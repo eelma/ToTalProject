@@ -16,13 +16,20 @@ HRESULT Sample::CreateVertexBuffer()
     // color  4 ~ 7   12~
     SimpleVertex vertices[] =
     {
-        -1.0f, 1.0f,  0.0f, //0.0f,0.0f,0.0f,0.0f,// v0
-        +1.0f, 1.0f,  0.0f, //0.0f,0.0f,0.0f,0.0f,// v1
-        -1.0f, -1.0f, 0.0f, //0.0f,0.0f,0.0f,0.0f,// v2
+
+        //반드시 시계방향(앞면)으로 구성한다
+        -0.5f, 0.5f,  0.0f, 1.0f,0.0f,0.0f,0.0f,// v0
+        +0.5f, 0.5f,  0.0f, 0.0f,1.0f,0.0f,0.0f,// v1
+        -0.5f, -0.5f, 0.0f, 0.0f,0.0f,1.0f,0.0f,// v2
+
+        -0.5f, -0.5f, 0.0f, 0.0f,0.0f,1.0f,0.0f,// v0
+        +0.5f, 0.5f,  0.0f, 0.0f,1.0f,0.0f,0.0f,// v1
+        +0.5f, -0.5f, 0.0f, 0.0f,0.0f,1.0f,0.0f,// v2
     };
     D3D11_BUFFER_DESC       bd;
     ZeroMemory(&bd, sizeof(bd));
-    bd.ByteWidth    = sizeof(SimpleVertex)*3; // 바이트 용량
+    UINT NumVertex = sizeof(vertices) / sizeof(vertices[0]);
+    bd.ByteWidth    = sizeof(SimpleVertex)* NumVertex; // 바이트 용량
     // GPU 메모리에 할당
     bd.Usage        = D3D11_USAGE_DEFAULT; // 버퍼의 할당 장소 내지는 버퍼용도
     bd.BindFlags    = D3D11_BIND_VERTEX_BUFFER;
@@ -36,9 +43,9 @@ HRESULT Sample::CreateVertexBuffer()
         &m_pVertexBuffer);
     return hr;
 }
-HRESULT Sample::CreateVertexLayout()
+HRESULT Sample::CreateShader()
 {
-    HRESULT hr;  
+    HRESULT hr;
     // 정점쉐이더 컴파일 
 
 
@@ -60,7 +67,7 @@ HRESULT Sample::CreateVertexLayout()
             OutputDebugStringA((char*)pErrorCode->GetBufferPointer());
             pErrorCode->Release();
         }
-        return false;
+        return hr;
     }
     hr = m_pd3dDevice->CreateVertexShader(
         m_pVSCode->GetBufferPointer(),
@@ -86,7 +93,7 @@ HRESULT Sample::CreateVertexLayout()
             OutputDebugStringA((char*)pErrorCode->GetBufferPointer());
             pErrorCode->Release();
         }
-        return false;
+        return hr;
     }
     hr = m_pd3dDevice->CreatePixelShader(
         m_pPSCode->GetBufferPointer(),
@@ -100,14 +107,22 @@ HRESULT Sample::CreateVertexLayout()
             OutputDebugStringA((char*)pErrorCode->GetBufferPointer());
             pErrorCode->Release();
         }
-        return false;
+        return hr;
     }
+    
+    return hr;
+}
+HRESULT Sample::CreateVertexLayout()
+{
+    HRESULT hr;  
+    // 정점쉐이더 컴파일 
+
     // 정점레이아웃은 정점쉐이더 밀접한 관련.
     // 정점레이아웃 생성시 사전에 정점쉐이더 생성이 필요하다.
     D3D11_INPUT_ELEMENT_DESC ied []=
     {
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,0,D3D11_INPUT_PER_VERTEX_DATA, 0},
-        //{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0,12,D3D11_INPUT_PER_VERTEX_DATA, 0},
+        { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0,12,D3D11_INPUT_PER_VERTEX_DATA, 0},
     };
     UINT NumElements = sizeof(ied) / sizeof(ied[0]);
     hr = m_pd3dDevice->CreateInputLayout(
@@ -122,6 +137,10 @@ HRESULT Sample::CreateVertexLayout()
 bool	Sample::Init()
 {   
     if (FAILED(CreateVertexBuffer()))
+    {
+        return false;
+    }
+    if (FAILED(CreateShader()))
     {
         return false;
     }
@@ -146,7 +165,9 @@ bool		Sample::Render()
     m_pImmediateContext->IASetInputLayout(m_pVertexLayout);
     m_pImmediateContext->VSSetShader(m_pVS, NULL, 0);
     m_pImmediateContext->PSSetShader(m_pPS, NULL, 0);
-    m_pImmediateContext->Draw(3, 0);
+
+    m_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    m_pImmediateContext->Draw(6, 0);
     return true;
 }
 bool		Sample::Release()
