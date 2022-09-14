@@ -29,6 +29,44 @@ struct KFloat3
 		float v[3];
 	};
 };
+struct KFloat4
+{
+	union
+	{
+		struct {
+			float x;
+			float y;
+			float z;
+			float w;
+		};
+		float v[4];
+	};
+};
+class KVector4D : public KFloat4
+{
+public:
+	KVector4D();
+	KVector4D(float x, float y, float z, float w);
+	KVector4D(const KVector4D& v);
+public:
+	KVector4D operator + (KVector4D& v);
+	KVector4D operator - (KVector4D& v);
+	KVector4D operator * (float scala);
+	KVector4D operator / (float scala);
+	KVector4D operator *= (float scala);
+	KVector4D operator += (KVector4D& v);
+	KVector4D operator -= (KVector4D& v);
+	bool      operator == (KVector4D& v);
+	bool      operator <= (KVector4D& v);
+	bool      operator >= (KVector4D& v);
+public:
+	float     LengthSquared();
+	float     Length();
+	void      Normalized();
+	KVector4D Identity();
+	float     Angle(KVector4D& v);
+};
+
 class KVector2D : public KFloat2
 {
 public:

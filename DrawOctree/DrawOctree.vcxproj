@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{7b87c572-8a6a-478f-8fae-807134504f8c}</ProjectGuid>
-    <RootNamespace>CreateTriangle1</RootNamespace>
+    <ProjectGuid>{71ee2c0f-8369-443a-aa98-415b34eb4109}</ProjectGuid>
+    <RootNamespace>DrawOctree</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -78,6 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>../../output/Debug/DrawOctree</OutDir>
+    <IntDir>../../output/Debug/DrawOctree</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -140,14 +142,32 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="KBaseObject.cpp" />
+    <ClCompile Include="KCollision.cpp" />
     <ClCompile Include="KDevice.cpp" />
+    <ClCompile Include="KEnemy.cpp" />
+    <ClCompile Include="KGameCore.cpp" />
+    <ClCompile Include="KGamePlayer.cpp" />
+    <ClCompile Include="KNode.cpp" />
+    <ClCompile Include="KObject.cpp" />
+    <ClCompile Include="KOctree.cpp" />
+    <ClCompile Include="KQuadtree.cpp" />
+    <ClCompile Include="KSpacePartition.cpp" />
     <ClCompile Include="KVector.cpp" />
     <ClCompile Include="KWindow.cpp" />
     <ClCompile Include="Sample.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KBaseObject.h" />
+    <ClInclude Include="KCollision.h" />
     <ClInclude Include="KDevice.h" />
+    <ClInclude Include="KEnemy.h" />
+    <ClInclude Include="KGameCore.h" />
+    <ClInclude Include="KGamePlayer.h" />
+    <ClInclude Include="KNode.h" />
+    <ClInclude Include="KObject.h" />
+    <ClInclude Include="KOctree.h" />
+    <ClInclude Include="KQuadtree.h" />
+    <ClInclude Include="KSpacePartition.h" />
     <ClInclude Include="KStd.h" />
     <ClInclude Include="KVector.h" />
     <ClInclude Include="KWindow.h" />
