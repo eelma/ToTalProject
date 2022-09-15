@@ -11,6 +11,7 @@ public:
 class KEnemy2D : public KObject2D
 {
 public:
+	void   SetPosition(KVector2D p, KVector2D s);
 	bool   Frame(float fDeltaTime, float fGameTime) override;
 	bool   Render() override;
 	KEnemy2D();

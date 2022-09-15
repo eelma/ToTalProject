@@ -1,11 +1,11 @@
 #include "KEnemy.h"
 KEnemy2D::KEnemy2D()
 {
-
+    m_fFriction = 1.0f;
 }
 KEnemy2D::KEnemy2D(std::string name) : KObject2D(name)
 {
-
+    m_fFriction = 1.0f;
 }
 bool   KEnemy2D::Render()
 {
@@ -48,7 +48,7 @@ bool KEnemy::Frame(float fDeltaTime, float fGameTime)
     m_fSpeed -= m_fFriction;
     if (0 >= m_fSpeed)
     {
-        m_fSpeed = 10+rand() % 50;
+        m_fSpeed = 10+rand() % 10;
     }
 
     if (vPos.x > 100.0f)
@@ -91,8 +91,8 @@ bool KEnemy2D::Frame(float fDeltaTime, float fGameTime)
     //벡터의 직선의 방정식 &  시간의 동기화
     m_vVelocity2D = m_vDirection2D * m_fSpeed * fDeltaTime;
     vPos = vPos + m_vVelocity2D;
-    m_fFriction = (fDeltaTime * m_fSpeed * 0.1f);
-    m_fSpeed -= m_fFriction;
+    //m_fFriction = (fDeltaTime * m_fSpeed * 0.1f);
+    m_fSpeed -= m_fFriction*fDeltaTime;
     if (0 >= m_fSpeed)
     {
         m_fSpeed = rand() % 10;
@@ -120,4 +120,30 @@ bool KEnemy2D::Frame(float fDeltaTime, float fGameTime)
     }
     SetPosition(vPos, vSize);
     return true;
+}
+
+void   KEnemy2D::SetPosition(KVector2D p, KVector2D s)
+{
+    float x1 = ((p.x / 100.0f) * 2 - 1.0f);
+    float y1 = ((p.y / 100.0f) * 2 - 1.0f);
+    float w1 = ((s.x / 100.0f) * 2);
+    float h1 = ((s.y / 100.0f) * 2);
+
+    m_VertexList[0].p = { x1,y1,0.0f };
+    m_VertexList[1].p = { x1 + w1,y1,0.0f };
+    m_VertexList[2].p = { x1,y1 - h1,0.0f };
+    m_VertexList[3].p = m_VertexList[2].p;
+    m_VertexList[4].p = m_VertexList[1].p;
+    m_VertexList[5].p = { x1 + w1,y1 - h1,0.0f };
+
+    m_VertexList[0].c = {0,0,1.0f,1.0f};
+    m_VertexList[1].c = {0,0,1.0f,1.0f};
+    m_VertexList[2].c = {0,0,1.0f,1.0f};
+    m_VertexList[3].c = {0,0,1.0f,1.0f};
+    m_VertexList[4].c = {0,0,1.0f,1.0f};
+    m_VertexList[5].c = {0,0,1.0f,1.0f};
+
+    m_rt.Set(p.x, p.y, s.x, s.y);
+    SetCircle(m_rt.cx, m_rt.cy, m_rt.w, m_rt.h);
+
 }

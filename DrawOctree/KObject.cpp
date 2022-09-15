@@ -88,7 +88,7 @@ bool   KObject2D::Init()
     m_vDirection2D.x = cos(rand());
     m_vDirection2D.y = sin(rand());
     m_vDirection2D.Normalized();
-    m_fFriction = 0.0f;
+    m_fFriction = 1.0f;
     m_fMass = 100.0f;
     m_fSpeed = 10.0f;
 
@@ -149,7 +149,7 @@ bool   KObject::Init()
     m_vDirection.y = sin(rand());
     m_vDirection.z = 1.0f - cos(rand());
     m_vDirection.Normalized();
-    m_fFriction = 0.0f;
+    m_fFriction = 1.0f;
     m_fMass = 100.0f;
     m_fSpeed = 10.0f;
 

@@ -51,18 +51,18 @@ template<class T>
 bool KGameCore<T>::Render()
 {
     m_pPlayer->Render();
-    for (auto obj : m_npcList)
+    /*for (auto obj : m_npcList)
     {
         KBaseObject* pObject = obj.second;
         pObject->Render();
-    }
-    /*if (!m_DrawList.empty())
+    }*/
+    if (!m_DrawList.empty())
     {
         for (int iObj = 0; iObj < m_DrawList.size(); iObj++)
         {
             m_DrawList[iObj]->Render();
         }
-    }*/
+    }
     return false;
 }
 template<class T>
