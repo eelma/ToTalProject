@@ -50,7 +50,7 @@ bool		Sample::Render()
 }
 bool		Sample::Release()
 {
-    m_object.Release();
+    //m_object.Release();
     return true;
 }
 
