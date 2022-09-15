@@ -122,8 +122,16 @@ void  KQuadtree::GetCollisitionObject(KNode* pNode,
             list.push_back(pNode->m_ObjectStaticList[iObj]);
         }
     }
-    for (int iObj = 0; iObj < pNode->m_ObjectDynamicList.size(); iObj++)
+   for (int iObj = 0; iObj < pNode->m_ObjectDynamicList.size(); iObj++)
     {
+
+       /*if (KCollision::RectToRect(
+           pNode->m_ObjectDynamicList[iObj]->m_rt,
+           pSrcObject->m_rt))
+       {
+           list.push_back(pNode->m_ObjectDynamicList[iObj]);
+       }*/
+
         if (KCollision::CircleToCircle(
             pNode->m_ObjectDynamicList[iObj]->m_Circle,
             pSrcObject->m_Circle))

@@ -15,7 +15,7 @@ void   KObject2D::SetCircle(KVector2D c, KVector2D s)
 void   KObject2D::SetPosition(KVector2D p, KVector2D s)
 {
     float x1 = ((p.x/100.0f) * 2 - 1.0f);
-    float y1 = ((p.y/100.0f) * 2 - 1.0f);
+    float y1 = -1.0f*((p.y/100.0f) * 2 - 1.0f);
     float w1 = ((s.x/100.0f) * 2);
     float h1 = ((s.y/100.0f) * 2);
 

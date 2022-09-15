@@ -26,7 +26,7 @@ bool	Sample::Init()
     game2D.m_pPlayer->GetImp()->SetDevice(m_pd3dDevice, m_pImmediateContext);
     game2D.m_pPlayer->GetImp()->Create();
     game2D.m_pPlayer->GetImp()->Init();
-    game2D.m_pPlayer->SetPosition(KVector2D(50, 50), KVector2D(50, 50));
+    game2D.m_pPlayer->SetPosition(KVector2D(75, 95), KVector2D(50, 50));
     game2D.m_pWorldSP->Create(KVector2D(0, 0), KVector2D(100, 100));
     game2D.Init();
     //game2D.Run();
