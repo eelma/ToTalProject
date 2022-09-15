@@ -24,7 +24,7 @@ void   KObject2D::SetPosition(KVector2D p, KVector2D s)
     m_VertexList[2].p = { x1,y1 - h1,0.0f };
     m_VertexList[3].p = m_VertexList[2].p;
     m_VertexList[4].p = m_VertexList[1].p;
-    m_VertexList[5].p = { x1,y1 - h1,0.0f };
+    m_VertexList[5].p = { x1+w1,y1 - h1,0.0f };
 
     m_rt.Set(p.x, p.y, s.x, s.y);
     SetCircle(m_rt.cx, m_rt.cy, m_rt.w, m_rt.h);
@@ -91,15 +91,17 @@ bool   KObject2D::Init()
     m_fFriction = 0.0f;
     m_fMass = 100.0f;
     m_fSpeed = 10.0f;
+
+    SetPosition(KVector2D(m_rt.x1, m_rt.y1), KVector2D(m_rt.w, m_rt.h));
     return true;
 }
 KObject2D::KObject2D()
 {
-    Init();
+   // Init();
 }
 KObject2D::KObject2D(std::string name)
 {
-    Init();
+   // Init();
     m_csName = name;
 }
 ////////////////////////////////////////////////////////
@@ -150,6 +152,8 @@ bool   KObject::Init()
     m_fFriction = 0.0f;
     m_fMass = 100.0f;
     m_fSpeed = 10.0f;
+
+    
     return true;
 }
 KObject::KObject()

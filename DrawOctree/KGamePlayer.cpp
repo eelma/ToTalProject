@@ -112,7 +112,7 @@ bool KGamePlayer2D::Frame(float fDeltaTime, float fGameTime)
     m_pImp->AddForces(vKeyForce);
 
     m_pImp->m_vAcceleration2D = m_pImp->m_vForces2D / m_pImp->m_fMass;
-    KVector2D linearAcc = m_pImp->m_vAcceleration2D;
+    KVector2D linearAcc = m_pImp->m_vAcceleration2D * fDeltaTime;
     m_pImp->m_vVelocity2D += linearAcc;
     //벡터의 직전의 방정식
     //결과벡터 = 시작벡터 + 방향벡터* speed * t(거리 내지는 시간) 
@@ -134,7 +134,7 @@ bool KGamePlayer2D::Frame(float fDeltaTime, float fGameTime)
         vPos.x = 100.0f;
         m_pImp->m_vForces2D = KVector2D(0, 0);
         m_pImp->m_vVelocity2D = KVector2D(0, 0);
-        m_pImp->m_vDirection2D *= -1.0f;
+        m_pImp->m_vDirection2D.x *= -1.0f;
         m_pImp->m_fFriction = 1.0f;
     }
     if (vPos.x < 0.0f)
@@ -142,14 +142,15 @@ bool KGamePlayer2D::Frame(float fDeltaTime, float fGameTime)
         vPos.x = 0.0f;
         m_pImp->m_vForces2D = KVector2D(0, 0);
         m_pImp->m_vVelocity2D = KVector2D(0, 0);
-        m_pImp->m_vDirection2D.x = 1.0f;
+        m_pImp->m_vDirection2D.x *= -1.0f;
         m_pImp->m_fFriction = 1.0f;
     }
     if (vPos.y > 100.0f)
     {
         vPos.y = 100.0f;
         m_pImp->m_vForces2D = KVector2D(0, 0);
-        m_pImp->m_vDirection2D.y = -1.0f;
+        m_pImp->m_vVelocity2D = KVector2D(0, 0);
+        m_pImp->m_vDirection2D.y *= -1.0f;
         m_pImp->m_fFriction = 1.0f;
     }
     if (vPos.y < 0.0f)
@@ -157,7 +158,7 @@ bool KGamePlayer2D::Frame(float fDeltaTime, float fGameTime)
         vPos.y = 0.0f;
         m_pImp->m_vForces2D = KVector2D(0, 0);
         m_pImp->m_vVelocity2D = KVector2D(0, 0);
-        m_pImp->m_vDirection2D.y = 1.0f;
+        m_pImp->m_vDirection2D.y *= -1.0f;
         m_pImp->m_fFriction = 1.0f;
     }    
     m_pImp->m_vDirection2D.Normalized();

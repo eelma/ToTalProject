@@ -9,6 +9,7 @@ KEnemy2D::KEnemy2D(std::string name) : KObject2D(name)
 }
 bool   KEnemy2D::Render()
 {
+    KBaseObject::Render();
     std::cout << m_csName << ","
         << m_rt.x1 << ","
         << m_rt.y1 << std::endl;
@@ -47,7 +48,7 @@ bool KEnemy::Frame(float fDeltaTime, float fGameTime)
     m_fSpeed -= m_fFriction;
     if (0 >= m_fSpeed)
     {
-        m_fSpeed = rand() % 10;
+        m_fSpeed = 10+rand() % 50;
     }
 
     if (vPos.x > 100.0f)
@@ -100,22 +101,22 @@ bool KEnemy2D::Frame(float fDeltaTime, float fGameTime)
     if (vPos.x > 100.0f)
     {
         vPos.x = 100.0f;
-        m_vDirection.x *= -1.0f;
+        m_vDirection2D.x *= -1.0f;
     }
     if (vPos.x < 0.0f)
     {
         vPos.x = 0.0f;
-        m_vDirection.x *= -1.0f;
+        m_vDirection2D.x *= -1.0f;
     }
     if (vPos.y > 100.0f)
     {
         vPos.y = 100.0f;
-        m_vDirection.y *= -1.0f;
+        m_vDirection2D.y *= -1.0f;
     }
     if (vPos.y < 0.0f)
     {
         vPos.y = 0.0f;
-        m_vDirection.y *= -1.0f;
+        m_vDirection2D.y *= -1.0f;
     }
     SetPosition(vPos, vSize);
     return true;

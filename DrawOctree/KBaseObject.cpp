@@ -23,12 +23,14 @@ HRESULT KBaseObject::CreateVertexBuffer()
     // pos    0 ~ 3,  0~ 11
     // color  4 ~ 7   12~
     m_VertexList.resize(6);
+
     m_VertexList[0].p = {-1.0f, 1.0f,  0.0f};
     m_VertexList[0].c = {1.0f,0.0f,0.0f,0.0f};
     m_VertexList[1].p = { +1.0f, 1.0f,  0.0f };
     m_VertexList[1].c = { 1.0f,0.0f,0.0f,0.0f };
     m_VertexList[2].p = { -1.0f, -1.0f, 0.0f };
     m_VertexList[2].c = { 1.0f,0.0f,0.0f,0.0f };
+
     m_VertexList[3].p = { -1.0f, -1.0f, 0.0f };
     m_VertexList[3].c = { 1.0f,0.0f,0.0f,0.0f };
     m_VertexList[4].p = { +1.0f, 1.0f,  0.0f };
@@ -171,7 +173,7 @@ bool		KBaseObject::Frame()
 
     //gpu update cpu에서 명령하지만 gpu에서 업데이트하게 해준다
     //위치이동
-   
+    
     return true;
 }
 bool		KBaseObject::Render()

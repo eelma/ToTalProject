@@ -13,6 +13,9 @@ bool KGameCore<T>::Init()
         std::string name = std::to_string(iObj);
         name += " Static";
         KBaseObject* pObj = m_pWorldSP->NewStaticObject(name);
+        pObj->SetDevice(m_pd3dDevice, m_pImmediateContext);
+        pObj->Create();
+        pObj->Init();
         m_AllObjectList.insert(std::make_pair(iObj, pObj));
         m_pWorldSP->AddStaticObject(pObj);
     }
@@ -21,6 +24,9 @@ bool KGameCore<T>::Init()
         std::string name = std::to_string(iObj);
         name += " Dynamic";
         KBaseObject* pObj = m_pWorldSP->NewDynamicObject(name);
+        pObj->SetDevice(m_pd3dDevice, m_pImmediateContext);
+        pObj->Create();
+        pObj->Init();
         m_npcList.insert(std::make_pair(iObj, pObj));
         m_AllObjectList.insert(std::make_pair(10+iObj, pObj));
         m_pWorldSP->AddDynamicObject(pObj);
@@ -45,13 +51,18 @@ template<class T>
 bool KGameCore<T>::Render()
 {
     m_pPlayer->Render();
-    if (!m_DrawList.empty())
+    for (auto obj : m_npcList)
+    {
+        KBaseObject* pObject = obj.second;
+        pObject->Render();
+    }
+    /*if (!m_DrawList.empty())
     {
         for (int iObj = 0; iObj < m_DrawList.size(); iObj++)
         {
             m_DrawList[iObj]->Render();
         }
-    }
+    }*/
     return false;
 }
 template<class T>

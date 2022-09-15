@@ -9,6 +9,8 @@ class KGameCore
 {
 public:
     KPlayer<T>*            m_pPlayer;
+    ID3D11Device*          m_pd3dDevice = nullptr;// 디바이스 객체
+    ID3D11DeviceContext*   m_pImmediateContext = nullptr;
 public:
     KSpacePartition*        m_pWorldSP;
     std::map<int, KBaseObject*> m_npcList;
