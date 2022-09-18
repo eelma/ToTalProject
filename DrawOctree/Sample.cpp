@@ -36,7 +36,7 @@ bool	Sample::Init()
 }
 bool		Sample::Frame()
 {
-    m_object.Frame();
+    //m_object.Frame();
    // game2D.m_pPlayer->Frame(m_fElapseTimer,m_fGameTimer);
     game2D.Frame(m_fElapseTimer, m_fGameTimer);
     return true;

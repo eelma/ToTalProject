@@ -17,11 +17,11 @@ bool   KEnemy2D::Render()
 };
 KEnemy::KEnemy()
 {
-
+    m_fFriction = 1.0f;
 }
 KEnemy::KEnemy(std::string name) : KObject(name)
 {
-
+    m_fFriction = 1.0f;
 }
 bool   KEnemy::Render() {
     std::cout << m_csName << ","
@@ -44,8 +44,8 @@ bool KEnemy::Frame(float fDeltaTime, float fGameTime)
     //벡터의 직선의 방정식 &  시간의 동기화
     m_vVelocity = m_vDirection* m_fSpeed* fDeltaTime;    
     vPos = vPos + m_vVelocity;
-    m_fFriction = (fDeltaTime * m_fSpeed * 0.1f);
-    m_fSpeed -= m_fFriction;
+    //m_fFriction = (fDeltaTime * m_fSpeed * 0.1f);
+    m_fSpeed -= m_fFriction*fDeltaTime;
     if (0 >= m_fSpeed)
     {
         m_fSpeed = 10+rand() % 10;
@@ -125,7 +125,7 @@ bool KEnemy2D::Frame(float fDeltaTime, float fGameTime)
 void   KEnemy2D::SetPosition(KVector2D p, KVector2D s)
 {
     float x1 = ((p.x / 100.0f) * 2 - 1.0f);
-    float y1 = ((p.y / 100.0f) * 2 - 1.0f);
+    float y1 = -1.0f*((p.y / 100.0f) * 2 - 1.0f);
     float w1 = ((s.x / 100.0f) * 2);
     float h1 = ((s.y / 100.0f) * 2);
 
