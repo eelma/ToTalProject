@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.32014.148
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32602.291
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ToTalProject", "ToTalProject.vcxproj", "{BD1BE331-69FE-4DB8-BEA9-37E20F743566}"
 EndProject
@@ -32,6 +32,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateTextureObject", "..\CreateTextureObject\CreateTextureObject.vcxproj", "{7FC0FFED-4B9E-4E09-95D8-F57FC62AC1AA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateObject_0", "..\CreateObject_0\CreateObject_0.vcxproj", "{55BAE644-D18C-4F59-BF8A-D5A0D8D5B903}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KGameCoreSample", "..\KGameCoreSample\KGameCoreSample.vcxproj", "{E4A7116B-A80B-4560-9413-D1D051D178DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -269,6 +271,18 @@ Global
 		{55BAE644-D18C-4F59-BF8A-D5A0D8D5B903}.Release|x64.Build.0 = Release|x64
 		{55BAE644-D18C-4F59-BF8A-D5A0D8D5B903}.Release|x86.ActiveCfg = Release|Win32
 		{55BAE644-D18C-4F59-BF8A-D5A0D8D5B903}.Release|x86.Build.0 = Release|Win32
+		{E4A7116B-A80B-4560-9413-D1D051D178DA}.Debug|ARM.ActiveCfg = Debug|Win32
+		{E4A7116B-A80B-4560-9413-D1D051D178DA}.Debug|ARM64.ActiveCfg = Debug|Win32
+		{E4A7116B-A80B-4560-9413-D1D051D178DA}.Debug|x64.ActiveCfg = Debug|x64
+		{E4A7116B-A80B-4560-9413-D1D051D178DA}.Debug|x64.Build.0 = Debug|x64
+		{E4A7116B-A80B-4560-9413-D1D051D178DA}.Debug|x86.ActiveCfg = Debug|Win32
+		{E4A7116B-A80B-4560-9413-D1D051D178DA}.Debug|x86.Build.0 = Debug|Win32
+		{E4A7116B-A80B-4560-9413-D1D051D178DA}.Release|ARM.ActiveCfg = Release|Win32
+		{E4A7116B-A80B-4560-9413-D1D051D178DA}.Release|ARM64.ActiveCfg = Release|Win32
+		{E4A7116B-A80B-4560-9413-D1D051D178DA}.Release|x64.ActiveCfg = Release|x64
+		{E4A7116B-A80B-4560-9413-D1D051D178DA}.Release|x64.Build.0 = Release|x64
+		{E4A7116B-A80B-4560-9413-D1D051D178DA}.Release|x86.ActiveCfg = Release|Win32
+		{E4A7116B-A80B-4560-9413-D1D051D178DA}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -285,6 +299,7 @@ Global
 		{E24BC0D3-F4A7-4A1F-8969-19E85CA31511} = {A70B7A18-2142-47F7-B8A2-994EFA54C8F2}
 		{7FC0FFED-4B9E-4E09-95D8-F57FC62AC1AA} = {A70B7A18-2142-47F7-B8A2-994EFA54C8F2}
 		{55BAE644-D18C-4F59-BF8A-D5A0D8D5B903} = {A70B7A18-2142-47F7-B8A2-994EFA54C8F2}
+		{E4A7116B-A80B-4560-9413-D1D051D178DA} = {A70B7A18-2142-47F7-B8A2-994EFA54C8F2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0D752930-2124-40CB-A63C-AC8F0B1893C3}
