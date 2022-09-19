@@ -9,6 +9,7 @@
 #include <d3dcompiler.h>
 #include"DDSTextureLoader.h"
 #include"WICTextureLoader.h"
+#pragma comment(lib, "winmm.lib")//timeGetTime
 #pragma comment(lib,"DirectXTK.lib")
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
@@ -19,7 +20,7 @@ extern HWND g_hWnd;
 extern RECT g_rtClient;
 
 
-template<class T>
+template<class T> 
 class KSingleTone
 {
 public:

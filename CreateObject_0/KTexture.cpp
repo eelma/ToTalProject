@@ -15,6 +15,8 @@ bool KTexture::Release()
 {
     if (m_Texture)m_Texture->Release();
     if (m_pTextureSRV)m_pTextureSRV->Release();
+    m_Texture = nullptr;
+    m_pTextureSRV = nullptr;
     return true;
 }
 HRESULT KTexture::Load(ID3D11Device* pd3dDevice,

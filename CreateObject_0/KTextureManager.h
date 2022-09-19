@@ -13,6 +13,7 @@ public:
 	map<wstring, KTexture*>m_List;
 public:
 	KTexture* Load(wstring name);
+	KTexture* Find(wstring name);
 	bool Release();
 private:
 	KTextureManager();

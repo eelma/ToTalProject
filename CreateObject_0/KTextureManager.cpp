@@ -11,11 +11,9 @@ KTexture* KTextureManager::Load(wstring name)
 {
     HRESULT hr;
     //중복 제거
-  auto iter= m_List.find(name);
-  if (iter != m_List.end())
-  {
-      return iter->second;
-  }
+    auto data = Find(name);
+    if (data != nullptr) return data;
+
     KTexture* pNewData = new KTexture;
     if (pNewData)
     {
@@ -38,7 +36,17 @@ bool KTextureManager::Release()
     m_List.clear();
     return true;
 }
+KTexture* KTextureManager::Find(wstring name)
+{
 
+    auto iter = m_List.find(name);
+    if (iter != m_List.end())
+    {
+        return iter->second;
+    }
+    return nullptr;
+
+}
 KTextureManager::KTextureManager()
 {
 

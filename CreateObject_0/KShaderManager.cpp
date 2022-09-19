@@ -16,6 +16,7 @@ KShader* KShaderManager::Load(wstring name)
   {
       return iter->second;
   }
+
   KShader* pNewData = new KShader;
     if (pNewData)
     {
@@ -39,12 +40,12 @@ bool KShaderManager::Release()
     return true;
 }
 
-KShaderManager::KTextureManager()
+KShaderManager::KShaderManager()
 {
 
 
 }
-KShaderManager::~KTextureManager()
+KShaderManager::~KShaderManager()
 {
    
     Release();

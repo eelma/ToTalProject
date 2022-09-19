@@ -133,6 +133,14 @@ bool        KWindow::Run()
     }
     m_bGameRun=true;
     MSG msg = { 0, };
+
+    m_fGameTimer = 0.0f;
+    m_fElapseTimer = 10;
+    DWORD dwBeforeTime = timeGetTime();
+    UINT fps = 0;
+    UINT counter = 0;
+    float fFps = 0.0f;
+
     while (m_bGameRun)
     {
         if (WM_QUIT == msg.message)
@@ -151,8 +159,27 @@ bool        KWindow::Run()
             {
                 m_bGameRun = false;
             }
-            
         }
+        DWORD dwCurrentTime = timeGetTime();
+        DWORD dwElapseTime = dwCurrentTime - dwBeforeTime;
+        m_fElapseTimer = dwElapseTime / 1000.0f;
+        m_fGameTimer += m_fElapseTimer;
+        wstring timer = to_wstring(m_fGameTimer);
+
+        dwBeforeTime = dwCurrentTime;
+        counter++;
+        fFps += m_fElapseTimer;
+        if (fFps >= 1.0f)
+        {
+            fps = counter;
+            counter = 0;
+            fFps = fFps - 1.0f;
+        }
+        timer += L" ";
+        timer += to_wstring(fps);
+        timer += L"\n";
+
+        OutputDebugString(timer.c_str());
     }
     KCoreRelease();
 

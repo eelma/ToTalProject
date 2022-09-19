@@ -1,5 +1,6 @@
 #include "KBaseObject.h"
 #include"KTextureManager.h"
+#include"KShaderManager.h"
 void KBaseObject::SetDevice(
     ID3D11Device* pd3dDevice,
     ID3D11DeviceContext* pContext)
@@ -69,74 +70,14 @@ HRESULT KBaseObject::CreateVertexBuffer()
         &m_pVertexBuffer);
     return hr;
 }
-HRESULT KBaseObject::CreateShader(wstring filename)
+bool KBaseObject::CreateShader(wstring filename)
 {
     HRESULT hr;
-    // 정점쉐이더 컴파일 
 
-
-    ID3DBlob* pErrorCode = nullptr;
-    hr = D3DCompileFromFile(
-        filename.c_str(),
-        NULL,
-        NULL,
-        "VS",
-        "vs_5_0",
-        0,
-        0,
-        &m_pVSCode,
-        &pErrorCode);
-    if (FAILED(hr))
-    {
-        if (pErrorCode)
-        {
-            OutputDebugStringA((char*)pErrorCode->GetBufferPointer());
-            pErrorCode->Release();
-        }
-        return hr;
-    }
-    hr = m_pd3dDevice->CreateVertexShader(
-        m_pVSCode->GetBufferPointer(),
-        m_pVSCode->GetBufferSize(),
-        NULL,
-        &m_pVS);
-
-    // 픽쉘쉐이더 컴파일  
-    hr = D3DCompileFromFile(
-        filename.c_str(),
-        NULL,
-        NULL,
-        "PS",
-        "ps_5_0",
-        0,
-        0,
-        &m_pPSCode,
-        &pErrorCode);
-    if (FAILED(hr))
-    {
-        if (pErrorCode)
-        {
-            OutputDebugStringA((char*)pErrorCode->GetBufferPointer());
-            pErrorCode->Release();
-        }
-        return hr;
-    }
-    hr = m_pd3dDevice->CreatePixelShader(
-        m_pPSCode->GetBufferPointer(),
-        m_pPSCode->GetBufferSize(),
-        NULL,
-        &m_pPS);
-    if (FAILED(hr))
-    {
-        if (pErrorCode)
-        {
-            OutputDebugStringA((char*)pErrorCode->GetBufferPointer());
-            pErrorCode->Release();
-        }
-        return hr;
-    }
-
-    return hr;
+    m_pShader= I_Shader.Load(filename);
+    if(m_pShader)return true;
+    
+    return false;
 }
 HRESULT KBaseObject::CreateVertexLayout()
 {
@@ -155,8 +96,8 @@ HRESULT KBaseObject::CreateVertexLayout()
     hr = m_pd3dDevice->CreateInputLayout(
         ied,
         NumElements,
-        m_pVSCode->GetBufferPointer(),
-        m_pVSCode->GetBufferSize(),
+        m_pShader->m_pVSCode->GetBufferPointer(),
+        m_pShader->m_pVSCode->GetBufferSize(),
         &m_pVertexLayout);
 
     return hr;
@@ -222,8 +163,8 @@ bool		KBaseObject::Render()
         &m_pVertexBuffer, &stride, &offset);
 
     m_pImmediateContext->IASetInputLayout(m_pVertexLayout);
-    m_pImmediateContext->VSSetShader(m_pVS, NULL, 0);
-    m_pImmediateContext->PSSetShader(m_pPS, NULL, 0);
+    m_pImmediateContext->VSSetShader(m_pShader->m_pVS, NULL, 0);
+    m_pImmediateContext->PSSetShader(m_pShader->m_pPS, NULL, 0);
 
     m_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
     //tex

@@ -4,6 +4,7 @@
 class Sample : public KDevice
 {
 	vector<KBaseObject*> m_pObjectList;
+	int m_iTexIndex;
 
 public:
 	bool		Init(); // √ ±‚»≠

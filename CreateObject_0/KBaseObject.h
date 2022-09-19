@@ -27,7 +27,7 @@ public:
 	
 public:
 	HRESULT		CreateVertexBuffer();
-	HRESULT		CreateShader(wstring filename);
+	bool		CreateShader(wstring filename);
 	HRESULT     CreateVertexLayout();
 	bool		LoadTexture(wstring filename);
 	
