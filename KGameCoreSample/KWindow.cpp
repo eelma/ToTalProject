@@ -111,6 +111,23 @@ KWindow::KWindow()
 }
 bool        KWindow::Run()
 {
-    
-    return true;
+    MSG msg = { 0, };
+    while(1)
+    {
+        if (WM_QUIT == msg.message)
+        {
+            break;
+        }
+        // 장점 : 메세지큐에 메세지가 없어도 반환됨.
+        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+        {
+            TranslateMessage(&msg); // 메세지 번역
+            DispatchMessage(&msg);  // 메세지 프로시져에 전달한다.
+        }
+        else
+        {
+            return true;
+        }
+    }
+    return false;
 }
