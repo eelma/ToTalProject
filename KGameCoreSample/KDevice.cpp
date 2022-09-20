@@ -44,15 +44,23 @@ HRESULT KDevice::CreateDevice()
 {
     // 1)디바이스 생성
     HRESULT hr;
+
+    UINT createDeviceFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+#ifdef _DEBUG
+    //디버그 옵션을 넣어줘야 디버깅 정보를 제공해준다
+    //이걸 넣어야만 랜더타겟이 지원이된다
+    createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
+#endif
+
     D3D_FEATURE_LEVEL pFeatureLevel;
-    UINT Flags = 0;
     D3D_FEATURE_LEVEL pFeatureLevels[] =
     {
         D3D_FEATURE_LEVEL_11_0,
     };
     UINT FeatureLevels = 1;
     hr = D3D11CreateDevice(
-        nullptr, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, pFeatureLevels, 1, D3D11_SDK_VERSION,
+        nullptr, D3D_DRIVER_TYPE_HARDWARE, NULL,
+        createDeviceFlags, pFeatureLevels, 1, D3D11_SDK_VERSION,
         &m_pd3dDevice,// 디바이스 객체
         &pFeatureLevel,
         &m_pImmediateContext

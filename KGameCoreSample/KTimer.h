@@ -1,16 +1,19 @@
 #pragma once
 #include"KStd.h"
-class KTimer
+class KTimer:public KSingleTone<KTimer>
 {
 public:
+	//타이머의 핵심 기능
 	float m_fGameTimer = 0.0f;
-	float m_fElapseTimer = 10;
+	float m_fElapseTimer = 10.0f;
 	UINT m_iFPS = 0;
-public:
-	DWORD dwBeforeTime;
-	UINT fps = 0;
-	UINT counter = 0;
-	float fFps = 0.0f;
+	wstring m_szTimer;
+
+	//템프
+private:
+	DWORD m_dwBeforeTime;
+	UINT m_iFPSCounter = 0;
+	float m_fFPSTimer = 0.0f;
 
 public:
 	virtual bool		Init(); // 초기화
@@ -19,3 +22,5 @@ public:
 	virtual bool		Release();// 소멸 및 삭제
 };
 
+//I = 인터페이스
+#define I_Timer KTimer::GetInstance()

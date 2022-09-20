@@ -1,10 +1,13 @@
 #pragma once
 #include"KDevice.h"
 #include"KTimer.h"
+#include"KInput.h"
+#include"KWriter.h"
 class KGameCore:public KDevice
 {
 public:
-	KTimer m_Timer;
+	KWriter m_Writer;
+	IDXGISurface1* m_pBackBuffer;
 	bool m_bGameRun = true;
 public:
 	virtual bool		Init() { return true; }; // √ ±‚»≠

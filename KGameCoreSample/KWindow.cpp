@@ -112,12 +112,9 @@ KWindow::KWindow()
 bool        KWindow::Run()
 {
     MSG msg = { 0, };
-    while(1)
+    while(WM_QUIT != msg.message)
     {
-        if (WM_QUIT == msg.message)
-        {
-            break;
-        }
+        
         // 장점 : 메세지큐에 메세지가 없어도 반환됨.
         if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {

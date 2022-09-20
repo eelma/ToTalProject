@@ -19,7 +19,9 @@ using namespace std;
 extern HWND g_hWnd;
 extern RECT g_rtClient;
 
-
+extern float g_fGameTimer;
+extern float g_fSecondPerFrame;
+//extern은 초기화 하면 안된다
 template<class T> 
 class KSingleTone
 {

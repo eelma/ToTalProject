@@ -6,12 +6,20 @@ bool		KGameCore::KCoreInit()
     {
         return false;
     }
-        return Init();
+    I_Timer.Init();
+    I_Input.Init();
+    m_Writer.Init();
+    
+    m_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)&m_pBackBuffer);
+    m_Writer.Set(m_pBackBuffer);
+
+    return Init();
 }
 bool		KGameCore::KCoreFrame()
 {
-    m_Timer.Frame();
-
+    I_Timer.Frame();
+    I_Input.Frame();
+    m_Writer.Frame();
     return Frame();
 }
 bool		KGameCore::KCorePreRender()
@@ -23,9 +31,13 @@ bool		KGameCore::KCorePreRender()
 }
 bool		KGameCore::KCoreRender()
 {
+
     KCorePreRender();
     Render();
-    m_Timer.Render();
+    I_Timer.Render();
+    I_Input.Render();
+    m_Writer.m_szDefaultText = I_Timer.m_szTimer;
+    m_Writer.Render();
     KCorePostRender();
     return true;
 }
@@ -36,8 +48,10 @@ bool		KGameCore::KCorePostRender()
 }
 bool		KGameCore::KCoreRelease()
 {
+    m_pBackBuffer->Release();
     Release();
-    m_Timer.Release();
+    I_Timer.Release();
+    I_Input.Release();
     KDevice::Release();
     return true;
 }
@@ -50,15 +64,27 @@ bool        KGameCore::Run()
         KCoreRelease();
         return false;
     }
-    
+    MSG msg = { 0, };
+    m_bGameRun = true;
+    //게임의 로직을 돌리는 부분
+    while (m_bGameRun)
+    {
+        //윈도우의 메세지 디스패쳐
+        if (KWindow::Run() == false)
+        {
+
+            m_bGameRun = false;
+
+        }
         else
         {
             if (!KCoreFrame() || !KCoreRender())
             {
-                m_bGameRun = false;
+             m_bGameRun = false;
             }
         }
     }
+
     KCoreRelease();
 
     return true;
