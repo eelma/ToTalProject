@@ -3,8 +3,7 @@
 #include"KShaderManager.h"
 bool	Sample::Init()
 {
-    I_Tex.SetDevice(m_pd3dDevice, m_pImmediateContext);
-    I_Shader.SetDevice(m_pd3dDevice, m_pImmediateContext);
+   
 
     I_Tex.Load(L"../../data/0.bmp");
     I_Tex.Load(L"../../data/1.bmp");

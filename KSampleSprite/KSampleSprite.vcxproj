@@ -21,21 +21,21 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{55BAE644-D18C-4F59-BF8A-D5A0D8D5B903}</ProjectGuid>
-    <RootNamespace>CreateTextureObject</RootNamespace>
+    <ProjectGuid>{A47D87C2-A237-4824-9E66-3FEDB215AFD3}</ProjectGuid>
+    <RootNamespace>KGameCoreSample</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -48,7 +48,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -78,8 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>../../output/Debug/CreateTextureObject</OutDir>
-    <IntDir>../../output/Debug/CreateTextureObject</IntDir>
+    <OutDir>../../output/Debug/KSampleSprite</OutDir>
+    <IntDir>../../output/Debug/KSampleSprite</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -119,6 +119,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../../include/dxtk;</AdditionalIncludeDirectories>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -145,28 +146,38 @@
   <ItemGroup>
     <ClCompile Include="KBaseObject.cpp" />
     <ClCompile Include="KDevice.cpp" />
+    <ClCompile Include="KDxState.cpp" />
+    <ClCompile Include="KGameCore.cpp" />
+    <ClCompile Include="KInput.cpp" />
     <ClCompile Include="KShader.cpp" />
     <ClCompile Include="KShaderManager.cpp" />
     <ClCompile Include="KTexture.cpp" />
     <ClCompile Include="KTextureManager.cpp" />
+    <ClCompile Include="KTimer.cpp" />
     <ClCompile Include="KVector.cpp" />
     <ClCompile Include="KWindow.cpp" />
+    <ClCompile Include="KWriter.cpp" />
     <ClCompile Include="Sample.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KBaseObject.h" />
     <ClInclude Include="KDevice.h" />
+    <ClInclude Include="KDxState.h" />
+    <ClInclude Include="KGameCore.h" />
+    <ClInclude Include="KInput.h" />
     <ClInclude Include="KShader.h" />
     <ClInclude Include="KShaderManager.h" />
     <ClInclude Include="KStd.h" />
     <ClInclude Include="KTexture.h" />
     <ClInclude Include="KTextureManager.h" />
+    <ClInclude Include="KTimer.h" />
     <ClInclude Include="KVector.h" />
     <ClInclude Include="KWindow.h" />
+    <ClInclude Include="KWriter.h" />
     <ClInclude Include="Sample.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="DefaultShape.txt" />
+    <Text Include="..\..\data\shader\DefaultShape.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

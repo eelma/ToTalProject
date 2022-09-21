@@ -49,7 +49,6 @@ bool KWriter::Init()
 		,g_rtClient.bottom
 		, &m_pTextLayout);
 
-	//wstring m_szDefaultText = L"KGCA Game Academy";
 
 	return true;
 }
@@ -76,9 +75,10 @@ bool KWriter::Draw(float x, float y,wstring text,D2D1_COLOR_F color)
 	m_d2dRT->DrawText(text.c_str(), text.size(), m_pTextForamat, rt, m_pTextColor);
 	//이건 디버깅 할때나 쓴다
 	//게임은 채팅 제외하곤 전부 이미지를 쓴다 속도가 느리기 때문에
-	m_pTextLayout->SetFontSize(50, { 0,(UINT)m_szDefaultText.size() });
+	/*m_pTextLayout->SetFontSize(20, { 0,(UINT)m_szDefaultText.size() });
 	m_pTextLayout->SetFontStyle(DWRITE_FONT_STYLE_ITALIC, {0,(UINT)m_szDefaultText.size()});
-	m_d2dRT->DrawTextLayout({ 400,400 }, m_pTextLayout, m_pTextColor);
+	m_d2dRT->DrawTextLayout({ (float)g_rtClient.right-m_szDefaultText.size()*20,0}, m_pTextLayout, m_pTextColor);
+	*/
 	m_d2dRT->EndDraw();
 	return true;
 }
