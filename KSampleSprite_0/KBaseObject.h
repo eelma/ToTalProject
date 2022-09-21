@@ -1,6 +1,6 @@
 #pragma once
 #include"kTexture.h"
-#include"KVector.h"
+#include"KCollision.h"
 #include"KShader.h"
 //p위치 n노말 c컬러 t텍스처좌표
 struct SimpleVertex

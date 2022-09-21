@@ -145,6 +145,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="KBaseObject.cpp" />
+    <ClCompile Include="KCollision.cpp" />
     <ClCompile Include="KDevice.cpp" />
     <ClCompile Include="KDxState.cpp" />
     <ClCompile Include="KGameCore.cpp" />
@@ -161,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KBaseObject.h" />
+    <ClInclude Include="KCollision.h" />
     <ClInclude Include="KDevice.h" />
     <ClInclude Include="KDxState.h" />
     <ClInclude Include="KGameCore.h" />
