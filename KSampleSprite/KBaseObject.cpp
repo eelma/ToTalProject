@@ -46,7 +46,7 @@ HRESULT KBaseObject::CreateVertexBuffer()
     m_VertexList[5].c = { 1.0f,0.0f,0.0f,0.0f };
     m_VertexList[5].t = { 1.0f,1.0f };
 
-   /* m_VertexList[0].t = { 0.0f,0.0f };
+    /*m_VertexList[0].t = { 0.0f,0.0f };
     m_VertexList[1].t = { 3.0f,0.0f };
     m_VertexList[2].t = { 0.0f,3.0f };
     m_VertexList[3].t = { 0.0f,3.0f };

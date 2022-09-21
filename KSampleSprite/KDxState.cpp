@@ -8,9 +8,11 @@ bool KDxState::SetState(ID3D11Device* pd3dDevice)
 	D3D11_SAMPLER_DESC sd;
     ZeroMemory(&sd, sizeof(sd));
     sd.Filter=D3D11_FILTER_MIN_MAG_MIP_POINT;//최근점 필터링 현재 uv값에 가장 가까운 픽셀을 선택해서 붙여라
-    sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;;
-    sd.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;;
-    sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;;
+    //x값 y값 z값 0과 1이 벗어난 텍스트 좌표를 어떻게할래 랩을 씌운다= 0-1 1-1 반복
+    //0과 1사이를 벗어나서 3을 넣으면 3장이 깔린다
+    sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+    sd.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+    sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
     /*sd.MipLODBias;
     sd.MaxAnisotropy;
     sd.ComparisonFunc;
