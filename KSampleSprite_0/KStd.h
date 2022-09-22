@@ -7,6 +7,8 @@
 #include <string>
 #include <d3d11.h>
 #include <d3dcompiler.h>
+#include<crtdbg.h>
+#include<cstdlib>
 #include"DDSTextureLoader.h"
 #include"WICTextureLoader.h"
 #pragma comment(lib, "winmm.lib")//timeGetTime

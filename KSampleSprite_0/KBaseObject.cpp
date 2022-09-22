@@ -28,22 +28,22 @@ HRESULT KBaseObject::CreateVertexBuffer()
 
     m_VertexList.resize(6);
     m_VertexList[0].p = {-1.0f, 1.0f,  0.0f};
-    m_VertexList[0].c = {1.0f,0.0f,0.0f,0.0f};
+    m_VertexList[0].c = { 1.0f,1.0f,1.0f,1.0f };
     m_VertexList[0].t = { 0.0f,0.0f };
     m_VertexList[1].p = { +1.0f, 1.0f,  0.0f };
-    m_VertexList[1].c = { 1.0f,0.0f,0.0f,0.0f };
+    m_VertexList[1].c = { 1.0f,1.0f,1.0f,1.0f };
     m_VertexList[1].t = { 1.0f,0.0f };
     m_VertexList[2].p = { -1.0f, -1.0f, 0.0f };
-    m_VertexList[2].c = { 1.0f,0.0f,0.0f,0.0f };
+    m_VertexList[2].c = { 1.0f,1.0f,1.0f,1.0f };
     m_VertexList[2].t = { 0.0f,1.0f };
     m_VertexList[3].p = { -1.0f, -1.0f, 0.0f };
-    m_VertexList[3].c = { 1.0f,0.0f,0.0f,0.0f };
+    m_VertexList[3].c = { 1.0f,1.0f,1.0f,1.0f };
     m_VertexList[3].t = { 0.0f,1.0f };
     m_VertexList[4].p = { +1.0f, 1.0f,  0.0f };
-    m_VertexList[4].c = { 1.0f,0.0f,0.0f,0.0f };
+    m_VertexList[4].c = { 1.0f,1.0f,1.0f,1.0f };
     m_VertexList[4].t = { 1.0f,0.0f };
     m_VertexList[5].p = { +1.0f, -1.0f, 0.0f };
-    m_VertexList[5].c = { 1.0f,0.0f,0.0f,0.0f };
+    m_VertexList[5].c = { 1.0f,1.0f,1.0f,1.0f };
     m_VertexList[5].t = { 1.0f,1.0f };
 
     /*m_VertexList[0].t = { 0.0f,0.0f };
@@ -108,7 +108,7 @@ bool KBaseObject::LoadTexture(wstring filename)
     m_pTexture=I_Tex.Load(filename);
     if (m_pTexture != nullptr)
     {
-        m_pTexture->
+        
         return true;
     }
     return false;
@@ -156,6 +156,13 @@ bool		KBaseObject::Frame()
 }
 bool		KBaseObject::Render()
 {
+    PreRender();
+    PostRender();
+    return true;
+}
+
+bool		KBaseObject::PreRender()
+{
     // 삼각형 랜더링
     UINT stride = sizeof(SimpleVertex); // 정점1개의 바이트용량
     UINT offset = 0; // 정점버퍼에서 출발지점(바이트)
@@ -170,16 +177,41 @@ bool		KBaseObject::Render()
     m_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
     //tex
     //맨 앞 숫자는 pixelshader.txt의 레지스터 번호와 동일해야한다
-    m_pImmediateContext->PSSetShaderResources(0,1,&m_pTexture->m_pTextureSRV);
+    ID3D11ShaderResourceView* srv = m_pTexture->GetSRV();
+    m_pImmediateContext->PSSetShaderResources(0,1,&srv);
     m_pImmediateContext->Draw(m_VertexList.size(), 0);
     return true;
 }
+bool		KBaseObject::PostRender()
+{
+    // 삼각형 랜더링
+    UINT stride = sizeof(SimpleVertex); // 정점1개의 바이트용량
+    UINT offset = 0; // 정점버퍼에서 출발지점(바이트)
+    //SLOT(레지스터리)
+    m_pImmediateContext->IASetVertexBuffers(0, 1,
+        &m_pVertexBuffer, &stride, &offset);
+
+    m_pImmediateContext->IASetInputLayout(m_pVertexLayout);
+    m_pImmediateContext->VSSetShader(m_pShader->m_pVS, NULL, 0);
+    m_pImmediateContext->PSSetShader(m_pShader->m_pPS, NULL, 0);
+
+    m_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    //tex
+    //맨 앞 숫자는 pixelshader.txt의 레지스터 번호와 동일해야한다
+    ID3D11ShaderResourceView* srv = m_pTexture->GetSRV();
+    m_pImmediateContext->PSSetShaderResources(0, 1, &srv);
+   
+    m_pImmediateContext->Draw(m_VertexList.size(), 0);
+    return true;
+}
+
 bool		KBaseObject::Release()
 {
+    m_pTexture->Release();
     if (m_pVertexBuffer) m_pVertexBuffer->Release();
     if (m_pVertexLayout) m_pVertexLayout->Release();
     m_pShader->Release();
-    m_pTexture->Release();
+    
     return true;
 }
 

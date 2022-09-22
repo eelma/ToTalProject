@@ -33,6 +33,6 @@ HRESULT KTexture::Load(ID3D11Device* pd3dDevice,
         (ID3D11Resource**)&m_pTexture,//m_pTexture라는것을 얻어오게끔 돼있다
         &m_pTextureSRV);
 
-    
+    m_pTexture->GetDesc(&m_Desc);//m_desc에 저장한다
     return hr;
 }

@@ -54,6 +54,5 @@ KTextureManager::KTextureManager()
 }
 KTextureManager::~KTextureManager()
 {
-   
-
+    Release();
 }
