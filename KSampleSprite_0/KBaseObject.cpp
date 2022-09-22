@@ -108,6 +108,7 @@ bool KBaseObject::LoadTexture(wstring filename)
     m_pTexture=I_Tex.Load(filename);
     if (m_pTexture != nullptr)
     {
+        m_pTexture->
         return true;
     }
     return false;

@@ -13,9 +13,9 @@ bool KTexture::Render()
 }
 bool KTexture::Release()
 {
-    if (m_Texture)m_Texture->Release();
+    if (m_pTexture)m_pTexture->Release();
     if (m_pTextureSRV)m_pTextureSRV->Release();
-    m_Texture = nullptr;
+    m_pTexture = nullptr;
     m_pTextureSRV = nullptr;
     return true;
 }
@@ -30,7 +30,9 @@ HRESULT KTexture::Load(ID3D11Device* pd3dDevice,
         pd3dDevice,
         pImmediateContext,
         filename.c_str(),
-        &m_Texture,
+        (ID3D11Resource**)&m_pTexture,//m_pTexture라는것을 얻어오게끔 돼있다
         &m_pTextureSRV);
+
+    
     return hr;
 }

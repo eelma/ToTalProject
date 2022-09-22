@@ -7,9 +7,9 @@ public:
 	ID3D11DeviceContext* m_pImmediateContext = nullptr;
 
 public:
-	ID3D11Resource* m_Texture = nullptr;
+	ID3D11Texture2D* m_pTexture = nullptr;
 	ID3D11ShaderResourceView* m_pTextureSRV = nullptr;
-
+	D3D11_TEXTURE2D_DESC m_Desc;
 public:
 	bool Init();
 	bool Frame();
