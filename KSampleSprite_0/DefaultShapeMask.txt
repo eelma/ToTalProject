@@ -58,7 +58,7 @@ float4 PS(PS_input input) : SV_Target
 	float4 vColor= g_txTexA.Sample(g_SampleWrap, input.t);
 	float4 vMask= g_txTexMaskA.Sample(g_SampleWrap, input.t);
 	float4 vFinalColor = vColor;
-	if(vMask.r > 0.5f)//rgba xywh로 해도 되는데 뒤섞어서는 불가능
+	if(vMask.r > 0.5f)//rgba xyzw로 해도 되는데 뒤섞어서는 불가능
 	{
 		discard;//아예 이 픽셸 세이더에서 계산되는 픽셀을 버려버려라
 	}
