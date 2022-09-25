@@ -1,8 +1,8 @@
 #pragma once
-#include"KDevice.h"
+#include"KGameCore.h"
 
 
-class Sample : public KDevice
+class Sample : public KGameCore
 {
 
 public:
@@ -10,7 +10,7 @@ public:
 	virtual bool Frame()override;
 	virtual bool Render()override;
 	virtual bool Release()override;
-	virtual bool Run()override;
+	//virtual bool Run()override;
 
 };
 

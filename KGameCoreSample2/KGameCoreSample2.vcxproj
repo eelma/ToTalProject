@@ -21,21 +21,21 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{EDF22393-D6A2-4564-89C0-EE52587399BF}</ProjectGuid>
-    <RootNamespace>KGameCoreSample</RootNamespace>
+    <ProjectGuid>{F6163144-B954-4240-B159-FD1B47E896D9}</ProjectGuid>
+    <RootNamespace>KGameCoreSample1</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -78,11 +78,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>../../output/Debug/KSampleSprite_0</OutDir>
-    <IntDir>../../output/Debug/KSampleSprite_0</IntDir>
+    <OutDir>../../output/Debug/KGameCoreSmaple1</OutDir>
+    <IntDir>../../output/Debug/KGameCoreSmaple1</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>../../output/Release/KGameCoreSmaple1</OutDir>
+    <IntDir>../../output/Release/KGameCoreSmaple1</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -118,13 +120,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../include/dxtk;</AdditionalIncludeDirectories>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>../../include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>KGameCore_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,52 +137,27 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../../include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>../../lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>KGameCore_R.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="KBaseObject.cpp" />
-    <ClCompile Include="KCollision.cpp" />
-    <ClCompile Include="KDevice.cpp" />
-    <ClCompile Include="KDxState.cpp" />
-    <ClCompile Include="KGameCore.cpp" />
-    <ClCompile Include="KInput.cpp" />
-    <ClCompile Include="KShader.cpp" />
-    <ClCompile Include="KShaderManager.cpp" />
-    <ClCompile Include="KTexture.cpp" />
-    <ClCompile Include="KTextureManager.cpp" />
-    <ClCompile Include="KTimer.cpp" />
-    <ClCompile Include="KVector.cpp" />
-    <ClCompile Include="KWindow.cpp" />
-    <ClCompile Include="KWriter.cpp" />
-    <ClCompile Include="Sample.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="KBaseObject.h" />
-    <ClInclude Include="KCollision.h" />
-    <ClInclude Include="KDevice.h" />
-    <ClInclude Include="KDxState.h" />
-    <ClInclude Include="KGameCore.h" />
-    <ClInclude Include="KInput.h" />
-    <ClInclude Include="KShader.h" />
-    <ClInclude Include="KShaderManager.h" />
-    <ClInclude Include="KStd.h" />
-    <ClInclude Include="KTexture.h" />
-    <ClInclude Include="KTextureManager.h" />
-    <ClInclude Include="KTimer.h" />
-    <ClInclude Include="KVector.h" />
-    <ClInclude Include="KWindow.h" />
-    <ClInclude Include="KWriter.h" />
     <ClInclude Include="Sample.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\data\shader\DefaultShape.txt" />
-    <Text Include="DefaultShapeMask.txt" />
+    <ClCompile Include="Sample.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KGameCore\KGameCore.vcxproj">
+      <Project>{caccddfa-ba0e-4448-8d44-36de2cf6b70e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
