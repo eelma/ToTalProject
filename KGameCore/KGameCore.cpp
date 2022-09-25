@@ -2,12 +2,15 @@
 bool		KGameCore::KCoreInit()
 {
 	KDevice::Init();
-   
+	I_Input.Init();
+	I_Timer.Init();
     return Init();
 }
 bool		KGameCore::KCoreFrame()
 {
-	KDevice::Frame();
+	
+	I_Input.Frame();
+	I_Timer.Frame();
     return Frame();
 }
 bool		KGameCore::KCorePreRender()
@@ -20,7 +23,9 @@ bool		KGameCore::KCorePreRender()
 bool		KGameCore::KCoreRender()
 {
 	KCorePreRender();
-	Render(); 
+	Render(); //디버그 렌더 화면에 뭔가 뿌리고 나서 마지막에 해주는게 좋다
+	I_Input.Render();
+	I_Timer.Render();
 	KCorePostRender();
     return true;
 }
@@ -32,6 +37,8 @@ bool		KGameCore::KCorePostRender()
 bool		KGameCore::KCoreRelease()
 {
 	Release();
+	I_Input.Release();
+	I_Timer.Release();
 	KDevice::Release();
     return true;
 }

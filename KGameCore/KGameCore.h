@@ -1,5 +1,7 @@
 #pragma once
 #include"KDevice.h"
+#include"KInput.h"
+#include"KTimer.h"
 
 class KGameCore:public KDevice
 {
