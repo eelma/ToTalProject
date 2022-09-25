@@ -1,17 +1,16 @@
 #pragma once
 #include"KGameCore.h"
-#include"KWriter.h"
+#include"KObjectPlane.h"
 
 class Sample : public KGameCore
 {
-	KWriter m_Writer;
-
+	KObjectPlane m_Plane;
 public:
 	virtual bool Init()override;
 	virtual bool Frame()override;
 	virtual bool Render()override;
 	virtual bool Release()override;
-	//virtual bool Run()override;
+	
 
 };
 

@@ -163,19 +163,29 @@ copy "KGameCore_R.lib" "..\\..\\lib\\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="KBaseObject.h" />
     <ClInclude Include="KDevice.h" />
     <ClInclude Include="KGameCore.h" />
     <ClInclude Include="KInput.h" />
     <ClInclude Include="KStd.h" />
     <ClInclude Include="KTimer.h" />
+    <ClInclude Include="KVector.h" />
     <ClInclude Include="KWindow.h" />
+    <ClInclude Include="KWriter.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="KBaseObject.cpp" />
     <ClCompile Include="KDevice.cpp" />
     <ClCompile Include="KGameCore.cpp" />
     <ClCompile Include="KInput.cpp" />
     <ClCompile Include="KTimer.cpp" />
+    <ClCompile Include="KVector.cpp" />
     <ClCompile Include="KWindow.cpp" />
+    <ClCompile Include="KWriter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="PixelShader.txt" />
+    <Text Include="VertexShader.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

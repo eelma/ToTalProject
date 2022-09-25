@@ -4,6 +4,11 @@ bool		KGameCore::KCoreInit()
 	KDevice::Init();
 	I_Input.Init();
 	I_Timer.Init();
+	m_Writer.Init();
+	IDXGISurface1* pBackBuffer;
+	m_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)&pBackBuffer);
+	m_Writer.Set(pBackBuffer);
+	pBackBuffer->Release();
     return Init();
 }
 bool		KGameCore::KCoreFrame()
@@ -11,13 +16,15 @@ bool		KGameCore::KCoreFrame()
 	
 	I_Input.Frame();
 	I_Timer.Frame();
+	m_Writer.Frame();
     return Frame();
 }
 bool		KGameCore::KCorePreRender()
 {
 	m_pImmediateContext->OMSetRenderTargets(1, &m_pRTV, NULL);
-	float color[4] = { 1.0f,1.0f,1.0f,1.0f };
+	float color[4] = { 0.34324f,0.52342f,0.798320f,1.0f };
 	m_pImmediateContext->ClearRenderTargetView(m_pRTV, color);
+	m_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
     return true;
 }
 bool		KGameCore::KCoreRender()
@@ -26,6 +33,8 @@ bool		KGameCore::KCoreRender()
 	Render(); //디버그 렌더 화면에 뭔가 뿌리고 나서 마지막에 해주는게 좋다
 	I_Input.Render();
 	I_Timer.Render();
+	m_Writer.m_szDefaultText = I_Timer.m_szTimer;
+	m_Writer.Render();
 	KCorePostRender();
     return true;
 }
@@ -39,6 +48,7 @@ bool		KGameCore::KCoreRelease()
 	Release();
 	I_Input.Release();
 	I_Timer.Release();
+	m_Writer.Release();
 	KDevice::Release();
     return true;
 }

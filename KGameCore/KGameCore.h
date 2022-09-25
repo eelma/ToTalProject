@@ -2,10 +2,11 @@
 #include"KDevice.h"
 #include"KInput.h"
 #include"KTimer.h"
-
+#include"KWriter.h"
 class KGameCore:public KDevice
 {
 public:
+	KWriter m_Writer;
 	bool bGameRun = true;
 public:
 	virtual bool		Init() { return true; }; // √ ±‚»≠
