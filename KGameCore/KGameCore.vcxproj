@@ -168,6 +168,8 @@ copy "KGameCore_R.lib" "..\\..\\lib\\"</Command>
     <ClInclude Include="KDevice.h" />
     <ClInclude Include="KGameCore.h" />
     <ClInclude Include="KInput.h" />
+    <ClInclude Include="KShader.h" />
+    <ClInclude Include="KShaderManager.h" />
     <ClInclude Include="KStd.h" />
     <ClInclude Include="KTexture.h" />
     <ClInclude Include="KTextureManager.h" />
@@ -181,6 +183,8 @@ copy "KGameCore_R.lib" "..\\..\\lib\\"</Command>
     <ClCompile Include="KDevice.cpp" />
     <ClCompile Include="KGameCore.cpp" />
     <ClCompile Include="KInput.cpp" />
+    <ClCompile Include="KShader.cpp" />
+    <ClCompile Include="KShaderManager.cpp" />
     <ClCompile Include="KTexture.cpp" />
     <ClCompile Include="KTextureManager.cpp" />
     <ClCompile Include="KTimer.cpp" />
@@ -189,6 +193,7 @@ copy "KGameCore_R.lib" "..\\..\\lib\\"</Command>
     <ClCompile Include="KWriter.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="..\..\data\shader\DefaultShape.txt" />
     <Text Include="PixelShader.txt" />
     <Text Include="VertexShader.txt" />
   </ItemGroup>

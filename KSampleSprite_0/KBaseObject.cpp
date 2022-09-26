@@ -75,8 +75,10 @@ bool KBaseObject::CreateShader(wstring filename)
     HRESULT hr;
 
     m_pShader= I_Shader.Load(filename);
-    if(m_pShader)return true;
-    
+    if (m_pShader)
+    {
+        return true;
+    }
     return false;
 }
 HRESULT KBaseObject::CreateVertexLayout()

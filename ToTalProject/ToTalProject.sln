@@ -69,6 +69,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KTesetTextureManager", "..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KTesetTextureManagerCore", "..\KTesetTextureManagerCore\KTesetTextureManagerCore.vcxproj", "{34C7DACB-D0BF-4854-9A50-794810ABBACB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KTestShaderManager", "..\KTestShaderManagerCore\KTestShaderManagerCore.vcxproj", "{D4F1CCFC-0461-402D-B441-139C362459DC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KTestShaderManagerCore", "..\TestShaderManagercore\TestShaderManagercore.vcxproj", "{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -561,6 +565,30 @@ Global
 		{34C7DACB-D0BF-4854-9A50-794810ABBACB}.Release|x64.Build.0 = Release|x64
 		{34C7DACB-D0BF-4854-9A50-794810ABBACB}.Release|x86.ActiveCfg = Release|Win32
 		{34C7DACB-D0BF-4854-9A50-794810ABBACB}.Release|x86.Build.0 = Release|Win32
+		{D4F1CCFC-0461-402D-B441-139C362459DC}.Debug|ARM.ActiveCfg = Debug|Win32
+		{D4F1CCFC-0461-402D-B441-139C362459DC}.Debug|ARM64.ActiveCfg = Debug|Win32
+		{D4F1CCFC-0461-402D-B441-139C362459DC}.Debug|x64.ActiveCfg = Debug|x64
+		{D4F1CCFC-0461-402D-B441-139C362459DC}.Debug|x64.Build.0 = Debug|x64
+		{D4F1CCFC-0461-402D-B441-139C362459DC}.Debug|x86.ActiveCfg = Debug|Win32
+		{D4F1CCFC-0461-402D-B441-139C362459DC}.Debug|x86.Build.0 = Debug|Win32
+		{D4F1CCFC-0461-402D-B441-139C362459DC}.Release|ARM.ActiveCfg = Release|Win32
+		{D4F1CCFC-0461-402D-B441-139C362459DC}.Release|ARM64.ActiveCfg = Release|Win32
+		{D4F1CCFC-0461-402D-B441-139C362459DC}.Release|x64.ActiveCfg = Release|x64
+		{D4F1CCFC-0461-402D-B441-139C362459DC}.Release|x64.Build.0 = Release|x64
+		{D4F1CCFC-0461-402D-B441-139C362459DC}.Release|x86.ActiveCfg = Release|Win32
+		{D4F1CCFC-0461-402D-B441-139C362459DC}.Release|x86.Build.0 = Release|Win32
+		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Debug|ARM.ActiveCfg = Debug|Win32
+		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Debug|ARM64.ActiveCfg = Debug|Win32
+		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Debug|x64.ActiveCfg = Debug|x64
+		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Debug|x64.Build.0 = Debug|x64
+		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Debug|x86.ActiveCfg = Debug|Win32
+		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Debug|x86.Build.0 = Debug|Win32
+		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Release|ARM.ActiveCfg = Release|Win32
+		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Release|ARM64.ActiveCfg = Release|Win32
+		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Release|x64.ActiveCfg = Release|x64
+		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Release|x64.Build.0 = Release|x64
+		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Release|x86.ActiveCfg = Release|Win32
+		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

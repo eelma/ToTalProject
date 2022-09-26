@@ -1,6 +1,7 @@
 #pragma once
 #include "KDevice.h"
 #include"KTextureManager.h"
+#include"KShaderManager.h"
 struct SimpleVertex
 {
 	KVector    p;
@@ -16,12 +17,13 @@ public:
 	ID3D11Buffer* m_pVertexBuffer;
 	ID3D11Buffer* m_pIndexBuffer;
 	ID3D11InputLayout* m_pVertexLayout;
+	KTexture* m_pTexture;
+	KShader* m_pShader;
+public:
 	ID3D11VertexShader* m_pVS;
 	ID3D11PixelShader* m_pPS;
 	ID3DBlob* m_pVSCode = nullptr;
 	ID3DBlob* m_pPSCode = nullptr;
-	KTexture* m_pTexture;
-	
 
 	std::vector<SimpleVertex>    m_VertexList;
 	std::vector<DWORD>			 m_IndexList;
@@ -36,6 +38,7 @@ public:
 	virtual HRESULT		CreateIndexBuffer();
 	virtual HRESULT     CreateVertexShader(wstring filename);
 	virtual HRESULT     CreatePixelShader(wstring filename);
+	virtual bool		CreateShader(wstring filename);
 	virtual HRESULT     CreateVertexLayout();
 	virtual void		UpdateVertexBuffer();
 public:

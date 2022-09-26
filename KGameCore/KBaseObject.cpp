@@ -163,6 +163,18 @@ HRESULT KBaseObject::CreateVertexLayout()
 
     return hr;
 }
+bool KBaseObject::CreateShader(wstring filename)
+{
+    m_pShader = I_Shader.Load(filename);
+    if (m_pShader)
+    {
+        m_pVS = m_pShader->m_pVS;
+        m_pPS = m_pShader->m_pPS;
+        m_pVSCode = m_pShader->m_pVSCode;
+        return true;
+    }
+    return false;
+}
 bool	KBaseObject::Create(
     ID3D11Device* pd3dDevice,// 디바이스 객체
     ID3D11DeviceContext* pImmediateContext,
@@ -179,14 +191,15 @@ bool	KBaseObject::Create(
     {
         return false;
     }
-    if (FAILED(CreateVertexShader(shadername)))
+    if(FAILED(CreateShader(shadername)))
+    /*if (FAILED(CreateVertexShader(shadername)))
     {
         return false;
     }
     if (FAILED(CreatePixelShader(shadername)))
     {
         return false;
-    }
+    }*/
     if (FAILED(CreateVertexLayout()))
     {
         return false;
@@ -226,10 +239,10 @@ bool KBaseObject::Release()
     if (m_pVertexBuffer) m_pVertexBuffer->Release();
     if (m_pIndexBuffer) m_pIndexBuffer->Release();
     if (m_pVertexLayout) m_pVertexLayout->Release();
-    if (m_pVS) m_pVS->Release();
+   /* if (m_pVS) m_pVS->Release();
     if (m_pPS) m_pPS->Release();
     if (m_pVSCode) m_pVSCode->Release();
-    if (m_pPSCode) m_pPSCode->Release();
+    if (m_pPSCode) m_pPSCode->Release();*/
     return true;
 }
 
