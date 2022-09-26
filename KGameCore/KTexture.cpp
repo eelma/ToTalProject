@@ -2,7 +2,9 @@
 HRESULT KTexture::Load(ID3D11Device* pd3dDevice,// 디바이스 객체
 	ID3D11DeviceContext* pImmediateContext, std::wstring name)
 {
-	HRESULT hr = DirectX::CreateWICTextureFromFile(
+	HRESULT hr;
+	
+	hr=DirectX::CreateWICTextureFromFile(
 		pd3dDevice,
 		pImmediateContext,
 		name.c_str(),

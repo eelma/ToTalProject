@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32901.82
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ToTalProject", "ToTalProject.vcxproj", "{BD1BE331-69FE-4DB8-BEA9-37E20F743566}"
 EndProject
@@ -69,9 +69,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KTesetTextureManager", "..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KTesetTextureManagerCore", "..\KTesetTextureManagerCore\KTesetTextureManagerCore.vcxproj", "{34C7DACB-D0BF-4854-9A50-794810ABBACB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KTestShaderManager", "..\KTestShaderManagerCore\KTestShaderManagerCore.vcxproj", "{D4F1CCFC-0461-402D-B441-139C362459DC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KTestShaderManager", "..\KTestShaderManager\KTestShaderManager.vcxproj", "{1FD9BEC2-00B3-4AA9-B556-A14F582EBB49}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KTestShaderManagerCore", "..\TestShaderManagercore\TestShaderManagercore.vcxproj", "{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KTestShaderManagerCore", "..\KTestShaderManagerCore\KTestShaderManagerCore.vcxproj", "{9A3EA302-EC88-408D-B72F-E54D08A3C2B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -565,30 +565,38 @@ Global
 		{34C7DACB-D0BF-4854-9A50-794810ABBACB}.Release|x64.Build.0 = Release|x64
 		{34C7DACB-D0BF-4854-9A50-794810ABBACB}.Release|x86.ActiveCfg = Release|Win32
 		{34C7DACB-D0BF-4854-9A50-794810ABBACB}.Release|x86.Build.0 = Release|Win32
-		{D4F1CCFC-0461-402D-B441-139C362459DC}.Debug|ARM.ActiveCfg = Debug|Win32
-		{D4F1CCFC-0461-402D-B441-139C362459DC}.Debug|ARM64.ActiveCfg = Debug|Win32
-		{D4F1CCFC-0461-402D-B441-139C362459DC}.Debug|x64.ActiveCfg = Debug|x64
-		{D4F1CCFC-0461-402D-B441-139C362459DC}.Debug|x64.Build.0 = Debug|x64
-		{D4F1CCFC-0461-402D-B441-139C362459DC}.Debug|x86.ActiveCfg = Debug|Win32
-		{D4F1CCFC-0461-402D-B441-139C362459DC}.Debug|x86.Build.0 = Debug|Win32
-		{D4F1CCFC-0461-402D-B441-139C362459DC}.Release|ARM.ActiveCfg = Release|Win32
-		{D4F1CCFC-0461-402D-B441-139C362459DC}.Release|ARM64.ActiveCfg = Release|Win32
-		{D4F1CCFC-0461-402D-B441-139C362459DC}.Release|x64.ActiveCfg = Release|x64
-		{D4F1CCFC-0461-402D-B441-139C362459DC}.Release|x64.Build.0 = Release|x64
-		{D4F1CCFC-0461-402D-B441-139C362459DC}.Release|x86.ActiveCfg = Release|Win32
-		{D4F1CCFC-0461-402D-B441-139C362459DC}.Release|x86.Build.0 = Release|Win32
-		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Debug|ARM.ActiveCfg = Debug|Win32
-		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Debug|ARM64.ActiveCfg = Debug|Win32
-		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Debug|x64.ActiveCfg = Debug|x64
-		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Debug|x64.Build.0 = Debug|x64
-		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Debug|x86.ActiveCfg = Debug|Win32
-		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Debug|x86.Build.0 = Debug|Win32
-		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Release|ARM.ActiveCfg = Release|Win32
-		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Release|ARM64.ActiveCfg = Release|Win32
-		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Release|x64.ActiveCfg = Release|x64
-		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Release|x64.Build.0 = Release|x64
-		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Release|x86.ActiveCfg = Release|Win32
-		{AECCF34A-5E01-4209-9A54-E7DA8E0AAB41}.Release|x86.Build.0 = Release|Win32
+		{1FD9BEC2-00B3-4AA9-B556-A14F582EBB49}.Debug|ARM.ActiveCfg = Debug|x64
+		{1FD9BEC2-00B3-4AA9-B556-A14F582EBB49}.Debug|ARM.Build.0 = Debug|x64
+		{1FD9BEC2-00B3-4AA9-B556-A14F582EBB49}.Debug|ARM64.ActiveCfg = Debug|x64
+		{1FD9BEC2-00B3-4AA9-B556-A14F582EBB49}.Debug|ARM64.Build.0 = Debug|x64
+		{1FD9BEC2-00B3-4AA9-B556-A14F582EBB49}.Debug|x64.ActiveCfg = Debug|x64
+		{1FD9BEC2-00B3-4AA9-B556-A14F582EBB49}.Debug|x64.Build.0 = Debug|x64
+		{1FD9BEC2-00B3-4AA9-B556-A14F582EBB49}.Debug|x86.ActiveCfg = Debug|Win32
+		{1FD9BEC2-00B3-4AA9-B556-A14F582EBB49}.Debug|x86.Build.0 = Debug|Win32
+		{1FD9BEC2-00B3-4AA9-B556-A14F582EBB49}.Release|ARM.ActiveCfg = Release|x64
+		{1FD9BEC2-00B3-4AA9-B556-A14F582EBB49}.Release|ARM.Build.0 = Release|x64
+		{1FD9BEC2-00B3-4AA9-B556-A14F582EBB49}.Release|ARM64.ActiveCfg = Release|x64
+		{1FD9BEC2-00B3-4AA9-B556-A14F582EBB49}.Release|ARM64.Build.0 = Release|x64
+		{1FD9BEC2-00B3-4AA9-B556-A14F582EBB49}.Release|x64.ActiveCfg = Release|x64
+		{1FD9BEC2-00B3-4AA9-B556-A14F582EBB49}.Release|x64.Build.0 = Release|x64
+		{1FD9BEC2-00B3-4AA9-B556-A14F582EBB49}.Release|x86.ActiveCfg = Release|Win32
+		{1FD9BEC2-00B3-4AA9-B556-A14F582EBB49}.Release|x86.Build.0 = Release|Win32
+		{9A3EA302-EC88-408D-B72F-E54D08A3C2B7}.Debug|ARM.ActiveCfg = Debug|x64
+		{9A3EA302-EC88-408D-B72F-E54D08A3C2B7}.Debug|ARM.Build.0 = Debug|x64
+		{9A3EA302-EC88-408D-B72F-E54D08A3C2B7}.Debug|ARM64.ActiveCfg = Debug|x64
+		{9A3EA302-EC88-408D-B72F-E54D08A3C2B7}.Debug|ARM64.Build.0 = Debug|x64
+		{9A3EA302-EC88-408D-B72F-E54D08A3C2B7}.Debug|x64.ActiveCfg = Debug|x64
+		{9A3EA302-EC88-408D-B72F-E54D08A3C2B7}.Debug|x64.Build.0 = Debug|x64
+		{9A3EA302-EC88-408D-B72F-E54D08A3C2B7}.Debug|x86.ActiveCfg = Debug|Win32
+		{9A3EA302-EC88-408D-B72F-E54D08A3C2B7}.Debug|x86.Build.0 = Debug|Win32
+		{9A3EA302-EC88-408D-B72F-E54D08A3C2B7}.Release|ARM.ActiveCfg = Release|x64
+		{9A3EA302-EC88-408D-B72F-E54D08A3C2B7}.Release|ARM.Build.0 = Release|x64
+		{9A3EA302-EC88-408D-B72F-E54D08A3C2B7}.Release|ARM64.ActiveCfg = Release|x64
+		{9A3EA302-EC88-408D-B72F-E54D08A3C2B7}.Release|ARM64.Build.0 = Release|x64
+		{9A3EA302-EC88-408D-B72F-E54D08A3C2B7}.Release|x64.ActiveCfg = Release|x64
+		{9A3EA302-EC88-408D-B72F-E54D08A3C2B7}.Release|x64.Build.0 = Release|x64
+		{9A3EA302-EC88-408D-B72F-E54D08A3C2B7}.Release|x86.ActiveCfg = Release|Win32
+		{9A3EA302-EC88-408D-B72F-E54D08A3C2B7}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

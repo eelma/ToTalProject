@@ -2,15 +2,16 @@
 #include "KGameCore.h"
 #include "KBaseObject.h"
 #include "KTextureManager.h"
-#include"KShaderManager.h"
+#include "KShaderManager.h"
+
 
 class KObject2D : public KBaseObject
 {
-	KShader* m_pShader = nullptr;
+	KShader* m_pShader;
 public:
+	virtual HRESULT     CreateVertexShader(wstring filename);
+	virtual HRESULT     CreatePixelShader(wstring filename);
 
-	virtual HRESULT CreateVertexShader(wstring filename);
-	virtual HRESULT CreatePixelShader(wstring filename);
 };
 
 class Sample : public KGameCore

@@ -44,7 +44,7 @@ HRESULT KShader::Load(ID3D11Device* pd3dDevice,
         0,
         0,
         &m_pVSCode,
-        &pErrorCode);//결과는 vscode에
+        &pErrorCode);
     if (FAILED(hr))
     {
         if (pErrorCode)
@@ -60,7 +60,7 @@ HRESULT KShader::Load(ID3D11Device* pd3dDevice,
         NULL,
         &m_pVS);
 
-    // 픽셸쉐이더 컴파일  
+    // 픽쉘쉐이더 컴파일  
     hr = D3DCompileFromFile(
         filename.c_str(),
         NULL,

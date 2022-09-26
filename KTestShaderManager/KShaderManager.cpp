@@ -28,7 +28,6 @@ KShader* KShaderManager::Load(wstring name)
     }
     return pNewData;
 }
-
 KShader* KShaderManager::VLoad(wstring name, string funName)
 {
     HRESULT hr;
@@ -42,17 +41,17 @@ KShader* KShaderManager::VLoad(wstring name, string funName)
     }
 
     KShader* pNewData = new KShader;
-    
+   
     if (pNewData)
     {
         hr = pNewData->Load(m_pd3dDevice, m_pImmediateContext, name);
         if (SUCCEEDED(hr))
         {
-            m_List.insert(make_pair(vName, pNewData));
+            m_List.insert(make_pair(name, pNewData));
         }
     }
     return pNewData;
-}
+};
 KShader* KShaderManager::PLoad(wstring name, string funName)
 {
     HRESULT hr;
@@ -72,11 +71,11 @@ KShader* KShaderManager::PLoad(wstring name, string funName)
         hr = pNewData->Load(m_pd3dDevice, m_pImmediateContext, name);
         if (SUCCEEDED(hr))
         {
-            m_List.insert(make_pair(vName, pNewData));
+            m_List.insert(make_pair(name, pNewData));
         }
     }
     return pNewData;
-}
+};
 
 bool KShaderManager::Release()
 {

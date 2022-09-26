@@ -12,13 +12,12 @@ public:
 
 	private:
 	friend KSingleTone<KShaderManager>;
-	map<wstring, KShader*>m_List;//매니저에서 원하는 쉐이더 이름을 Kshader로 map으로 관리하겠다
+	map<wstring, KShader*>m_List;
 
 public:
 	KShader* Load(wstring name);
 	KShader* VLoad(wstring name, string funName = "VS");
 	KShader* PLoad(wstring name, string funName = "PS");
-
 	bool Release();
 
 private:

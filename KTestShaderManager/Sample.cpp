@@ -1,53 +1,52 @@
 #include "Sample.h"
 
-HRESULT KObject2D::CreateVertexShader(wstring filename)
+HRESULT     KObject2D::CreateVertexShader(wstring filename)
 {
-	HRESULT hr = S_OK;
-	//픽셸 버텍스 셰이더가 동시에 들어있다
-	if (m_pShader == nullptr)
-	{
-		m_pShader = I_Shader.Load(filename);
-		if (m_pShader != nullptr && m_pShader->m_pVS != nullptr)
-		{
-		m_pVS = m_pShader->m_pVS;
-		m_pVSCode = m_pShader->m_pVSCode;
-		return S_OK;
-		}
-		
-	}
-	if(m_pShader!=nullptr&&m_pShader->m_pVS!=nullptr)
-	{
-		m_pVS = m_pShader->m_pVS;
-		m_pVSCode = m_pShader->m_pVSCode;
-		return S_OK;
-	}
-	
 
-	return E_FAIL;
-}
-HRESULT KObject2D::CreatePixelShader(wstring filename)
-{
 	HRESULT hr = S_OK;
-	if (m_pShader == nullptr)
+	if(m_pShader==nullptr)
 	{
-		m_pShader = I_Shader.Load(filename);
-		if (m_pShader != nullptr && m_pShader->m_pPS != nullptr)
-		{
-			m_pPS = m_pShader->m_pPS;
-			m_pPSCode = m_pShader->m_pPSCode;
+		m_pShader=I_Shader.Load(filename);
+		if (m_pShader != nullptr & m_pShader->m_pVS != nullptr)
+			{
+			m_pVS = m_pShader->m_pVS;
+			m_pVSCode = m_pShader->m_pVSCode;
 			return S_OK;
-		}
-		
+			}
 	}
-	if (m_pShader != nullptr && m_pShader->m_pPS != nullptr)
+	if (m_pShader != nullptr & m_pShader->m_pVS != nullptr)
+	{
+	m_pVS = m_pShader->m_pVS;
+	m_pVSCode = m_pShader->m_pVSCode;
+	return S_OK;
+
+	}
+	return E_FAIL;
+
+}
+HRESULT    KObject2D::CreatePixelShader(wstring filename)
+{
+
+	HRESULT hr = S_OK;
+	if (m_pShader ==nullptr)
+	{
+		KShader* pShader = I_Shader.Load(filename);
+		if(m_pShader != nullptr & m_pShader->m_pPS != nullptr)
+		{
+		m_pPS = m_pShader->m_pPS;
+		m_pPSCode = m_pShader->m_pPSCode;
+		return S_OK;
+		}
+	}
+	if (m_pShader != nullptr & m_pShader->m_pPS != nullptr)
 	{
 		m_pPS = m_pShader->m_pPS;
 		m_pPSCode = m_pShader->m_pPSCode;
 		return S_OK;
 	}
 	
-
 	return E_FAIL;
+
 }
 
 bool Sample::Init()

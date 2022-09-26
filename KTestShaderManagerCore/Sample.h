@@ -1,8 +1,8 @@
 #pragma once
 #include "KGameCore.h"
 #include "KBaseObject.h"
-
-
+#include "KTextureManager.h"
+#include "KShaderManager.h"
 
 class Sample : public KGameCore
 {

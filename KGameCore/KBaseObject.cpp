@@ -165,14 +165,20 @@ HRESULT KBaseObject::CreateVertexLayout()
 }
 bool KBaseObject::CreateShader(wstring filename)
 {
-    m_pShader = I_Shader.Load(filename);
-    if (m_pShader)
-    {
-        m_pVS = m_pShader->m_pVS;
+   
+        m_pShader = I_Shader.Load(filename);
+        if (m_pShader)
+        {
+            m_pVS = m_pShader->m_pVS;
+            m_pPS = m_pShader->m_pPS;
+            m_pVSCode = m_pShader->m_pVSCode;
+            return true;
+        }
+        /*m_pVS = m_pShader->m_pVS;
         m_pPS = m_pShader->m_pPS;
         m_pVSCode = m_pShader->m_pVSCode;
-        return true;
-    }
+        return true;*/
+  
     return false;
 }
 bool	KBaseObject::Create(
@@ -224,7 +230,7 @@ bool KBaseObject::Render()
     m_pImmediateContext->PSSetShader(m_pPS, NULL, 0);
     UINT stride = sizeof(SimpleVertex); // 정점1개의 바이트용량
     UINT offset = 0; // 정점버퍼에서 출발지점(바이트)
-    m_pImmediateContext->IASetVertexBuffers(0, 1,
+    m_pImmediateContext->IASetVertexBuffers(0, 0,
         &m_pVertexBuffer, &stride, &offset);
     m_pImmediateContext->IASetIndexBuffer(m_pIndexBuffer,
         DXGI_FORMAT_R32_UINT, 0);

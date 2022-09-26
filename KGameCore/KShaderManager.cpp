@@ -28,7 +28,6 @@ KShader* KShaderManager::Load(wstring name)
     }
     return pNewData;
 }
-
 KShader* KShaderManager::VLoad(wstring name, string funName)
 {
     HRESULT hr;
@@ -42,7 +41,7 @@ KShader* KShaderManager::VLoad(wstring name, string funName)
     }
 
     KShader* pNewData = new KShader;
-    
+   
     if (pNewData)
     {
         hr = pNewData->Load(m_pd3dDevice, m_pImmediateContext, name);
@@ -52,7 +51,7 @@ KShader* KShaderManager::VLoad(wstring name, string funName)
         }
     }
     return pNewData;
-}
+};
 KShader* KShaderManager::PLoad(wstring name, string funName)
 {
     HRESULT hr;
@@ -76,7 +75,7 @@ KShader* KShaderManager::PLoad(wstring name, string funName)
         }
     }
     return pNewData;
-}
+};
 
 bool KShaderManager::Release()
 {

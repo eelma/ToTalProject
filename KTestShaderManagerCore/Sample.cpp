@@ -1,6 +1,5 @@
 #include "Sample.h"
 
-
 bool Sample::Init()
 {
 	I_Shader.SetDevice(m_pd3dDevice, m_pImmediateContext);
@@ -11,8 +10,9 @@ bool Sample::Init()
 		KBaseObject* pObj = new KBaseObject;
 		pObj->Create(m_pd3dDevice,
 			m_pImmediateContext,
-			shaderfilename,
-			L"../../data/kgcabk.bmp");
+			L"../../data/shader/DefaultShape.txt",
+			L"../../data/air.bmp"
+			);
 		m_ObjectList.push_back(pObj);
 	}
 	for (int iObj = 0; iObj < 10; iObj++)
@@ -20,8 +20,9 @@ bool Sample::Init()
 		KBaseObject* pObj = new KBaseObject;
 		pObj->Create(m_pd3dDevice,
 			m_pImmediateContext,
-			shaderfilename,
-			L"../../data/bitmap1.bmp");
+			L"../../data/shader/DefaultShape.txt",
+			L"../../data/bitmap1.bmp"
+			);
 		m_ObjectList.push_back(pObj);
 	}
 
@@ -60,7 +61,11 @@ bool Sample::Release()
 		m_ObjectList[iObj]->Release();
 		delete m_ObjectList[iObj];
 	}
-	
+	/*for (int iObj = 0; iObj < m_ObjectTextureList.size(); iObj++)
+	{
+		m_ObjectTextureList[iObj]->Release();
+		delete m_ObjectTextureList[iObj];
+	}*/
 	return true;
 }
 

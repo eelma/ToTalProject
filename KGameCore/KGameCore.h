@@ -4,6 +4,7 @@
 #include"KTimer.h"
 #include"KWriter.h"
 #include"KTextureManager.h"
+#include"KShaderManager.h"
 class KGameCore:public KDevice
 {
 public:

@@ -94,8 +94,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="PixelShader.txt" />
-    <Text Include="VertexShader.txt" />
     <Text Include="..\..\data\shader\DefaultShape.txt" />
   </ItemGroup>
 </Project>
