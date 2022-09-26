@@ -2,6 +2,7 @@
 bool		KGameCore::KCoreInit()
 {
 	KDevice::Init();
+	I_Tex.SetDevice(m_pd3dDevice, m_pImmediateContext);
 	I_Input.Init();
 	I_Timer.Init();
 	m_Writer.Init();

@@ -1,5 +1,6 @@
 #pragma once
 #include "KDevice.h"
+#include"KTextureManager.h"
 struct SimpleVertex
 {
 	KVector    p;
@@ -19,6 +20,8 @@ public:
 	ID3D11PixelShader* m_pPS;
 	ID3DBlob* m_pVSCode = nullptr;
 	ID3DBlob* m_pPSCode = nullptr;
+	KTexture* m_pTexture;
+	
 
 	std::vector<SimpleVertex>    m_VertexList;
 	std::vector<DWORD>			 m_IndexList;
@@ -26,7 +29,7 @@ public:
 	virtual bool		Create(
 		ID3D11Device* pd3dDevice,// 디바이스 객체
 		ID3D11DeviceContext* pImmediateContext,
-		std::wstring vsfilename, std::wstring psfilename);
+		std::wstring shadername, std::wstring texturename);
 	virtual void		CreateVertexData();
 	virtual void		CreateIndexData();
 	virtual HRESULT		CreateVertexBuffer();

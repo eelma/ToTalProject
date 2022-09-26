@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.32014.148
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32901.82
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ToTalProject", "ToTalProject.vcxproj", "{BD1BE331-69FE-4DB8-BEA9-37E20F743566}"
 EndProject
@@ -64,6 +64,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KTestBaseObjectCore", "..\KTestBaseObjectCore\KTestBaseObjectCore.vcxproj", "{1DEC4F97-F605-4E4C-B584-AB59D61554C6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KTestTexture", "..\KTestTexture\KTestTexture.vcxproj", "{F44B552B-1952-468C-9AB4-04504223AD2D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KTesetTextureManager", "..\KTesetTextureManager\KTesetTextureManager.vcxproj", "{E47A590B-3937-4B76-9C6F-75D5515BB513}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KTesetTextureManagerCore", "..\KTesetTextureManagerCore\KTesetTextureManagerCore.vcxproj", "{34C7DACB-D0BF-4854-9A50-794810ABBACB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -533,6 +537,30 @@ Global
 		{F44B552B-1952-468C-9AB4-04504223AD2D}.Release|x64.Build.0 = Release|x64
 		{F44B552B-1952-468C-9AB4-04504223AD2D}.Release|x86.ActiveCfg = Release|Win32
 		{F44B552B-1952-468C-9AB4-04504223AD2D}.Release|x86.Build.0 = Release|Win32
+		{E47A590B-3937-4B76-9C6F-75D5515BB513}.Debug|ARM.ActiveCfg = Debug|Win32
+		{E47A590B-3937-4B76-9C6F-75D5515BB513}.Debug|ARM64.ActiveCfg = Debug|Win32
+		{E47A590B-3937-4B76-9C6F-75D5515BB513}.Debug|x64.ActiveCfg = Debug|x64
+		{E47A590B-3937-4B76-9C6F-75D5515BB513}.Debug|x64.Build.0 = Debug|x64
+		{E47A590B-3937-4B76-9C6F-75D5515BB513}.Debug|x86.ActiveCfg = Debug|Win32
+		{E47A590B-3937-4B76-9C6F-75D5515BB513}.Debug|x86.Build.0 = Debug|Win32
+		{E47A590B-3937-4B76-9C6F-75D5515BB513}.Release|ARM.ActiveCfg = Release|Win32
+		{E47A590B-3937-4B76-9C6F-75D5515BB513}.Release|ARM64.ActiveCfg = Release|Win32
+		{E47A590B-3937-4B76-9C6F-75D5515BB513}.Release|x64.ActiveCfg = Release|x64
+		{E47A590B-3937-4B76-9C6F-75D5515BB513}.Release|x64.Build.0 = Release|x64
+		{E47A590B-3937-4B76-9C6F-75D5515BB513}.Release|x86.ActiveCfg = Release|Win32
+		{E47A590B-3937-4B76-9C6F-75D5515BB513}.Release|x86.Build.0 = Release|Win32
+		{34C7DACB-D0BF-4854-9A50-794810ABBACB}.Debug|ARM.ActiveCfg = Debug|Win32
+		{34C7DACB-D0BF-4854-9A50-794810ABBACB}.Debug|ARM64.ActiveCfg = Debug|Win32
+		{34C7DACB-D0BF-4854-9A50-794810ABBACB}.Debug|x64.ActiveCfg = Debug|x64
+		{34C7DACB-D0BF-4854-9A50-794810ABBACB}.Debug|x64.Build.0 = Debug|x64
+		{34C7DACB-D0BF-4854-9A50-794810ABBACB}.Debug|x86.ActiveCfg = Debug|Win32
+		{34C7DACB-D0BF-4854-9A50-794810ABBACB}.Debug|x86.Build.0 = Debug|Win32
+		{34C7DACB-D0BF-4854-9A50-794810ABBACB}.Release|ARM.ActiveCfg = Release|Win32
+		{34C7DACB-D0BF-4854-9A50-794810ABBACB}.Release|ARM64.ActiveCfg = Release|Win32
+		{34C7DACB-D0BF-4854-9A50-794810ABBACB}.Release|x64.ActiveCfg = Release|x64
+		{34C7DACB-D0BF-4854-9A50-794810ABBACB}.Release|x64.Build.0 = Release|x64
+		{34C7DACB-D0BF-4854-9A50-794810ABBACB}.Release|x86.ActiveCfg = Release|Win32
+		{34C7DACB-D0BF-4854-9A50-794810ABBACB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
