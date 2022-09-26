@@ -32,7 +32,6 @@ HRESULT KBaseObject::CreateVertexBuffer()
 {
     HRESULT hr;
     CreateVertexData();
-
     D3D11_BUFFER_DESC       bd;
     ZeroMemory(&bd, sizeof(bd));
     bd.ByteWidth = sizeof(SimpleVertex) * m_VertexList.size(); // 바이트 용량
@@ -52,7 +51,7 @@ HRESULT KBaseObject::CreateVertexBuffer()
 HRESULT KBaseObject::CreateIndexBuffer()
 {
     HRESULT hr;
-    // 정점버퍼에 인덱스
+
     CreateIndexData();
 
     D3D11_BUFFER_DESC       bd;
@@ -71,13 +70,25 @@ HRESULT KBaseObject::CreateIndexBuffer()
         &m_pIndexBuffer);
     return hr;
 }
-HRESULT KBaseObject::CreateVertexShader(wstring filename)
+bool KBaseObject::CreateShader(std::wstring filename)
+{
+    m_pShader = I_Shader.Load(filename);
+    if (m_pShader)
+    {
+        m_pVS = m_pShader->m_pVS;
+        m_pPS = m_pShader->m_pPS;
+        m_pVSCode = m_pShader->m_pVSCode;
+        return true;
+    }
+    return false;
+}
+HRESULT KBaseObject::CreateVertexShader(std::wstring filename)
 {
     HRESULT hr;
     // 정점쉐이더 컴파일 
     ID3DBlob* pErrorCode = nullptr;
     hr = D3DCompileFromFile(
-       filename.c_str(),
+        filename.c_str(),
         NULL,
         NULL,
         "VS",
@@ -102,7 +113,7 @@ HRESULT KBaseObject::CreateVertexShader(wstring filename)
         &m_pVS);
     return hr;
 }
-HRESULT KBaseObject::CreatePixelShader(wstring filename)
+HRESULT KBaseObject::CreatePixelShader(std::wstring filename)
 {
     HRESULT hr;
     ID3DBlob* pErrorCode = nullptr;
@@ -150,7 +161,7 @@ HRESULT KBaseObject::CreateVertexLayout()
     D3D11_INPUT_ELEMENT_DESC ied[] =
     {
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,0,D3D11_INPUT_PER_VERTEX_DATA, 0},
-         { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0,12,D3D11_INPUT_PER_VERTEX_DATA, 0},
+        { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0,12,D3D11_INPUT_PER_VERTEX_DATA, 0},
         { "TEXTURE", 0, DXGI_FORMAT_R32G32_FLOAT, 0,28,D3D11_INPUT_PER_VERTEX_DATA, 0},
     };
     UINT NumElements = sizeof(ied) / sizeof(ied[0]);
@@ -163,29 +174,10 @@ HRESULT KBaseObject::CreateVertexLayout()
 
     return hr;
 }
-bool KBaseObject::CreateShader(wstring filename)
-{
-   
-        m_pShader = I_Shader.Load(filename);
-        if (m_pShader)
-        {
-            m_pVS = m_pShader->m_pVS;
-            m_pPS = m_pShader->m_pPS;
-            m_pVSCode = m_pShader->m_pVSCode;
-            return true;
-        }
-        /*m_pVS = m_pShader->m_pVS;
-        m_pPS = m_pShader->m_pPS;
-        m_pVSCode = m_pShader->m_pVSCode;
-        return true;*/
-  
-    return false;
-}
 bool	KBaseObject::Create(
     ID3D11Device* pd3dDevice,// 디바이스 객체
     ID3D11DeviceContext* pImmediateContext,
-    std::wstring shadername,
-    std::wstring texturename)
+    std::wstring shadername, std::wstring texturename)
 {
     m_pd3dDevice = pd3dDevice;
     m_pImmediateContext = pImmediateContext;
@@ -197,7 +189,10 @@ bool	KBaseObject::Create(
     {
         return false;
     }
-    if(FAILED(CreateShader(shadername)))
+    if (FAILED(CreateShader(shadername)))
+    {
+        return false;
+    }
     /*if (FAILED(CreateVertexShader(shadername)))
     {
         return false;
@@ -210,10 +205,11 @@ bool	KBaseObject::Create(
     {
         return false;
     }
+
     m_pTexture = I_Tex.Load(texturename);
     return true;
 }
-bool KBaseObject::Init()
+bool	KBaseObject::Init()
 {
     return true;
 }
@@ -221,6 +217,12 @@ bool KBaseObject::Frame()
 {
 
     return true;
+}
+void   KBaseObject::UpdateVertexBuffer()
+{
+    m_pImmediateContext->UpdateSubresource(
+        m_pVertexBuffer, 0, nullptr,
+        &m_VertexList.at(0), 0, 0);
 }
 bool KBaseObject::Render()
 {
@@ -230,7 +232,7 @@ bool KBaseObject::Render()
     m_pImmediateContext->PSSetShader(m_pPS, NULL, 0);
     UINT stride = sizeof(SimpleVertex); // 정점1개의 바이트용량
     UINT offset = 0; // 정점버퍼에서 출발지점(바이트)
-    m_pImmediateContext->IASetVertexBuffers(0, 0,
+    m_pImmediateContext->IASetVertexBuffers(0, 1,
         &m_pVertexBuffer, &stride, &offset);
     m_pImmediateContext->IASetIndexBuffer(m_pIndexBuffer,
         DXGI_FORMAT_R32_UINT, 0);
@@ -245,16 +247,6 @@ bool KBaseObject::Release()
     if (m_pVertexBuffer) m_pVertexBuffer->Release();
     if (m_pIndexBuffer) m_pIndexBuffer->Release();
     if (m_pVertexLayout) m_pVertexLayout->Release();
-   /* if (m_pVS) m_pVS->Release();
-    if (m_pPS) m_pPS->Release();
-    if (m_pVSCode) m_pVSCode->Release();
-    if (m_pPSCode) m_pPSCode->Release();*/
     return true;
 }
 
-void   KBaseObject::UpdateVertexBuffer()
-{
-    m_pImmediateContext->UpdateSubresource(
-        m_pVertexBuffer, 0, nullptr,
-        &m_VertexList.at(0), 0, 0);
-}

@@ -6,64 +6,37 @@ void KShaderManager::SetDevice(
     m_pd3dDevice = pd3dDevice;
     m_pImmediateContext = pContext;
 }
-
-KShader* KShaderManager::Load(wstring name)
+KShader* KShaderManager::Load(std::wstring name)
 {
     HRESULT hr;
-    //중복 제거
-  auto iter= m_List.find(name);
-  if (iter != m_List.end())
-  {
-      return iter->second;
-  }
-
-  KShader* pNewData = new KShader;
+    // 중복제거
+    auto iter = m_List.find(name);
+    if (iter != m_List.end())
+    {
+        return iter->second;
+    }
+    KShader* pNewData = new KShader;
     if (pNewData)
     {
         hr = pNewData->Load(m_pd3dDevice, m_pImmediateContext, name);
         if (SUCCEEDED(hr))
         {
-            m_List.insert(make_pair(name,pNewData));
+            m_List.insert(std::make_pair(name, pNewData));
         }
     }
     return pNewData;
 }
-KShader* KShaderManager::VLoad(wstring name, string funName)
+KShader* KShaderManager::VLoad(std::wstring name, std::string funName)
 {
     HRESULT hr;
-    //중복 제거
-    wstring vName = name;
+    // 중복제거
+    std::wstring vName = name;
     vName += mtw(funName);
     auto iter = m_List.find(vName);
     if (iter != m_List.end())
     {
         return iter->second;
     }
-
-    KShader* pNewData = new KShader;
-   
-    if (pNewData)
-    {
-        hr = pNewData->Load(m_pd3dDevice, m_pImmediateContext, name);
-        if (SUCCEEDED(hr))
-        {
-            m_List.insert(make_pair(vName, pNewData));
-        }
-    }
-    return pNewData;
-};
-KShader* KShaderManager::PLoad(wstring name, string funName)
-{
-    HRESULT hr;
-    //중복 제거
-    wstring vName = name;
-    vName += mtw(funName);
-    auto iter = m_List.find(vName);
-    if (iter != m_List.end())
-    {
-        return iter->second;
-    }
-
     KShader* pNewData = new KShader;
 
     if (pNewData)
@@ -71,31 +44,50 @@ KShader* KShaderManager::PLoad(wstring name, string funName)
         hr = pNewData->Load(m_pd3dDevice, m_pImmediateContext, name);
         if (SUCCEEDED(hr))
         {
-            m_List.insert(make_pair(vName, pNewData));
+            m_List.insert(std::make_pair(vName, pNewData));
+        }
+    }
+    return pNewData;
+};
+KShader* KShaderManager::PLoad(std::wstring name, std::string funName)
+{
+    HRESULT hr;
+    // 중복제거
+    std::wstring vName = name;
+    vName += mtw(funName);
+    auto iter = m_List.find(vName);
+    if (iter != m_List.end())
+    {
+        return iter->second;
+    }
+    KShader* pNewData = new KShader;
+
+    if (pNewData)
+    {
+        hr = pNewData->Load(m_pd3dDevice, m_pImmediateContext, name);
+        if (SUCCEEDED(hr))
+        {
+            m_List.insert(std::make_pair(vName, pNewData));
         }
     }
     return pNewData;
 };
 
+KShaderManager::KShaderManager()
+{
+}
 bool KShaderManager::Release()
 {
     for (auto data : m_List)
     {
         KShader* pData = data.second;
-        if (pData)pData->Release();
+        if (pData) pData->Release();
         delete pData;
     }
     m_List.clear();
     return true;
 }
-
-KShaderManager::KShaderManager()
-{
-
-
-}
 KShaderManager::~KShaderManager()
 {
-   
     Release();
 }

@@ -1,38 +1,35 @@
 #include "KShader.h"
 #include "KShaderManager.h"
-
-bool KShader::Init()
+bool	KShader::Init()
 {
     return true;
 }
-bool KShader::Frame()
-{
+bool	KShader::Frame() {
     return true;
 }
-bool KShader::Render()
-{
+bool	KShader::Render() {
     return true;
 }
-bool KShader::Release()
-{
+bool	KShader::Release() {
     if (m_pVS) m_pVS->Release();
     if (m_pPS) m_pPS->Release();
     if (m_pVSCode) m_pVSCode->Release();
     if (m_pPSCode) m_pPSCode->Release();
+
     m_pVS = nullptr;
     m_pPS = nullptr;
     m_pVSCode = nullptr;
     m_pPSCode = nullptr;
     return true;
 }
-HRESULT KShader::Load(ID3D11Device* pd3dDevice,
+HRESULT KShader::Load(
+    ID3D11Device* pd3dDevice,
     ID3D11DeviceContext* pImmediateContext,
-    wstring filename)
+    std::wstring filename)
 {
-    HRESULT  hr;
+    HRESULT hr;
     m_pd3dDevice = pd3dDevice;
     m_pImmediateContext = pImmediateContext;
-
     // 정점쉐이더 컴파일 
     ID3DBlob* pErrorCode = nullptr;
     hr = D3DCompileFromFile(
@@ -94,7 +91,5 @@ HRESULT KShader::Load(ID3D11Device* pd3dDevice,
         }
         return hr;
     }
-
     return hr;
-   
 }
