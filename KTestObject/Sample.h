@@ -8,6 +8,7 @@
 class Sample : public KGameCore
 {
 public:
+	KMapObject* m_pUser;
 	KMapObject* m_pMap;
 public:
 	std::vector<KBaseObject*>	m_ObjectList;

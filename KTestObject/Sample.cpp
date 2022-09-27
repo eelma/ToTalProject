@@ -9,8 +9,13 @@ bool Sample::Init()
 	m_pMap->Create(m_pd3dDevice,
 		m_pImmediateContext,
 		shaderfilename,
-		L"../../data/PacMan_Map.png");
+		L"../../data/mapHeight.bmp");
 
+	m_pUser = new KMapObject;
+	m_pUser->Create(m_pd3dDevice,
+		m_pImmediateContext,
+		shaderfilename,
+		L"../../data/bitmap1.bmp");
 
 	/*for (int iObj = 0; iObj < 1; iObj++)
 	{
@@ -34,14 +39,7 @@ bool Sample::Init()
 	}*/
 
 
-	//D3D11_SAMPLER_DESC sd;
-	//ZeroMemory(&sd, sizeof(sd));
-	//sd.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;// 최근점 필터링
-	//sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	//sd.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	//sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-	//HRESULT hr = m_pd3dDevice->CreateSamplerState(&sd, &g_pDefaultSS);
-
+	
 	return true;
 }
 bool Sample::Frame()
