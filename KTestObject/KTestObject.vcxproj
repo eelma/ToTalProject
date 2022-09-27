@@ -149,17 +149,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="KCollision.h" />
     <ClInclude Include="KMapObject.h" />
+    <ClInclude Include="KObject2D.h" />
+    <ClInclude Include="KUser2D.h" />
     <ClInclude Include="Sample.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="KCollision.cpp" />
     <ClCompile Include="KMapObject.cpp" />
+    <ClCompile Include="KObject2D.cpp" />
+    <ClCompile Include="KUser2D.cpp" />
     <ClCompile Include="Sample.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KGameCore\KGameCore.vcxproj">
       <Project>{caccddfa-ba0e-4448-8d44-36de2cf6b70e}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="DefaultShapeMask.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

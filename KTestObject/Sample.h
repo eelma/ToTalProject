@@ -4,11 +4,12 @@
 #include "KTextureManager.h"
 #include "KShaderManager.h"
 #include"KMapObject.h"
+#include"KUser2D.h"
 
 class Sample : public KGameCore
 {
 public:
-	KMapObject* m_pUser;
+	KUser2D* m_pUser;
 	KMapObject* m_pMap;
 public:
 	std::vector<KBaseObject*>	m_ObjectList;
