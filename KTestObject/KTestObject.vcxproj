@@ -151,6 +151,7 @@
   <ItemGroup>
     <ClInclude Include="KCollision.h" />
     <ClInclude Include="KMapObject.h" />
+    <ClInclude Include="KNpc2D.h" />
     <ClInclude Include="KObject2D.h" />
     <ClInclude Include="KUser2D.h" />
     <ClInclude Include="Sample.h" />
@@ -158,6 +159,7 @@
   <ItemGroup>
     <ClCompile Include="KCollision.cpp" />
     <ClCompile Include="KMapObject.cpp" />
+    <ClCompile Include="KNpc2D.cpp" />
     <ClCompile Include="KObject2D.cpp" />
     <ClCompile Include="KUser2D.cpp" />
     <ClCompile Include="Sample.cpp" />

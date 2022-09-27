@@ -21,7 +21,26 @@ bool Sample::Init()
 	m_pUser->SetRect({ 91,2,40,59 });
 	m_pUser->SetPosition({ g_rtClient.right / 2.0f,g_rtClient.bottom - 100.0f });
 
-	
+	for (int i = 0; i < 7; i++)
+	{
+		KNpc2D* npc = new KNpc2D;
+		npc->Create(m_pd3dDevice, m_pImmediateContext,
+			L"DefaultShapeMask.txt",
+			L"../../data/bitmap1.bmp"
+			);
+		if (i % 2 == 0)
+		{
+			npc->SetRect({ 46,62,68,79 });
+		}
+		else
+		{
+			npc->SetRect({ 115,62,37,35 });
+		}
+		//npc->SetDirection({ randstep(-1.0f, 1.0f),randstep(-1.0f,1.0f) });
+		npc->SetPosition({ 100.0f + i * 100.0f,100.0f });
+		npc->SetMask(pMaskTex);
+		m_pNpcList.push_back(npc);
+	}
 
 	/*for (int iObj = 0; iObj < 1; iObj++)
 	{
@@ -52,9 +71,9 @@ bool Sample::Frame()
 {
 	m_pMap->Frame();
 	m_pUser->Frame();
-	for (int iObj = 0; iObj < m_ObjectList.size(); iObj++)
+	for (int iObj = 0; iObj < m_pNpcList.size(); iObj++)
 	{
-		m_ObjectList[iObj]->Frame();
+		m_pNpcList[iObj]->Frame();
 	}
 	return true;
 }
@@ -62,9 +81,9 @@ bool Sample::Render()
 {
 	m_pMap->Render();
 	
-	for (int iObj = 0; iObj < m_ObjectList.size(); iObj++)
+	for (int iObj = 0; iObj < m_pNpcList.size(); iObj++)
 	{
-		m_ObjectList[iObj]->Render();
+		m_pNpcList[iObj]->Render();
 	}
 	m_pUser->PreRender();
 	//1번 레지스터에 마스크 이미지를 넘길 수 있다
@@ -76,10 +95,10 @@ bool Sample::Release()
 {
 	m_pMap->Release();
 	m_pUser->Release();
-	for (int iObj = 0; iObj < m_ObjectList.size(); iObj++)
+	for (int iObj = 0; iObj < m_pNpcList.size(); iObj++)
 	{
-		m_ObjectList[iObj]->Release();
-		delete m_ObjectList[iObj];
+		m_pNpcList[iObj]->Release();
+		delete m_pNpcList[iObj];
 	}
 	/*for (int iObj = 0; iObj < m_ObjectTextureList.size(); iObj++)
 	{

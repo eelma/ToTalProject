@@ -5,6 +5,7 @@
 #include "KShaderManager.h"
 #include"KMapObject.h"
 #include"KUser2D.h"
+#include"KNpc2D.h"
 
 class Sample : public KGameCore
 {
@@ -12,7 +13,7 @@ public:
 	KUser2D* m_pUser;
 	KMapObject* m_pMap;
 public:
-	std::vector<KBaseObject*>	m_ObjectList;
+	std::vector<KBaseObject*>	m_pNpcList;
 	std::vector<KTexture*>		m_ObjectTextureList;
 public:
 	virtual bool		Init() override;
