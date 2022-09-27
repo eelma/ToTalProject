@@ -19,6 +19,8 @@ public:
 	ID3D11InputLayout* m_pVertexLayout;
 	KTexture* m_pTexture;
 	KShader* m_pShader;
+	ID3D11ShaderResourceView* m_pTextureSRV = nullptr;
+
 public:
 	ID3D11VertexShader* m_pVS;
 	ID3D11PixelShader* m_pPS;
@@ -44,7 +46,11 @@ public:
 public:
 	virtual bool		Init();
 	virtual bool		Frame();
+
 	virtual bool		Render();
+	virtual bool		PreRender();
+	virtual bool		PostRender();
+	
 	virtual bool		Release();
 };
 

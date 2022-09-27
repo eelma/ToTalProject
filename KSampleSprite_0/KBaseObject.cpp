@@ -147,7 +147,7 @@ bool	KBaseObject::Init()
 bool		KBaseObject::Frame()
 {
     m_VertexList[0].p = { -1.0f, 1.0f,  0.0f };
-    m_VertexList[0].c = { 1.0f,0.0f,0.0f,0.0f };
+    m_VertexList[0].c = { 1.0f,1.0f,1.0f,1.0f };
     //gpu update cpu에서 명령하지만 gpu에서 업데이트하게 해준다
     //위치이동
 

@@ -26,6 +26,7 @@ bool		KGameCore::KCorePreRender()
 	m_pImmediateContext->OMSetRenderTargets(1, &m_pRTV, NULL);
 	float color[4] = { 0.34324f,0.52342f,0.798320f,1.0f };
 	m_pImmediateContext->ClearRenderTargetView(m_pRTV, color);
+	m_pImmediateContext->PSSetSamplers(0, 1, &m_pDefaultSS);
 	m_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
     return true;
 }
@@ -48,6 +49,7 @@ bool		KGameCore::KCorePostRender()
 bool		KGameCore::KCoreRelease()
 {
 	Release();
+	if (m_pDefaultSS)m_pDefaultSS->Release();
 	I_Input.Release();
 	I_Timer.Release();
 	m_Writer.Release();
