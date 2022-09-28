@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -165,9 +165,11 @@ copy "KGameCore_R.lib" "..\\..\\lib\\"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="KBaseObject.h" />
+    <ClInclude Include="KCollision.h" />
     <ClInclude Include="KDevice.h" />
     <ClInclude Include="KGameCore.h" />
     <ClInclude Include="KInput.h" />
+    <ClInclude Include="KObject2D.h" />
     <ClInclude Include="KShader.h" />
     <ClInclude Include="KShaderManager.h" />
     <ClInclude Include="KStd.h" />
@@ -180,9 +182,11 @@ copy "KGameCore_R.lib" "..\\..\\lib\\"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KBaseObject.cpp" />
+    <ClCompile Include="KCollision.cpp" />
     <ClCompile Include="KDevice.cpp" />
     <ClCompile Include="KGameCore.cpp" />
     <ClCompile Include="KInput.cpp" />
+    <ClCompile Include="KObject2D.cpp" />
     <ClCompile Include="KShader.cpp" />
     <ClCompile Include="KShaderManager.cpp" />
     <ClCompile Include="KTexture.cpp" />

@@ -54,6 +54,12 @@
     <ClInclude Include="KShaderManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="KCollision.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="KObject2D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KWindow.cpp">
@@ -90,6 +96,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="KShaderManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="KCollision.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="KObject2D.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

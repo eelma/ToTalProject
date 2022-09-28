@@ -2,7 +2,7 @@
 #include "KStd.h"
 #include "WICTextureLoader.h"
 #include "DDSTextureLoader.h"
-#pragma(lib,"DirectXTK.lib")
+#pragma comment (lib,"DirectXTK.lib")
 #ifdef _DEBUG
 #pragma comment(lib, "DirectXTK_D.lib")
 #else

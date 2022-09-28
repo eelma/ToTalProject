@@ -1,20 +1,13 @@
 #pragma once
 #include "KGameCore.h"
-#include "KBaseObject.h"
-#include "KTextureManager.h"
-#include "KShaderManager.h"
-#include"KMapObject.h"
-#include"KUser2D.h"
-#include"KNpc2D.h"
+#include"KSceneTitle.h"
 
 class Sample : public KGameCore
 {
 public:
-	KUser2D* m_pUser;
-	KMapObject* m_pMap;
-public:
-	std::vector<KBaseObject*>	m_pNpcList;
-	std::vector<KTexture*>		m_ObjectTextureList;
+	KSceneTitle* m_pTitle = nullptr;
+	KScene* m_pInGame = nullptr;
+	KScene* m_pCurrentScene=nullptr;
 public:
 	virtual bool		Init() override;
 	virtual bool		Frame() override;
