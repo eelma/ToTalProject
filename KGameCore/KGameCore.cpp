@@ -4,6 +4,7 @@ bool		KGameCore::KCoreInit()
 	KDevice::Init();
 	I_Tex.SetDevice(m_pd3dDevice, m_pImmediateContext);
 	I_Shader.SetDevice(m_pd3dDevice, m_pImmediateContext);
+	I_Sound.Init();
 	I_Input.Init();
 	I_Timer.Init();
 	m_Writer.Init();
@@ -28,6 +29,7 @@ bool		KGameCore::KCoreFrame()
 	
 	I_Input.Frame();
 	I_Timer.Frame();
+	I_Sound.Frame();
 	m_Writer.Frame();
     return Frame();
 }
@@ -64,6 +66,7 @@ bool		KGameCore::KCoreRelease()
 	I_Input.Release();
 	I_Timer.Release();
 	m_Writer.Release();
+	I_Sound.Release();
 	KDevice::Release();
     return true;
 }

@@ -60,6 +60,12 @@
     <ClInclude Include="KObject2D.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="KSound.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="KSoundManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KWindow.cpp">
@@ -102,6 +108,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="KObject2D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="KSound.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="KSoundManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

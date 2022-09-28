@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../include;../../include/dxtk;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../include;../../include/dxtk;../../include/fomd;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -172,6 +172,8 @@ copy "KGameCore_R.lib" "..\\..\\lib\\"</Command>
     <ClInclude Include="KObject2D.h" />
     <ClInclude Include="KShader.h" />
     <ClInclude Include="KShaderManager.h" />
+    <ClInclude Include="KSound.h" />
+    <ClInclude Include="KSoundManager.h" />
     <ClInclude Include="KStd.h" />
     <ClInclude Include="KTexture.h" />
     <ClInclude Include="KTextureManager.h" />
@@ -189,6 +191,8 @@ copy "KGameCore_R.lib" "..\\..\\lib\\"</Command>
     <ClCompile Include="KObject2D.cpp" />
     <ClCompile Include="KShader.cpp" />
     <ClCompile Include="KShaderManager.cpp" />
+    <ClCompile Include="KSound.cpp" />
+    <ClCompile Include="KSoundManager.cpp" />
     <ClCompile Include="KTexture.cpp" />
     <ClCompile Include="KTextureManager.cpp" />
     <ClCompile Include="KTimer.cpp" />

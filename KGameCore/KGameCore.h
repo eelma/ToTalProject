@@ -3,6 +3,7 @@
 #include"KInput.h"
 #include"KTimer.h"
 #include"KWriter.h"
+#include "KSoundManager.h"
 #include"KTextureManager.h"
 #include"KShaderManager.h"
 class KGameCore:public KDevice

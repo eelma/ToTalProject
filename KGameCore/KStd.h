@@ -21,8 +21,16 @@ using namespace std;
 
 extern HWND g_hWnd;
 extern RECT g_rtClient;
-
+extern float g_fGameTimer;
+extern float g_fSecondPerFrame;
 //extern은 초기화 하면 안된다
+
+typedef basic_string<TCHAR> T_STR;
+typedef basic_string<wchar_t> W_STR;
+typedef basic_string<char>  C_STR;
+typedef vector<basic_string<TCHAR>>		TCHAR_STRING_VECTOR;
+typedef vector<DWORD>					DWORD_VECTOR;
+
 template<class T> 
 class KSingleTone
 {
@@ -43,6 +51,10 @@ public:
 #define GAME_WINDOW(s,x,y) Sample demo;demo.SetWindow(hInstance,L#s,x,y);demo.Run();return 1;
 #define GAME_END    }
 #define GAME_RUN(s,x,y)  GAME_START  GAME_WINDOW(s,x,y)  GAME_END
+
+
+
+
 
 // 멀티바이트 문자집합 사용경우
 	// ABC홍길동 = 9
