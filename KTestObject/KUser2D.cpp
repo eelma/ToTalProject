@@ -1,5 +1,5 @@
 #include "KUser2D.h"
-#include"KInput.h"
+#include "KInput.h"
 bool KUser2D::Frame()
 {
     KVector2D vPos = m_vPos;
@@ -19,6 +19,7 @@ bool KUser2D::Frame()
     {
         vPos.x += 1.0f * g_fSecondPerFrame * m_fSpeed;
     }
-    SetPosition(vPos);
+
+    SetPosition(vPos, m_vCameraPos);
     return true;
 }

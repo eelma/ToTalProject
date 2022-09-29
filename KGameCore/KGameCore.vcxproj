@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../include;../../include/dxtk;../../include/fomd;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../include;../../include/dxtk;../../include/fmod;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -167,6 +167,7 @@ copy "KGameCore_R.lib" "..\\..\\lib\\"</Command>
     <ClInclude Include="KBaseObject.h" />
     <ClInclude Include="KCollision.h" />
     <ClInclude Include="KDevice.h" />
+    <ClInclude Include="KDxState.h" />
     <ClInclude Include="KGameCore.h" />
     <ClInclude Include="KInput.h" />
     <ClInclude Include="KObject2D.h" />
@@ -186,6 +187,7 @@ copy "KGameCore_R.lib" "..\\..\\lib\\"</Command>
     <ClCompile Include="KBaseObject.cpp" />
     <ClCompile Include="KCollision.cpp" />
     <ClCompile Include="KDevice.cpp" />
+    <ClCompile Include="KDxState.cpp" />
     <ClCompile Include="KGameCore.cpp" />
     <ClCompile Include="KInput.cpp" />
     <ClCompile Include="KObject2D.cpp" />

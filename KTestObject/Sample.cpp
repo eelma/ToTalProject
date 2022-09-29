@@ -3,15 +3,24 @@
 bool Sample::Init()
 {
 	m_pTitle = new KSceneTitle;
-	m_pInGame = new KScene;
+	m_pInGame = new KSceneInGame;
 	m_pTitle->Create(m_pd3dDevice, m_pImmediateContext, L"");
 	m_pInGame->Create(m_pd3dDevice, m_pImmediateContext, L"");
-	
 	m_pTitle->Init();
 	m_pInGame->Init();
-
 	m_pCurrentScene = m_pTitle;
-	//커렌트를 타이틀로하면 지형만 뿌려진다
+
+
+	D3D11_VIEWPORT vp;
+	vp.Width = 400;
+	vp.Height = 300;
+	vp.TopLeftX = 0;
+	vp.TopLeftY = 0;
+	vp.MinDepth = 0.0f;
+	vp.MaxDepth = 1.0f;
+	m_pImmediateContext->RSSetViewports(1, &vp);
+
+
 	return true;
 }
 bool Sample::Frame()
@@ -25,6 +34,25 @@ bool Sample::Frame()
 }
 bool Sample::Render()
 {
+	D3D11_VIEWPORT vp;
+	vp.Width = 800;
+	vp.Height = 600;  
+	vp.TopLeftX = 0;
+	vp.TopLeftY = 0;
+	vp.MinDepth = 0.0f;
+	vp.MaxDepth = 1.0f;
+	m_pImmediateContext->RSSetViewports(1, &vp);
+	m_pCurrentScene->Render();
+
+	//m_pImmediateContext->PSSetSamplers(0,1,&KDxState::g_pDefaultSSMirror);
+	vp.Width = 100;
+	vp.Height = 100;
+	vp.TopLeftX = 0;
+	vp.TopLeftY = 500;
+	vp.MinDepth = 0.0f;
+	vp.MaxDepth = 1.0f;
+	m_pImmediateContext->RSSetViewports(1, &vp);
+
 	m_pCurrentScene->Render();
 	return true;
 }
@@ -32,10 +60,10 @@ bool Sample::Release()
 {
 	m_pTitle->Release();
 	m_pInGame->Release();
-	
+
 	delete m_pTitle;
 	delete m_pInGame;
 	return true;
 }
 
-GAME_RUN(KTestTexture, 800, 600)
+GAME_RUN(KSampleTexture, 800, 600)

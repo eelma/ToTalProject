@@ -6,10 +6,10 @@
 #include "KSoundManager.h"
 #include"KTextureManager.h"
 #include"KShaderManager.h"
+#include"KDxState.h"
 class KGameCore:public KDevice
 {
 public:
-	ID3D11SamplerState* m_pDefaultSS=nullptr;
 
 	KWriter m_Writer;
 	bool bGameRun = true;

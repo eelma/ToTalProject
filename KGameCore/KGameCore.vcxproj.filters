@@ -66,6 +66,9 @@
     <ClInclude Include="KSoundManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="KDxState.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KWindow.cpp">
@@ -114,6 +117,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="KSoundManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="KDxState.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

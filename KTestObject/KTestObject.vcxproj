@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -120,7 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../include;../../include/dxtk;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../include;../../include/dxtk;../../include/fmod;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -152,6 +152,7 @@
     <ClInclude Include="KMapObject.h" />
     <ClInclude Include="KNpc2D.h" />
     <ClInclude Include="KScene.h" />
+    <ClInclude Include="KSceneInGame.h" />
     <ClInclude Include="KSceneTitle.h" />
     <ClInclude Include="KUser2D.h" />
     <ClInclude Include="Sample.h" />
@@ -160,6 +161,7 @@
     <ClCompile Include="KMapObject.cpp" />
     <ClCompile Include="KNpc2D.cpp" />
     <ClCompile Include="KScene.cpp" />
+    <ClCompile Include="KSceneInGame.cpp" />
     <ClCompile Include="KSceneTitle.cpp" />
     <ClCompile Include="KUser2D.cpp" />
     <ClCompile Include="Sample.cpp" />

@@ -39,18 +39,45 @@ void KObject2D::SetRect(KRect rt)
     m_rtUV.h = rt.h / m_pkImageSize.y;
 
 }
-//vPos(화면 좌표)를 ndc 좌표로 변경(컨버팅)해야한다
-//화면 좌표로 세팅하고 내부적으로 ndc로 랜더링을한다
-//ndc좌표를 만들어주는 기능이 필요하다
+
+// 화면 좌표 -> NDC 좌표 
+void  KObject2D::ScreenToNDC()
+{
+    // 0  ~ 800   -> 0~1 ->  -1 ~ +1
+    m_vDrawPos.x = (m_vPos.x / g_rtClient.right) * 2.0f - 1.0f;
+    m_vDrawPos.y = -((m_vPos.y / g_rtClient.bottom) * 2.0f - 1.0f);
+    m_vDrawSize.x = (m_rtInit.w / g_rtClient.right) * 2;
+    m_vDrawSize.y = (m_rtInit.h / g_rtClient.bottom) * 2;
+}
+
+void  KObject2D::ScreenToCamera(KVector2D vCameraPos, KVector2D vViewPort)
+{
+    KVector2D vPos = m_vPos;
+    vPos.x = vPos.x - vCameraPos.x;
+    vPos.y = vPos.y - vCameraPos.y;
+    // 0  ~ 800   -> 0~1 ->  -1 ~ +1
+    m_vDrawPos.x = vPos.x * (2.0f / vViewPort.x);
+    m_vDrawPos.y = vPos.y * (2.0f / vViewPort.y) * -1.0f;
+
+
+    m_vDrawSize.x = (m_rtInit.w / vViewPort.x) * 2;
+    m_vDrawSize.y = (m_rtInit.h / vViewPort.y) * 2;
+
+}
+
 void KObject2D::SetPosition(KVector2D vPos)
 {
     m_vPos = vPos;
-    //0~800 -> 0~1-> -1~+1
-    //ndc좌표
-    m_vDrawPos.x = (vPos.x / g_rtClient.right) * 2.0f - 1.0f;
-    m_vDrawPos.y = -((vPos.y / g_rtClient.bottom) * 2.0f - 1.0f);
-    m_vDrawSize.x = (m_rtInit.w / g_rtClient.right) * 2;
-    m_vDrawSize.y = ((m_rtInit.h / g_rtClient.bottom)) * 2;
+    ScreenToNDC();
+    UpdateVertexBuffer();
+}
+//vPos(화면 좌표)를 ndc 좌표로 변경(컨버팅)해야한다
+//화면 좌표로 세팅하고 내부적으로 ndc로 랜더링을한다
+//ndc좌표를 만들어주는 기능이 필요하다
+void KObject2D::SetPosition(KVector2D vPos, KVector2D vCamera)
+{
+    m_vPos = vPos;
+    ScreenToCamera(vCamera, m_vViewSize);
     UpdateVertexBuffer();
 }
 bool KObject2D::Frame()

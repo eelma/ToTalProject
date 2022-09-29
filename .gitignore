@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/KGameCore/KCollision.cpp
+/KGameCore/KCollision.h
+/KGameCore/KObject2D.cpp
+/KGameCore/KObject2D.h
