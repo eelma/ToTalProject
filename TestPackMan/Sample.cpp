@@ -13,10 +13,10 @@ bool Sample::Init()
 	m_pCurrentScene = m_pTitle;
 	//커렌트를 타이틀로하면 지형만 뿌려진다
 
-	m_pBGSound = I_Sound.GetPtr(L"OnlyLove.MP3");
+	m_pBGSound = I_Sound.GetPtr(L"PacMan1987.mp3");
 	if (m_pBGSound == nullptr)
 	{
-		m_pBGSound = I_Sound.Load(L"../../data/sound/OnlyLove.MP3");
+		m_pBGSound = I_Sound.Load(L"../../data/sound/PacMan/PacMan1987.mp3");
 	}
 	m_pShot = I_Sound.GetPtr(L"GunShot.mp3");
 	if (m_pShot == nullptr)

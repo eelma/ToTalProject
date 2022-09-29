@@ -45,13 +45,7 @@ bool Sample::Render()
 	m_pCurrentScene->Render();
 
 	//m_pImmediateContext->PSSetSamplers(0,1,&KDxState::g_pDefaultSSMirror);
-	vp.Width = 100;
-	vp.Height = 100;
-	vp.TopLeftX = 0;
-	vp.TopLeftY = 500;
-	vp.MinDepth = 0.0f;
-	vp.MaxDepth = 1.0f;
-	m_pImmediateContext->RSSetViewports(1, &vp);
+	
 
 	m_pCurrentScene->Render();
 	return true;

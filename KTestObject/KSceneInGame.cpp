@@ -92,6 +92,25 @@ bool KSceneInGame::Render()
 	m_pImmediateContext->PSSetShaderResources(1, 1,
 		&m_pUser->m_pMaskTex->m_pTextureSRV);
 	m_pUser->PostRender();
+	D3D11_VIEWPORT vp;
+	vp.Width = 100;
+	vp.Height = 100;
+	vp.TopLeftX = 0;
+	vp.TopLeftY = 500;
+	vp.MinDepth = 0.0f;
+	vp.MaxDepth = 1.0f;
+	m_pImmediateContext->RSSetViewports(1, &vp);
+
+	m_pMap->Render();
+	for (int iObj = 0; iObj < m_pNpcList.size(); iObj++)
+	{
+		m_pNpcList[iObj]->Render();
+	}
+
+	m_pUser->PreRender();
+	m_pImmediateContext->PSSetShaderResources(1, 1,
+		&m_pUser->m_pMaskTex->m_pTextureSRV);
+	m_pUser->PostRender();
 	return true;
 }
 bool KSceneInGame::Release()
