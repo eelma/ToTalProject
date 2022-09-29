@@ -30,7 +30,7 @@ bool KScene::Init()
 		L"../../data/PacMan.png");
 	m_pUser->SetMask(pMaskTex);
 	m_pUser->m_fSpeed = 300.0f;
-	m_pUser->SetRect({ 145,86,57,63 });
+	m_pUser->SetRect({ 145,86,55,61 });
 	m_pUser->SetPosition({ g_rtClient.right / 2.0f,g_rtClient.bottom - 100.0f });
 
 	
