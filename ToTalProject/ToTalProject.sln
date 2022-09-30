@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32901.82
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ToTalProject", "ToTalProject.vcxproj", "{BD1BE331-69FE-4DB8-BEA9-37E20F743566}"
 EndProject
@@ -84,6 +84,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PacManCore", "..\PacManCore\PacManCore.vcxproj", "{F423964B-DF18-4696-A748-0FB785CB26CD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestPackMan", "..\TestPackMan\TestPackMan.vcxproj", "{324A99E5-3318-4EFD-BCB2-E5935A5428D2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F423964B-DF18-4696-A748-0FB785CB26CD} = {F423964B-DF18-4696-A748-0FB785CB26CD}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KTestSpriteManager", "..\KTestSpriteManager\KTestSpriteManager.vcxproj", "{10A87A38-8E37-481E-83F5-18005B8EC34B}"
 EndProject

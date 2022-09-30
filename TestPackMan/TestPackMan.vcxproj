@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -120,7 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../include/Pach;../../include/dxtk;../../include/fmod;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../include/Pach;../../include/Pach/dxtk;../../include/Pach/fmod</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -163,11 +163,6 @@
     <ClCompile Include="KSceneTitle.cpp" />
     <ClCompile Include="KUser2D.cpp" />
     <ClCompile Include="Sample.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\KGameCore\KGameCore.vcxproj">
-      <Project>{caccddfa-ba0e-4448-8d44-36de2cf6b70e}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Text Include="DefaultShapeMask.txt" />
