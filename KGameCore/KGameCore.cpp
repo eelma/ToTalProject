@@ -2,6 +2,7 @@
 bool		KGameCore::KCoreInit()
 {
 	KDevice::Init();
+	KDxState::SetState(m_pd3dDevice);
 	I_Tex.SetDevice(m_pd3dDevice, m_pImmediateContext);
 	I_Shader.SetDevice(m_pd3dDevice, m_pImmediateContext);
 	I_Sound.Init();
@@ -32,6 +33,8 @@ bool		KGameCore::KCorePreRender()
 	m_pImmediateContext->ClearRenderTargetView(m_pRTV, color);
 	m_pImmediateContext->PSSetSamplers(0, 1, &KDxState::g_pDefaultSSWrap);
 	m_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	m_pImmediateContext->RSSetViewports(1 ,&m_vp);
+	m_pImmediateContext->RSSetState(KDxState::g_pDefaultRSSolid);
     return true;
 }
 bool		KGameCore::KCoreRender()

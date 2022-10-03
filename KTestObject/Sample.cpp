@@ -11,14 +11,6 @@ bool Sample::Init()
 	m_pCurrentScene = m_pTitle;
 
 
-	D3D11_VIEWPORT vp;
-	vp.Width = 400;
-	vp.Height = 300;
-	vp.TopLeftX = 0;
-	vp.TopLeftY = 0;
-	vp.MinDepth = 0.0f;
-	vp.MaxDepth = 1.0f;
-	m_pImmediateContext->RSSetViewports(1, &vp);
 
 
 	return true;
@@ -34,19 +26,12 @@ bool Sample::Frame()
 }
 bool Sample::Render()
 {
-	D3D11_VIEWPORT vp;
-	vp.Width = 800;
-	vp.Height = 600;  
-	vp.TopLeftX = 0;
-	vp.TopLeftY = 0;
-	vp.MinDepth = 0.0f;
-	vp.MaxDepth = 1.0f;
-	m_pImmediateContext->RSSetViewports(1, &vp);
-	m_pCurrentScene->Render();
-
-	//m_pImmediateContext->PSSetSamplers(0,1,&KDxState::g_pDefaultSSMirror);
 	
-
+	if (I_Input.GetKey('V') == KEY_HOLD)
+	{
+		m_pImmediateContext->RSSetState(KDxState::g_pDefaultRsWireFrame);
+	}
+	
 	m_pCurrentScene->Render();
 	return true;
 }

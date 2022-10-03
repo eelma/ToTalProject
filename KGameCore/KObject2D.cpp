@@ -43,19 +43,39 @@ void KObject2D::SetRect(KRect rt)
 // 화면 좌표 -> NDC 좌표 
 void  KObject2D::ScreenToNDC()
 {
-    // 0  ~ 800   -> 0~1 ->  -1 ~ +1
-    m_vDrawPos.x = (m_vPos.x / g_rtClient.right) * 2.0f - 1.0f;
-    m_vDrawPos.y = -((m_vPos.y / g_rtClient.bottom) * 2.0f - 1.0f);
+    KVector2D	vDrawSize;
+    vDrawSize.x = m_rtInit.w / 2.0f;
+    vDrawSize.y = m_rtInit.h / 2.0f;
+    m_rtCollision.Set(
+        m_vPos.x - vDrawSize.x,
+        m_vPos.y - vDrawSize.y,
+        m_rtInit.w,
+        m_rtInit.h);
+    // 0  ~ 800   -> 0~1 ->  -1 ~ +1 
+    m_vDrawPos.x = (m_rtCollision.x1 / g_rtClient.right) * 2.0f - 1.0f;
+    m_vDrawPos.y = -((m_rtCollision.y1 / g_rtClient.bottom) * 2.0f - 1.0f);
     m_vDrawSize.x = (m_rtInit.w / g_rtClient.right) * 2;
     m_vDrawSize.y = (m_rtInit.h / g_rtClient.bottom) * 2;
 }
 
+//월드 좌표(화면 좌표계)->뷰 좌표->NDC좌표
 void  KObject2D::ScreenToCamera(KVector2D vCameraPos, KVector2D vViewPort)
 {
-    KVector2D vPos = m_vPos;
-    vPos.x = vPos.x - vCameraPos.x;
-    vPos.y = vPos.y - vCameraPos.y;
-    // 0  ~ 800   -> 0~1 ->  -1 ~ +1
+    KVector2D vPos = m_vPos;//센터값
+
+    KVector2D	vDrawSize;
+    vDrawSize.x = m_rtInit.w / 2.0f;
+    vDrawSize.y = m_rtInit.h / 2.0f;
+    m_rtCollision.Set(
+        vPos.x - vDrawSize.x,
+        vPos.y - vDrawSize.y,
+        m_rtInit.w,
+        m_rtInit.h);//위치가 어디냐
+    //왼쪽 상단이 이거다
+    vPos.x = m_rtCollision.x1 - vCameraPos.x;//화면 좌표계로 바꿔라 센터가 화면좌표계로 ㄱ바뀐다
+    vPos.y = m_rtCollision.y1 - vCameraPos.y;
+
+    // 0  ~ 800   -> 0~1 ->  -1 ~ +1여기가 스크린 투 카메라 부분
     m_vDrawPos.x = vPos.x * (2.0f / vViewPort.x);
     m_vDrawPos.y = vPos.y * (2.0f / vViewPort.y) * -1.0f;
 
@@ -67,8 +87,8 @@ void  KObject2D::ScreenToCamera(KVector2D vCameraPos, KVector2D vViewPort)
 
 void KObject2D::SetPosition(KVector2D vPos)
 {
-    m_vPos = vPos;
-    ScreenToNDC();
+    m_vPos = vPos;//앞으로 렉트의 정중앙이다
+    ScreenToNDC();//
     UpdateVertexBuffer();
 }
 //vPos(화면 좌표)를 ndc 좌표로 변경(컨버팅)해야한다

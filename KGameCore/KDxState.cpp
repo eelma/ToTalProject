@@ -3,6 +3,9 @@ ID3D11SamplerState* KDxState::g_pDefaultSSWrap=nullptr;
 ID3D11SamplerState* KDxState::g_pDefaultSSMirror = nullptr;
 ID3D11BlendState* KDxState::g_pDefaultBS = nullptr;
 
+ID3D11RasterizerState* KDxState::g_pDefaultRsWireFrame=nullptr;
+ID3D11RasterizerState* KDxState::g_pDefaultRSSolid=nullptr;
+
 //샘플러 스테이트라는 것은 항상 구조체를 채워서 그 구조체에 의해서 만들어지는 과정을 가지고있다
 bool KDxState::SetState(ID3D11Device* pd3dDevice)
 {
@@ -30,11 +33,25 @@ bool KDxState::SetState(ID3D11Device* pd3dDevice)
     sd.AddressV = D3D11_TEXTURE_ADDRESS_MIRROR;
     sd.AddressW = D3D11_TEXTURE_ADDRESS_MIRROR;
     hr = pd3dDevice->CreateSamplerState(&sd, &g_pDefaultSSMirror);
+
+
+    D3D11_RASTERIZER_DESC rd;
+    ZeroMemory(&rd, sizeof(rd));
+    rd.DepthClipEnable=true;
+    rd.FillMode = D3D11_FILL_WIREFRAME;//필모드는 와이어프레임 솔리드
+    rd.CullMode = D3D11_CULL_NONE;//컬모드는 정면이냐 뒷면이냐 우리는 무조건 시계방향이니 앞면으로 컬링뒷면은 뿌리지 말라
+    pd3dDevice->CreateRasterizerState(&rd, &g_pDefaultRsWireFrame);
+    rd.FillMode = D3D11_FILL_SOLID;//필모드는 와이어프레임 솔리드
+    pd3dDevice->CreateRasterizerState(&rd, &g_pDefaultRSSolid);//솔리드는 가득차있다
+
+
 	return true;
 }
 bool KDxState::Release()
 {
 	if (g_pDefaultSSMirror)g_pDefaultSSMirror->Release();
     if (g_pDefaultSSWrap)g_pDefaultSSWrap->Release();
+    if (g_pDefaultRsWireFrame)g_pDefaultRsWireFrame->Release();
+    if (g_pDefaultRSSolid)g_pDefaultRSSolid->Release();
 	return true;
 }

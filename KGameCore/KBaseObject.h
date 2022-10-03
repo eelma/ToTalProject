@@ -2,13 +2,14 @@
 #include "KDevice.h"
 #include"KTextureManager.h"
 #include"KShaderManager.h"
+#include"KCollision.h"
 struct SimpleVertex
 {
 	KVector    p;
 	KVector4D  c;
 	KVector2D  t;
 };
-
+//dx와 관련된 기능만 있음
 class KBaseObject
 {
 public:
@@ -29,6 +30,7 @@ public:
 
 	std::vector<SimpleVertex>    m_VertexList;
 	std::vector<DWORD>			 m_IndexList;
+	KRect m_rtCollision;
 public:
 	virtual bool		Create(
 		ID3D11Device* pd3dDevice,// 디바이스 객체

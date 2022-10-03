@@ -18,7 +18,7 @@ bool KSceneInGame::Init()
    // -1 ~ +1
 	m_pUser = new KUser2D;
 	m_pUser->Create(m_pd3dDevice, m_pImmediateContext,
-		L"../../data/shader/DefaultShapeMask.txt",
+		L"DefaultShapeMask.txt",
 		L"../../data/bitmap1.bmp");
 	m_pUser->SetMask(pMaskTex);
 	m_pUser->m_fSpeed = 300.0f;
@@ -30,7 +30,7 @@ bool KSceneInGame::Init()
 	{
 		KNpc2D* npc = new KNpc2D;
 		npc->Create(m_pd3dDevice, m_pImmediateContext,
-			L"../../data/shader/DefaultShapeMask.txt",
+			L"DefaultShapeMask.txt",
 			L"../../data/bitmap1.bmp");
 		if (iNpc % 2 == 0)
 		{
@@ -92,26 +92,43 @@ bool KSceneInGame::Render()
 	m_pImmediateContext->PSSetShaderResources(1, 1,
 		&m_pUser->m_pMaskTex->m_pTextureSRV);
 	m_pUser->PostRender();
+	//미니맵을 뿌리고
+	DrawMiniMap(700, 0);
+	return true;
+}
+void KSceneInGame::DrawMiniMap(UINT x, UINT y, UINT w, UINT h)
+{
+	D3D11_VIEWPORT saveViewPort[15];
+	UINT SaveNumView = 1;
+	//a라는 작업자가 현재의 상태를 저장
+	m_pImmediateContext->RSGetViewports(&SaveNumView, saveViewPort);
+
 	D3D11_VIEWPORT vp;
-	vp.Width = 100;
-	vp.Height = 100;
-	vp.TopLeftX = 0;
-	vp.TopLeftY = 500;
+	vp.Width = w;
+	vp.Height = h;
+	vp.TopLeftX = x;
+	vp.TopLeftY = y;
 	vp.MinDepth = 0.0f;
 	vp.MaxDepth = 1.0f;
+	//뷰포트 변경
 	m_pImmediateContext->RSSetViewports(1, &vp);
 
+	KVector2D vSize = { 2000,2000 };
+	m_pMap->SetCameraSize(vSize);
+	m_pMap->SetCameraPos(m_vCamera);
+	m_pMap->Frame();
 	m_pMap->Render();
-	for (int iObj = 0; iObj < m_pNpcList.size(); iObj++)
+	//뿌리고
+	for (int i = 0; i < m_pNpcList.size(); i++)
 	{
-		m_pNpcList[iObj]->Render();
+		m_pNpcList[i]->SetCameraSize(vSize);
+		m_pNpcList[i]->SetCameraPos(m_vCamera);
+		m_pNpcList[i]->Frame();
+		m_pNpcList[i]->Render();
 	}
+	//다시 복원
+	m_pImmediateContext->RSSetViewports(SaveNumView, saveViewPort);
 
-	m_pUser->PreRender();
-	m_pImmediateContext->PSSetShaderResources(1, 1,
-		&m_pUser->m_pMaskTex->m_pTextureSRV);
-	m_pUser->PostRender();
-	return true;
 }
 bool KSceneInGame::Release()
 {

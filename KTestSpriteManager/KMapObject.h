@@ -1,13 +1,10 @@
 #pragma once
-#include"KBaseObject.h"
-#include"KInput.h"
-class KMapObject: public KBaseObject
+#include "KObject2D.h"
+class KMapObject : public KObject2D
 {
+	bool   FrameScroll();
 public:
-	KVector2D m_vUser;
-public:
-	bool Frame();
-	bool Render();
-
+	bool   Frame() override;
+	void  UpdateVertexBuffer() override;
 };
 

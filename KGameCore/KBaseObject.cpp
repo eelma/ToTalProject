@@ -254,6 +254,7 @@ bool KBaseObject::PostRender()
         m_pImmediateContext->Draw(m_VertexList.size(), 0);
     else
         m_pImmediateContext->DrawIndexed(m_IndexList.size(), 0, 0);
+
     return true;
 }bool KBaseObject::Render()
 {
