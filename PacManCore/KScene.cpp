@@ -38,7 +38,7 @@ bool KScene::Init()
 	stac->Create(m_pd3dDevice, m_pImmediateContext,
 		L"../../data/shader/DefaultShapeMask.txt",
 		L"../../data/simple.png");
-	stac->SetRect({ 100,100,800,20 });
+	stac->SetRect({ 0,100,800,20 });
 	stac->SetPosition({	400 , 5 });
 	stac->SetMask(statictex);
 	m_StaticList.push_back(stac);
@@ -76,6 +76,21 @@ bool KScene::Frame()
 		npc->SetCameraSize(vSize);
 		npc->SetCameraPos(m_vCamera);
 		npc->Frame();
+	}
+
+	for (auto nono = m_StaticList.begin(); nono != m_StaticList.end();)
+	{
+		if (KCollision::RectToRect((*nono)->m_rtCollision, m_pUser->m_rtCollision))
+		{
+			if (m_pUser->m_rt.top == (*nono)->m_rt.bottom)
+			{
+				/*m_pUser->m_fSpeed = 0;
+				continue;*/
+			}
+			
+			continue;
+		}
+		else nono++;
 	}
 
 	for (auto src = m_pNpcList.begin(); src != m_pNpcList.end();)
