@@ -1,51 +1,66 @@
 #pragma once
-#include"KGameCore.h"
-#include"KBaseObject.h"
-#include"KUser2D.h"
-#include"KMapObject.h"
-
-typedef vector<RECT> RECT_ARRAY;//렉트 배열
-
-class KSprite : public KObject2D
+#include "KGameCore.h"
+#include "KUser2D.h"
+#include "KMapObject.h"
+#include "KSpriteManager.h"
+struct KEffect
 {
+	KVector2D   m_vPos;
+	KVector2D   m_vDir = { 0,1 };
+	float		m_fLifeTime = 1.33f;
+	float		m_fSpeed = 300.0f;
+	UINT		m_iIndex = 0;
+	UINT		m_iMaxIndex = 1;
+	float		m_fEffectTimer = 0.0f;
+	KRect		m_tRect = { 0,0,0,0 };
+	float		m_fStep = 1.0f;
+	KRect		m_rtCollision;
+	KSprite* m_pSprite = nullptr;//리소스
 
-	
-public:
-	void SetPosition(KVector2D vPos)
+	KRect convert(RECT rt)
 	{
-		m_vPos = vPos;//얘가 센터값
-		KVector2D	vDrawSize;
-		vDrawSize.x = m_rtInit.w / 2.0f;
-		vDrawSize.y = m_rtInit.h / 2.0f;
-		m_rtCollision.Set(
-			vPos.x - vDrawSize.x,
-			vPos.y - vDrawSize.y,
-			m_rtInit.w,
-			m_rtInit.h);
-		// 0  ~ 800   -> 0~1 ->  -1 ~ +1
-		m_vDrawPos.x = (m_rtCollision.x1 / g_rtClient.right) * 2.0f - 1.0f;
-		m_vDrawPos.y = -((m_rtCollision.y1 / g_rtClient.bottom) * 2.0f - 1.0f);
-		m_vDrawSize.x = (m_rtInit.w / g_rtClient.right) * 2;
-		m_vDrawSize.y = (m_rtInit.h / g_rtClient.bottom) * 2;
-		UpdateVertexBuffer();
+		KRect tRt;
+		tRt.x1 = rt.left;
+		tRt.y1 = rt.top;
+		tRt.w = rt.right;
+		tRt.h = rt.bottom;
+		return tRt;
 	}
-
+	bool Update()
+	{
+		m_fEffectTimer += g_fSecondPerFrame;
+		if (m_fStep <= m_fEffectTimer)
+		{
+			m_fEffectTimer -= m_fStep;
+			m_iIndex++;
+		}
+		if (m_iIndex >= m_iMaxIndex)
+		{
+			return false;
+		}
+		RECT rt = m_pSprite->m_uvArray[m_iIndex];
+		m_tRect = convert(rt);
+		KVector2D vAdd = m_vDir * m_fSpeed * g_fSecondPerFrame;
+		m_vPos = m_vPos + vAdd;
+		m_rtCollision.x1 = m_vPos.x;
+		m_rtCollision.y1 = m_vPos.y;
+		return true;
+	}
 };
 class Sample : public KGameCore
 {
+	KVector2D		m_vCamera;
 	KMapObject* m_pMap;
-	KVector2D m_vCamera;
 	KUser2D* m_pUser;
-	KSprite* m_pObject;
-	vector<RECT_ARRAY>m_rtSpriteList;//2차원 배열
-
+	// 0 : 50, 1: 30, 2: 20
+	list<KEffect*>		m_pEffectList;
 public:
-	bool GameDataLoad(const TCHAR* pszLoad);
-	virtual bool Init()override;
-	virtual bool Frame()override;
-	virtual bool Render()override;
-	virtual bool Release()override;
-	//virtual bool Run()override;
-
+	void AddEffect();
+	//bool GameDataLoad(const TCHAR* pszLoad);
+	virtual bool		Init() override;
+	virtual bool		Frame() override;
+	virtual bool		Render() override;
+	virtual bool		Release() override;
 };
+
 

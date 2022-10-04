@@ -11,16 +11,16 @@ KCollisionType KCollision::RectToRect(KRect& a, KRect& b)
     fMinY = a.y1 < b.y1 ? a.y1 : b.y1;
     fMaxX = a.x2 > b.x2 ? a.x2 : b.x2;
     fMaxY = a.y2 > b.y2 ? a.y2 : b.y2;
-    //  가로 판정
+    //  가로 판정   
     if ((a.w + b.w) >= (fMaxX - fMinX))
     {
         //  세로 판정
         if ((a.h + b.h) >= (fMaxY - fMinY))
         {
-            // 교차한다. 교집합
+            // 교차한다. 교집합  
             float x, y, x2, y2;
             KRect Intersect;
-            x = a.x1 > b.x1 ? a.x1 : b.y1;
+            x = a.x1 > b.x1 ? a.x1 : b.x1;
             y = a.y1 > b.y1 ? a.y1 : b.y1;
             x2 = a.x2 < b.x2 ? a.x2 : b.x2;
             y2 = a.y2 < b.y2 ? a.y2 : b.y2;
@@ -29,7 +29,9 @@ KCollisionType KCollision::RectToRect(KRect& a, KRect& b)
             {
                 return KCollisionType::RECT_IN;
             }
-            return KCollisionType::RECT_OVERLAP;
+
+                return KCollisionType::RECT_OVERLAP;
+            
         }
     }
     return KCollisionType::RECT_OUT;

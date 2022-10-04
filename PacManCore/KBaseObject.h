@@ -2,6 +2,7 @@
 #include "KDevice.h"
 #include"KTextureManager.h"
 #include"KShaderManager.h"
+#include"KCollision.h"
 struct SimpleVertex
 {
 	KVector    p;
@@ -26,6 +27,9 @@ public:
 	ID3D11PixelShader* m_pPS;
 	ID3DBlob* m_pVSCode = nullptr;
 	ID3DBlob* m_pPSCode = nullptr;
+	KRect m_rtCollision;
+
+
 
 	std::vector<SimpleVertex>    m_VertexList;
 	std::vector<DWORD>			 m_IndexList;

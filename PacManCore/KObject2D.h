@@ -32,4 +32,14 @@ public:
 		m_pMaskTex = pMaskTex;
 	}
 
+
+public:
+	KVector2D m_vCameraPos;
+	KVector2D m_vViewSize;
+	void SetCameraPos(KVector2D vCamera) { m_vCameraPos = vCamera; }
+	void SetCameraSize(KVector2D vSize) { m_vViewSize = vSize; }
+	void ScreenToNDC();
+	void ScreenToCamera(KVector2D vCameraPos,
+		KVector2D vViewPort = { 2000.0f,2000.0f });
+
 };

@@ -29,7 +29,7 @@ bool Sample::Render()
 	
 	if (I_Input.GetKey('V') == KEY_HOLD)
 	{
-		m_pImmediateContext->RSSetState(KDxState::g_pDefaultRsWireFrame);
+		m_pImmediateContext->RSSetState(KDxState::g_pDefaultRSWireFrame);
 	}
 	
 	m_pCurrentScene->Render();

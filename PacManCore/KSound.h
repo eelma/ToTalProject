@@ -25,6 +25,7 @@ public:
 	void VolumeDown(float fVolume = 0.1f);
 	bool Play(bool bLoop = false);
 	bool PlayEffect(bool bLoop = false);
+	bool PlayEffect2(bool bLoop = false);
 	void Stop();
 	void SetLoop(bool bLoop = false);
 	bool IsPlay();

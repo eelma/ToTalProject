@@ -10,6 +10,9 @@ bool Sample::Init()
 	m_pTitle->Init();
 	m_pInGame->Init();
 
+	
+	
+
 	m_pCurrentScene = m_pTitle;
 	//커렌트를 타이틀로하면 지형만 뿌려진다
 
@@ -18,25 +21,23 @@ bool Sample::Init()
 	{
 		m_pBGSound = I_Sound.Load(L"../../data/sound/PacMan/PacMan1987.mp3");
 	}
-	m_pShot = I_Sound.GetPtr(L"GunShot.mp3");
+	m_pShot = I_Sound.GetPtr(L"pacman_chomp.wav");
 	if (m_pShot == nullptr)
 	{
-		m_pShot = I_Sound.Load(L"../../data/sound/GunShot.mp3");
+		m_pShot = I_Sound.Load(L"../../data/sound/PacMan/pacman_chomp.wav");
 	}
-	m_pEffect = I_Sound.GetPtr(L"romance.mid");
+	/*m_pEffect = I_Sound.GetPtr(L"romance.mid");
 	if (m_pEffect == nullptr)
 	{
 		m_pEffect = I_Sound.Load(L"../../data/sound/romance.mid");
-	}
+	}*/
 	m_pBGSound->Play(true);
 	return true;
 }
 bool Sample::Frame()
 {
-	if (I_Input.GetKey(VK_F1) == KEY_PUSH)
-	{
-		m_pCurrentScene = m_pInGame;
-	}
+	KeyDown();
+	
 	m_pCurrentScene->Frame();
 
 	//I_Sound.Frame();
@@ -45,6 +46,8 @@ bool Sample::Frame()
 }
 bool Sample::Render()
 {
+	m_Writer.Render();
+	
 	m_pCurrentScene->Render();
 	m_Writer.Draw(0, 100, m_pBGSound->m_szBuffer);
 
@@ -54,10 +57,35 @@ bool Sample::Release()
 {
 	m_pTitle->Release();
 	m_pInGame->Release();
-
+	
 	delete m_pTitle;
+
 	delete m_pInGame;
 	return true;
+}
+void Sample::KeyDown()
+{
+	if (I_Input.GetKey('T') == KEY_PUSH)
+	{
+		m_pCurrentScene = m_pInGame;
+	}
+	if (I_Input.GetKey(VK_INSERT) == KEY_PUSH)
+	{
+		m_pBGSound->VolumeUp();
+	}
+	if (I_Input.GetKey(VK_HOME) == KEY_PUSH)
+	{
+		m_pBGSound->VolumeDown();
+	}
+	if (I_Input.GetKey('W') == KEY_HOLD || I_Input.GetKey('A') == KEY_HOLD || I_Input.GetKey('S') == KEY_HOLD || I_Input.GetKey('D') == KEY_HOLD)
+	{
+		m_pShot->PlayEffect2();
+	}
+	if (I_Input.GetKey('Q') == KEY_PUSH)
+	{
+		m_pBGSound->Paused();
+	}
+
 }
 
 GAME_RUN(KTestTexture, 800, 1000)

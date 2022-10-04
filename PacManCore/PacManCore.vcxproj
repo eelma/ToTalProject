@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -169,15 +169,20 @@ copy "PacManCore_R.lib" "..\\..\\lib\\"</Command>
     <ClInclude Include="KDevice.h" />
     <ClInclude Include="KGameCore.h" />
     <ClInclude Include="KInput.h" />
+    <ClInclude Include="KMapObject.h" />
+    <ClInclude Include="KNpc2D.h" />
     <ClInclude Include="KObject2D.h" />
+    <ClInclude Include="KScene.h" />
     <ClInclude Include="KShader.h" />
     <ClInclude Include="KShaderManager.h" />
     <ClInclude Include="KSound.h" />
     <ClInclude Include="KSoundManager.h" />
+    <ClInclude Include="KStaticObject.h" />
     <ClInclude Include="KStd.h" />
     <ClInclude Include="KTexture.h" />
     <ClInclude Include="KTextureManager.h" />
     <ClInclude Include="KTimer.h" />
+    <ClInclude Include="KUser2D.h" />
     <ClInclude Include="KVector.h" />
     <ClInclude Include="KWindow.h" />
     <ClInclude Include="KWriter.h" />
@@ -188,14 +193,19 @@ copy "PacManCore_R.lib" "..\\..\\lib\\"</Command>
     <ClCompile Include="KDevice.cpp" />
     <ClCompile Include="KGameCore.cpp" />
     <ClCompile Include="KInput.cpp" />
+    <ClCompile Include="KMapObject.cpp" />
+    <ClCompile Include="KNpc2D.cpp" />
     <ClCompile Include="KObject2D.cpp" />
+    <ClCompile Include="KScene.cpp" />
     <ClCompile Include="KShader.cpp" />
     <ClCompile Include="KShaderManager.cpp" />
     <ClCompile Include="KSound.cpp" />
     <ClCompile Include="KSoundManager.cpp" />
+    <ClCompile Include="KStaticObject.cpp" />
     <ClCompile Include="KTexture.cpp" />
     <ClCompile Include="KTextureManager.cpp" />
     <ClCompile Include="KTimer.cpp" />
+    <ClCompile Include="KUser2D.cpp" />
     <ClCompile Include="KVector.cpp" />
     <ClCompile Include="KWindow.cpp" />
     <ClCompile Include="KWriter.cpp" />

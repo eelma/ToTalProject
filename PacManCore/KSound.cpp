@@ -31,6 +31,19 @@ bool		KSound::PlayEffect(bool bLoop)
 	}
 	return true;
 }
+bool		KSound::PlayEffect2(bool bLoop)
+{
+	FMOD_RESULT hr =
+		m_pSystem->playSound(m_pSound, nullptr, false,
+			&m_pChannel);
+	if (hr == FMOD_OK)
+	{
+		m_fVolume = 0.2f;
+		m_pChannel->setVolume(m_fVolume);
+		//SetLoop(bLoop);
+	}
+	return true;
+}
 bool		KSound::Play(bool bLoop)
 {
 	if (IsPlay() == false)

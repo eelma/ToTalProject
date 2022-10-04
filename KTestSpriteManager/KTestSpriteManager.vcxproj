@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -151,11 +151,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="KMapObject.h" />
+    <ClInclude Include="KSprite.h" />
+    <ClInclude Include="KSpriteManager.h" />
     <ClInclude Include="KUser2D.h" />
     <ClInclude Include="Sample.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KMapObject.cpp" />
+    <ClCompile Include="KSprite.cpp" />
+    <ClCompile Include="KSpriteManager.cpp" />
     <ClCompile Include="KUser2D.cpp" />
     <ClCompile Include="Sample.cpp" />
   </ItemGroup>

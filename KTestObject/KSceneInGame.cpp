@@ -18,7 +18,7 @@ bool KSceneInGame::Init()
    // -1 ~ +1
 	m_pUser = new KUser2D;
 	m_pUser->Create(m_pd3dDevice, m_pImmediateContext,
-		L"DefaultShapeMask.txt",
+		L"../../data/shader/DefaultShapeMask.txt",
 		L"../../data/bitmap1.bmp");
 	m_pUser->SetMask(pMaskTex);
 	m_pUser->m_fSpeed = 300.0f;
@@ -30,7 +30,7 @@ bool KSceneInGame::Init()
 	{
 		KNpc2D* npc = new KNpc2D;
 		npc->Create(m_pd3dDevice, m_pImmediateContext,
-			L"DefaultShapeMask.txt",
+			L"../../data/shader/DefaultShapeMask.txt",
 			L"../../data/bitmap1.bmp");
 		if (iNpc % 2 == 0)
 		{

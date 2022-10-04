@@ -47,14 +47,28 @@ void KObject2D::SetPosition(KVector2D vPos)
     m_vPos = vPos;
     //0~800 -> 0~1-> -1~+1
     //ndcÁÂÇ¥
-    m_vDrawPos.x = (vPos.x / g_rtClient.right) * 2.0f - 1.0f;
-    m_vDrawPos.y = -((vPos.y / g_rtClient.bottom) * 2.0f - 1.0f);
-    m_vDrawSize.x = (m_rtInit.w / g_rtClient.right) * 2;
-    m_vDrawSize.y = ((m_rtInit.h / g_rtClient.bottom)) * 2;
+    ScreenToNDC();
     UpdateVertexBuffer();
 }
 bool KObject2D::Frame()
 {
 
     return true;
+}
+
+void  KObject2D::ScreenToNDC()
+{
+    KVector2D	vDrawSize;
+    vDrawSize.x = m_rtInit.w / 2.0f;
+    vDrawSize.y = m_rtInit.h / 2.0f;
+    m_rtCollision.Set(
+        m_vPos.x - vDrawSize.x,
+        m_vPos.y - vDrawSize.y,
+        m_rtInit.w,
+        m_rtInit.h);
+    // 0  ~ 800   -> 0~1 ->  -1 ~ +1 
+    m_vDrawPos.x = (m_rtCollision.x1 / g_rtClient.right) * 2.0f - 1.0f;
+    m_vDrawPos.y = -((m_rtCollision.y1 / g_rtClient.bottom) * 2.0f - 1.0f);
+    m_vDrawSize.x = (m_rtInit.w / g_rtClient.right) * 2;
+    m_vDrawSize.y = (m_rtInit.h / g_rtClient.bottom) * 2;
 }
