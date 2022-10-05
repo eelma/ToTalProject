@@ -1,5 +1,5 @@
 #include "KTimer.h"
-#include"KScene.h"
+
 float g_fGameTimer = 0.0f;
 float g_fSecondPerFrame = 10.0f;
 
@@ -12,7 +12,7 @@ bool		KTimer::Init()
 }
 
 //심각도	코드	설명	프로젝트	파일	줄	비표시 오류(Suppression) 상태
-//오류	LNK2019	__imp_timeGetTime"public: virtual bool __cdecl KTimer::Frame(void)" (? Frame@KTimer@@UEAA_NXZ) 함수에서 참조되는 확인할 수 없는 외부 기호	KTestTimer	E : \Project\KTestTimer\KTimer.obj	1
+//오류	LNK2019	 (? Frame@KTimer@@UEAA_NXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
 //cpp나 라이브러리 없을때 뜬다
 //있는데도 문제가 생기면 코드에 문제가 있다
 bool		KTimer::Frame()
@@ -41,8 +41,6 @@ bool		KTimer::Frame()
 bool		KTimer::Render()
 {
     m_szTimer = to_wstring(m_fGameTimer);
-    m_szTimer += L" ";
-    m_szTimer = to_wstring(score);
     m_szTimer += L" ";
     m_szTimer += to_wstring(m_iFPS);
     m_szTimer += L"\n";

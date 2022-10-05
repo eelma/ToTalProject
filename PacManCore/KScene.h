@@ -4,6 +4,7 @@
 #include"KUser2D.h"
 #include"KNpc2D.h"
 #include"KStaticObject.h"
+#include"KWindow.h"
 static float score = 0;
 class KScene:public KSingleTone<KScene>
 {

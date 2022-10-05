@@ -106,6 +106,11 @@ bool KScene::Frame()
 			score += 200.0f;
 			delete* src;
 			src = m_pNpcList.erase(src);
+			if (score == 1000)
+			{
+				int MessageBox(HWND hwnd, LPCTSTR IpText, LPCTSTR IpCaption, UINT nType);
+				MessageBox(g_hWnd,L"ªΩ¿Ã¡ˆ∑’",L"∞‘¿”≥°", MB_OK);
+			}
 			continue;
 		}
 		else src++;
