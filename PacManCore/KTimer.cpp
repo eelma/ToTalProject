@@ -1,5 +1,5 @@
 #include "KTimer.h"
-
+#include"KScene.h"
 float g_fGameTimer = 0.0f;
 float g_fSecondPerFrame = 10.0f;
 
@@ -41,6 +41,8 @@ bool		KTimer::Frame()
 bool		KTimer::Render()
 {
     m_szTimer = to_wstring(m_fGameTimer);
+    m_szTimer += L" ";
+    m_szTimer = to_wstring(score);
     m_szTimer += L" ";
     m_szTimer += to_wstring(m_iFPS);
     m_szTimer += L"\n";

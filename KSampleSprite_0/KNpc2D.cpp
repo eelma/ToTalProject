@@ -31,6 +31,7 @@ bool KNpc2D::Frame()
         vPos.y = 0.0f;
         m_vDir.y *= -1.0f;
     }
+    
 
     SetPosition(vPos);
     return true;

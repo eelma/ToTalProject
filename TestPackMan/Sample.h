@@ -14,7 +14,7 @@ public:
 	KScene* m_pCurrentScene = nullptr;
 
 	KSound* m_pBGSound = nullptr;
-	KSound* m_pShot = nullptr;
+	KSound* m_move = nullptr;
 	KSound* m_pEffect = nullptr;
 	
 public:

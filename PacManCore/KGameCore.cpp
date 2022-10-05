@@ -82,7 +82,10 @@ bool        KGameCore::Run()
 		{
 			KCoreFrame();
 			KCoreRender();
-
+			if (score == 1000)
+			{
+				KWindow::Run() == false;
+			}
 		}
 		else
 		{

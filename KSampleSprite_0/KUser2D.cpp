@@ -19,6 +19,7 @@ bool KUser2D::Frame()
     {
         vPos.x += 1.0f * g_fSecondPerFrame * m_fSpeed;
     }
+    
     SetPosition(vPos);
     return true;
 }

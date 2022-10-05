@@ -6,7 +6,6 @@ bool		KScene::Create(
 	std::wstring shadername)
 {
 
-
 	m_pd3dDevice = pd3dDevice;
 	m_pImmediateContext = pImmediateContext;
 
@@ -16,7 +15,6 @@ bool KScene::Init()
 {
 	wstring shaderfilename = L"../../data/shader/DefaultShape.txt";
 	KTexture* pMaskTex = I_Tex.Load(L"../../data/PacManmask.bmp");
-	KTexture* statictex = I_Tex.Load(L"../../data/simple.bmp");
 
 	m_pMap = new KMapObject;
 	m_pMap->Create(m_pd3dDevice,
@@ -34,36 +32,9 @@ bool KScene::Init()
 	m_pUser->SetPosition({ g_rtClient.right / 2.0f,g_rtClient.bottom - 100.0f });
 
 	InitNPC();
-	KStaticObject* stac = new KStaticObject;
-	stac->Create(m_pd3dDevice, m_pImmediateContext,
-		L"../../data/shader/DefaultShapeMask.txt",
-		L"../../data/simple.png");
-	stac->SetRect({ 0,100,800,20 });
-	stac->SetPosition({	400 , 5 });
-	stac->SetMask(statictex);
-	m_StaticList.push_back(stac);
-		
+	InitMapObj();
 
-	/*for (int iObj = 0; iObj < 1; iObj++)
-	{
-		KBaseObject* pObj = new KBaseObject;
-		pObj->Create(m_pd3dDevice,
-			m_pImmediateContext,
-			shaderfilename,
-			L"../../data/air.bmp"
-			);
-		m_ObjectList.push_back(pObj);
-	}*/
-	/*for (int iObj = 0; iObj < 10; iObj++)
-	{
-		KBaseObject* pObj = new KBaseObject;
-		pObj->Create(m_pd3dDevice,
-			m_pImmediateContext,
-			L"../../data/shader/DefaultShape.txt",
-			L"../../data/bitmap1.bmp"
-			);
-		m_ObjectList.push_back(pObj);
-	}*/
+
 	return true;
 }
 bool KScene::Frame()
@@ -82,14 +53,49 @@ bool KScene::Frame()
 	{
 		if (KCollision::RectToRect((*nono)->m_rtCollision, m_pUser->m_rtCollision))
 		{
-			if (m_pUser->m_rt.top == (*nono)->m_rt.bottom)
+			if (m_pUser->m_rtCollision.y1 <= ((*nono)->m_rtCollision.y1 + (*nono)->m_rtCollision.h)&& (m_pUser->m_rtCollision.y1 + m_pUser->m_rtCollision.h)>((*nono)->m_rtCollision.y1 + (*nono)->m_rtCollision.h))
 			{
-				/*m_pUser->m_fSpeed = 0;
-				continue;*/
+				if ((m_pUser->m_rtCollision.x1 + m_pUser->m_rtCollision.w) < ((*nono)->m_rtCollision.x1 + (*nono)->m_rtCollision.w))
+				{
+					if ((m_pUser->m_rtCollision.x1) > ((*nono)->m_rtCollision.x1))
+					{
+
+						m_pUser->m_vPos.y = (*nono)->m_rtCollision.y1 + (*nono)->m_rtCollision.h + 20.0f;
+						m_pUser->Frame();
+						continue;
+					}
+				}
+			}else
+			if ((m_pUser->m_rtCollision.y1+ m_pUser->m_rtCollision.h) >= (*nono)->m_rtCollision.y1)
+			{
+				if ((m_pUser->m_rtCollision.x1 + m_pUser->m_rtCollision.w) < ((*nono)->m_rtCollision.x1 + (*nono)->m_rtCollision.w))
+				{
+					if ((m_pUser->m_rtCollision.x1) > ((*nono)->m_rtCollision.x1))
+					{
+
+						m_pUser->m_vPos.y = (*nono)->m_rtCollision.y1 - 20.0f;
+						m_pUser->Frame();
+						continue;
+					}
+				}
+				
+			}
+			if ((m_pUser->m_rtCollision.x1 + m_pUser->m_rtCollision.w) >= ((*nono)->m_rtCollision.x1)&& (m_pUser->m_rtCollision.x1 + m_pUser->m_rtCollision.w) <= ((*nono)->m_rtCollision.x1 + (*nono)->m_rtCollision.w))
+			{
+				m_pUser->m_vPos.x = (*nono)->m_rtCollision.x1-20.0f;
+				m_pUser->Frame();
+				continue;
+			}else
+			if ((m_pUser->m_rtCollision.x1) <= ((*nono)->m_rtCollision.x1 + (*nono)->m_rtCollision.w))
+			{
+				m_pUser->m_vPos.x = (*nono)->m_rtCollision.x1 + (*nono)->m_rtCollision.w + 20.0f;
+				m_pUser->Frame();
+				continue;
 			}
 			
-			continue;
+			
 		}
+			
 		else nono++;
 	}
 
@@ -97,34 +103,11 @@ bool KScene::Frame()
 	{
 		if (KCollision::RectToRect((*src)->m_rtCollision, m_pUser->m_rtCollision))
 		{
+			score += 200.0f;
 			delete* src;
 			src = m_pNpcList.erase(src);
 			continue;
 		}
-
-		/*bool bFlag = false;
-		for (auto dest = m_pNpcList.begin(); dest != m_pNpcList.end();)
-		{
-			if (src == dest)
-			{
-				dest++;
-				continue;
-			}
-
-			if (KCollision::RectToRect((*src)->m_rtCollision, (*dest)->m_rtCollision))
-			{
-				delete* src;
-				delete* dest;
-				bFlag = true;
-				dest = m_pNpcList.erase(dest);
-			}
-			else
-			{
-				dest++;
-			}
-
-		}
-		if (bFlag)src = m_pNpcList.erase(src);*/
 		else src++;
 	}
 	
@@ -137,7 +120,7 @@ bool KScene::Frame()
 	{
 		data->Frame();
 	}
-
+	
 	return true;
 }
 bool KScene::Render()
@@ -309,4 +292,29 @@ void KScene::InitNPC()
 		m_pNpcList.push_back(npc);
 	}
 	
+}
+void KScene::InitMapObj()
+{
+	wstring shaderfilename = L"../../data/shader/DefaultShape.txt";
+	KTexture* pMaskTex = I_Tex.Load(L"../../data/PacManmask.bmp");
+	KTexture* statictex = I_Tex.Load(L"../../data/simple.bmp");
+
+	KStaticObject* stac = new KStaticObject;
+	stac->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/simple.png");
+	stac->SetRect({ 0,100,800,20 });
+	stac->SetPosition({ 400 , 5 });
+	stac->SetMask(statictex);
+	m_StaticList.push_back(stac);
+
+	KStaticObject* stac2 = new KStaticObject;
+	stac2->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/simple.png");
+	stac2->SetRect({ 100,100,100,100 });
+	stac2->SetPosition({ 400 , 400 });
+	stac2->SetMask(statictex);
+	m_StaticList.push_back(stac2);
+
 }

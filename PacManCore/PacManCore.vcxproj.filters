@@ -18,6 +18,10 @@
     <ClCompile Include="KWindow.cpp" />
     <ClCompile Include="KWriter.cpp" />
     <ClCompile Include="KStaticObject.cpp" />
+    <ClCompile Include="KMapObject.cpp" />
+    <ClCompile Include="KNpc2D.cpp" />
+    <ClCompile Include="KScene.cpp" />
+    <ClCompile Include="KUser2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KBaseObject.h" />
@@ -38,6 +42,10 @@
     <ClInclude Include="KWindow.h" />
     <ClInclude Include="KWriter.h" />
     <ClInclude Include="KStaticObject.h" />
+    <ClInclude Include="KMapObject.h" />
+    <ClInclude Include="KNpc2D.h" />
+    <ClInclude Include="KScene.h" />
+    <ClInclude Include="KUser2D.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\data\shader\DefaultShape.txt" />

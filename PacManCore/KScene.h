@@ -4,7 +4,7 @@
 #include"KUser2D.h"
 #include"KNpc2D.h"
 #include"KStaticObject.h"
-
+static float score = 0;
 class KScene:public KSingleTone<KScene>
 {
 public:
@@ -20,11 +20,12 @@ public:
 	virtual bool		Create(
 		ID3D11Device* pd3dDevice,// 디바이스 객체
 		ID3D11DeviceContext* pImmediateContext,
-		std::wstring shadername);
+		wstring shadername);
 	void InitNPC();
+	void InitMapObj();
 public:
 	//std::vector<KBaseObject*>	m_pNpcList;
-	std::vector<KTexture*>		m_ObjectTextureList;
+	vector<KTexture*>		m_ObjectTextureList;
 	list<KNpc2D*> m_pNpcList;
 	
 	KVector2D		m_vCamera;
