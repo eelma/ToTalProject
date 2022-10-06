@@ -103,16 +103,16 @@ bool KScene::Frame()
 	{
 		if (KCollision::RectToRect((*src)->m_rtCollision, m_pUser->m_rtCollision))
 		{
-			score += 200.0f;
+			score += 100.0f;
 			delete* src;
 			src = m_pNpcList.erase(src);
-			if (score == 1000)
+			if (score == 3000)
 			{
 				
-				/*if (MessageBox(g_hWnd, L"뻥이지롱", L"게임끝", MB_OK) == IDOK)
+				if (MessageBox(g_hWnd, L"게임끝", L"OK", MB_OK) == IDOK)
 				{
 					DestroyWindow(g_hWnd);
-				}*/
+				}
 				
 
 			}
@@ -141,10 +141,10 @@ bool KScene::Render()
 	{
 		data->Render();
 	}
-	for (auto data : m_StaticList)
+	/*for (auto data : m_StaticList)
 	{
 		data->Render();
-	}
+	}*/
 	m_pUser->PreRender();
 	//1번 레지스터에 마스크 이미지를 넘길 수 있다
 	m_pImmediateContext->PSSetShaderResources(1, 1, &m_pUser->m_pMaskTex->m_pTextureSRV);
@@ -352,5 +352,68 @@ void KScene::InitMapObj()
 	stac4->SetPosition({ 400 , 60 });
 	stac4->SetMask(statictex);
 	m_StaticList.push_back(stac4);
+
+	KStaticObject* stac5 = new KStaticObject;
+	stac5->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac5->SetRect({ 0,0,40,400 });
+	stac5->SetPosition({ (float)g_rtClient.right , 150 });
+	stac5->SetMask(statictex);
+	m_StaticList.push_back(stac5);
+
+	KStaticObject* stac6 = new KStaticObject;
+	stac6->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac6->SetRect({ 50,150,200,130 });
+	stac6->SetPosition({ 740 , 370 });
+	stac6->SetMask(statictex);
+	m_StaticList.push_back(stac6);
+
+	KStaticObject* stac7 = new KStaticObject;
+	stac7->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac7->SetRect({ 50,150,200,130 });
+	stac7->SetPosition({ 740 , 570 });
+	stac7->SetMask(statictex);
+	m_StaticList.push_back(stac7);
+
+	KStaticObject* stac8 = new KStaticObject;
+	stac8->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac8->SetRect({ 0,0,120,130 });
+	stac8->SetPosition({ 80 , 570 });
+	stac8->SetMask(statictex);
+	m_StaticList.push_back(stac8);
+
+	KStaticObject* stac9 = new KStaticObject;
+	stac9->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac9->SetRect({ 0,0,40,400 });
+	stac9->SetPosition({ 5 , 800 });
+	stac9->SetMask(statictex);
+	m_StaticList.push_back(stac9);
+	
+	KStaticObject* stac10 = new KStaticObject;
+	stac10->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac10->SetRect({ 0,0,40,400 });
+	stac10->SetPosition({ (float)g_rtClient.right, 800 });
+	stac10->SetMask(statictex);
+	m_StaticList.push_back(stac10);
+
+	KStaticObject* stac11 = new KStaticObject;
+	stac11->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac11->SetRect({ 0,100,800,20 });
+	stac11->SetPosition({ 400 , (float)g_rtClient.bottom });
+	stac11->SetMask(statictex);
+	m_StaticList.push_back(stac11);
 
 }
