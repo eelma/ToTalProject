@@ -175,6 +175,7 @@ copy "PacManCore_R.lib" "..\\..\\lib\\"</Command>
     <ClInclude Include="KNpc2D.h" />
     <ClInclude Include="KObject2D.h" />
     <ClInclude Include="KScene.h" />
+    <ClInclude Include="KSceneTitle.h" />
     <ClInclude Include="KShader.h" />
     <ClInclude Include="KShaderManager.h" />
     <ClInclude Include="KSound.h" />
@@ -199,6 +200,7 @@ copy "PacManCore_R.lib" "..\\..\\lib\\"</Command>
     <ClCompile Include="KNpc2D.cpp" />
     <ClCompile Include="KObject2D.cpp" />
     <ClCompile Include="KScene.cpp" />
+    <ClCompile Include="KSceneTitle.cpp" />
     <ClCompile Include="KShader.cpp" />
     <ClCompile Include="KShaderManager.cpp" />
     <ClCompile Include="KSound.cpp" />

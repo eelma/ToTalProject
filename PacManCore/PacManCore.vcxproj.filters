@@ -22,6 +22,7 @@
     <ClCompile Include="KNpc2D.cpp" />
     <ClCompile Include="KScene.cpp" />
     <ClCompile Include="KUser2D.cpp" />
+    <ClCompile Include="KSceneTitle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KBaseObject.h" />
@@ -46,6 +47,7 @@
     <ClInclude Include="KNpc2D.h" />
     <ClInclude Include="KScene.h" />
     <ClInclude Include="KUser2D.h" />
+    <ClInclude Include="KSceneTitle.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\data\shader\DefaultShape.txt" />

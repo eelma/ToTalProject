@@ -54,15 +54,15 @@ struct KRect : Rect
         return false;
     }
     KRect() {}
-    KRect(float x, float y, float z, float w) {
-        Set(x, y, z, w);
+    KRect(float x, float y, float w, float z) {
+        Set(x, y, w, z);
     }
-    void  Set(float x, float y, float z, float w)
+    void  Set(float x, float y, float w, float z)
     {
         this->x1 = x;
         this->y1 = y;
-        this->w = z;
-        this->h = w;
+        this->w = w;
+        this->h = z;
         x2 = x + w;
         y2 = y + h;
         cx = (x + x2) / 2.0f;

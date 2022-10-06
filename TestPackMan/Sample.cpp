@@ -1,5 +1,5 @@
 #include "Sample.h"
-
+#include"KWindow.h"
 bool Sample::Init()
 {
 	m_pTitle = new KSceneTitle;
@@ -9,8 +9,8 @@ bool Sample::Init()
 
 	m_pTitle->Init();
 	m_pInGame->Init();
-
-	m_pCurrentScene = m_pTitle;
+	m_pCurrentScene = m_pInGame;
+	//m_pCurrentScene = m_pTitle;
 	//커렌트를 타이틀로하면 지형만 뿌려진다
 
 	m_pBGSound = I_Sound.GetPtr(L"PacMan1987.mp3");
@@ -80,4 +80,10 @@ void Sample::KeyDown()
 
 }
 
-GAME_RUN(KTestTexture, 800, 1000)
+int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR    lpCmdLine, int       nCmdShow)
+{
+ Sample demo;
+ demo.SetWindow(hInstance,L"왜 안돼",800,1000);
+ demo.Run(); return 1;
+
+}

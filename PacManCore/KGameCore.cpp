@@ -6,7 +6,7 @@ bool		KGameCore::KCoreInit()
 	I_Shader.SetDevice(m_pd3dDevice, m_pImmediateContext);
 	I_Sound.Init();
 	I_Input.Init();
-	I_Timer.Init();
+	//I_Timer.Init();
 	m_Writer.Init();
 	IDXGISurface1* pBackBuffer;
 	m_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)&pBackBuffer);
@@ -82,10 +82,7 @@ bool        KGameCore::Run()
 		{
 			KCoreFrame();
 			KCoreRender();
-			if (score == 1000)
-			{
-				KWindow::Run() == false;
-			}
+			
 		}
 		else
 		{
