@@ -19,6 +19,13 @@ bool KUser2D::Frame()
     {
         vPos.x += 1.0f * g_fSecondPerFrame * m_fSpeed;
     }
+    if (vPos.x > g_rtClient.right)
+    {
+        vPos.x = g_rtClient.left;
+    }if (vPos.x < g_rtClient.left)
+    {
+        vPos.x = g_rtClient.right;
+    }
     SetPosition(vPos);
     return true;
 }

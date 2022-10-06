@@ -77,6 +77,7 @@ bool KSpriteManager::Load(wstring filename)
     }
     return true;
 }
+
 KSprite& KSpriteManager::Get(W_STR name)
 {
     auto iter = m_List.find(name);

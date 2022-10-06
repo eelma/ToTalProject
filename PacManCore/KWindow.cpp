@@ -91,7 +91,7 @@ ATOM KWindow::MyRegisterClass()
     wcex.lpszClassName = L"KGCA윈도우";// 이름
     // 윈도우 메세지를 받을 함수를 지정한다.    
     wcex.lpfnWndProc = WndProc;  // 전화번호  
-    wcex.hCursor = LoadCursor(nullptr, IDC_WAIT);
+    wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
     return RegisterClassEx(&wcex);
 }
 bool		KWindow::SetWindow(HINSTANCE hInstance,

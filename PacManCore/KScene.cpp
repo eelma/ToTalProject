@@ -108,8 +108,13 @@ bool KScene::Frame()
 			src = m_pNpcList.erase(src);
 			if (score == 1000)
 			{
-				int MessageBox(HWND hwnd, LPCTSTR IpText, LPCTSTR IpCaption, UINT nType);
-				MessageBox(g_hWnd,L"ªΩ¿Ã¡ˆ∑’",L"∞‘¿”≥°", MB_OK);
+				
+				if (MessageBox(g_hWnd, L"ªΩ¿Ã¡ˆ∑’", L"∞‘¿”≥°", MB_OK) == IDOK)
+				{
+					DestroyWindow(g_hWnd);
+				}
+				
+
 			}
 			continue;
 		}
