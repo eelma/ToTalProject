@@ -1,6 +1,6 @@
 #include "KTexture.h"
 HRESULT KTexture::Load(ID3D11Device* pd3dDevice,// 디바이스 객체
-	ID3D11DeviceContext* pImmediateContext, std::wstring name)
+	ID3D11DeviceContext* pImmediateContext, wstring name)
 {
 	HRESULT hr;
 	

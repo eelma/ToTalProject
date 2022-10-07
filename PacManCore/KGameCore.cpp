@@ -48,7 +48,7 @@ bool		KGameCore::KCoreRender()
 	KCorePreRender();
 	Render(); //디버그 렌더 화면에 뭔가 뿌리고 나서 마지막에 해주는게 좋다
 	I_Input.Render();
-	I_Timer.Render();
+	//I_Timer.Render();
 	m_Writer.m_szDefaultText = I_Timer.m_szTimer;
 	m_Writer.Render();
 	KCorePostRender();

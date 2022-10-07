@@ -3,7 +3,7 @@
 bool		KScene::Create(
 	ID3D11Device* pd3dDevice,// 디바이스 객체
 	ID3D11DeviceContext* pImmediateContext,
-	std::wstring shadername)
+	wstring shadername)
 {
 
 	m_pd3dDevice = pd3dDevice;
@@ -29,7 +29,7 @@ bool KScene::Init()
 	m_pUser->SetMask(pMaskTex);
 	m_pUser->m_fSpeed = 300.0f;
 	m_pUser->SetRect({ 111,53,30,31 });
-	m_pUser->SetPosition({ g_rtClient.right / 2.0f,g_rtClient.bottom - 100.0f });
+	m_pUser->SetPosition({ g_rtClient.right / 2.0f,g_rtClient.bottom - 50.0f });
 
 	InitNPC();
 	InitMapObj();
@@ -141,10 +141,10 @@ bool KScene::Render()
 	{
 		data->Render();
 	}
-	/*for (auto data : m_StaticList)
+	for (auto data : m_StaticList)
 	{
 		data->Render();
-	}*/
+	}
 	m_pUser->PreRender();
 	//1번 레지스터에 마스크 이미지를 넘길 수 있다
 	m_pImmediateContext->PSSetShaderResources(1, 1, &m_pUser->m_pMaskTex->m_pTextureSRV);
@@ -306,7 +306,7 @@ void KScene::InitNPC()
 void KScene::InitMapObj()
 {
 	wstring shaderfilename = L"../../data/shader/DefaultShape.txt";
-	KTexture* statictex = I_Tex.Load(L"../../data/whitemask.png");
+	KTexture* statictex = I_Tex.Load(L"../../data/whitemask.bmp");
 
 	KStaticObject* stac = new KStaticObject;
 	stac->Create(m_pd3dDevice, m_pImmediateContext,
@@ -415,5 +415,33 @@ void KScene::InitMapObj()
 	stac11->SetPosition({ 400 , (float)g_rtClient.bottom });
 	stac11->SetMask(statictex);
 	m_StaticList.push_back(stac11);
+	
+	KStaticObject* stac12 = new KStaticObject;
+	stac12->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac12->SetRect({ 0,0,70,55 });
+	stac12->SetPosition({ 115 , 110 });
+	stac12->SetMask(statictex);
+	m_StaticList.push_back(stac12);
+
+	KStaticObject* stac13 = new KStaticObject;
+	stac13->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac13->SetRect({ 0,0,110,55 });
+	stac13->SetPosition({ 270 , 110 });
+	stac13->SetMask(statictex);
+	m_StaticList.push_back(stac13);
+
+	KStaticObject* stac14 = new KStaticObject;
+	stac14->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac14->SetRect({ 0,0,70,55 });
+	stac14->SetPosition({ 675 , 110 });
+	stac14->SetMask(statictex);
+	m_StaticList.push_back(stac14);
+
 
 }

@@ -25,7 +25,7 @@ public:
 	void InitNPC();
 	void InitMapObj();
 public:
-	//std::vector<KBaseObject*>	m_pNpcList;
+	//vector<KBaseObject*>	m_pNpcList;
 	vector<KTexture*>		m_ObjectTextureList;
 	list<KNpc2D*> m_pNpcList;
 	

@@ -1,7 +1,7 @@
 #include "KSoundManager.h"
 #include <tchar.h>
 #include <io.h>//_findclose
-void	KSoundManager::LoadDir(std::wstring path)
+void	KSoundManager::LoadDir(wstring path)
 {
     W_STR dirpath = path + L"*.*";
     intptr_t handle;
@@ -23,7 +23,7 @@ void	KSoundManager::LoadDir(std::wstring path)
     } while (_wfindnext(handle, &fd) == 0);
     _findclose(handle);
 }
-void	KSoundManager::LoadAll(std::wstring path)
+void	KSoundManager::LoadAll(wstring path)
 {
     LoadDir(path);
     for (auto& data : m_fileList)
@@ -47,7 +47,7 @@ bool KSoundManager::Init()
     m_pSystem->init(32, FMOD_INIT_NORMAL, 0);
     return true;
 }
-W_STR KSoundManager::GetSplitName(std::wstring fullpath)
+W_STR KSoundManager::GetSplitName(wstring fullpath)
 {
     W_STR name;
     TCHAR dirve[MAX_PATH] = { 0, };
@@ -60,7 +60,7 @@ W_STR KSoundManager::GetSplitName(std::wstring fullpath)
     name += ext;
     return name;
 }
-KSound* KSoundManager::Load(std::wstring fullpath)
+KSound* KSoundManager::Load(wstring fullpath)
 {
     HRESULT hr;
     // m_szName = 파일이름+확장자
@@ -78,7 +78,7 @@ KSound* KSoundManager::Load(std::wstring fullpath)
         hr = pNewData->Load(m_pSystem, fullpath);
         if (SUCCEEDED(hr))
         {
-            m_List.insert(std::make_pair(name, pNewData));
+            m_List.insert(make_pair(name, pNewData));
         }
     }
     return pNewData;

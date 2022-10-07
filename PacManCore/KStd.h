@@ -62,37 +62,37 @@ public:
 	// 유니코드바이트 문자집합 사용경우
 	// ABC홍길동 = 12
 	// [A][0][B][0][C][0] [][][][][][]
-//static std::wstring mtw(std::string str)
+//static wstring mtw(string str)
 //{
-//	std::wstring ret = std::wstring(str.begin(), str.end());
+//	wstring ret = wstring(str.begin(), str.end());
 //	return  ret;
 //}
-//static std::string wtm(std::wstring str)
+//static string wtm(wstring str)
 //{
-//	return  std::string(str.begin(), str.end());
+//	return  string(str.begin(), str.end());
 //}
 
 //#include <atlconv.h> // A2W
-static std::wstring to_mw(const std::string& _src)
+static wstring to_mw(const string& _src)
 {
 	USES_CONVERSION;
-	return std::wstring(A2W(_src.c_str()));
+	return wstring(A2W(_src.c_str()));
 };
 
-static std::string to_wm(const std::wstring& _src)
+static string to_wm(const wstring& _src)
 {
 	USES_CONVERSION;
-	return std::string(W2A(_src.c_str()));
+	return string(W2A(_src.c_str()));
 };
-static std::wstring mtw(std::string str)
+static wstring mtw(string str)
 {
-	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> conv;
+	wstring_convert<codecvt_utf8_utf16<wchar_t>> conv;
 	return conv.from_bytes(str);
 }
 //#include <codecvt>
-static std::string wtm(std::wstring str)
+static string wtm(wstring str)
 {
-	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> conv;
+	wstring_convert<codecvt_utf8_utf16<wchar_t>> conv;
 	return conv.to_bytes(str);
 }
 static char* GetWtM(WCHAR* data)

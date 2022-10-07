@@ -185,8 +185,8 @@ bool KBaseObject::CreateShader(wstring filename)
 bool	KBaseObject::Create(
     ID3D11Device* pd3dDevice,// 디바이스 객체
     ID3D11DeviceContext* pImmediateContext,
-    std::wstring shadername,
-    std::wstring texturename)
+    wstring shadername,
+    wstring texturename)
 {
     m_pd3dDevice = pd3dDevice;
     m_pImmediateContext = pImmediateContext;

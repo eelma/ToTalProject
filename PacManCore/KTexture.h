@@ -18,7 +18,7 @@ public:
 	D3D11_TEXTURE2D_DESC		m_Desc;
 public:
 	HRESULT Load(ID3D11Device* pd3dDevice,// 디바이스 객체
-		ID3D11DeviceContext* pImmediateContext, std::wstring name);
+		ID3D11DeviceContext* pImmediateContext, wstring name);
 	void Apply(ID3D11DeviceContext* pImmediateContext,
 		UINT iSlot = 0);
 	bool Release();

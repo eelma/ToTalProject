@@ -31,13 +31,13 @@ public:
 
 
 
-	std::vector<SimpleVertex>    m_VertexList;
-	std::vector<DWORD>			 m_IndexList;
+	vector<SimpleVertex>    m_VertexList;
+	vector<DWORD>			 m_IndexList;
 public:
 	virtual bool		Create(
 		ID3D11Device* pd3dDevice,// 디바이스 객체
 		ID3D11DeviceContext* pImmediateContext,
-		std::wstring shadername, std::wstring texturename);
+		wstring shadername, wstring texturename);
 	virtual void		CreateVertexData();
 	virtual void		CreateIndexData();
 	virtual HRESULT		CreateVertexBuffer();

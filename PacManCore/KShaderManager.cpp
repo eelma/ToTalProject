@@ -6,7 +6,7 @@ void KShaderManager::SetDevice(
     m_pd3dDevice = pd3dDevice;
     m_pImmediateContext = pContext;
 }
-KShader* KShaderManager::Load(std::wstring name)
+KShader* KShaderManager::Load(wstring name)
 {
     HRESULT hr;
     // 중복제거
@@ -21,16 +21,16 @@ KShader* KShaderManager::Load(std::wstring name)
         hr = pNewData->Load(m_pd3dDevice, m_pImmediateContext, name);
         if (SUCCEEDED(hr))
         {
-            m_List.insert(std::make_pair(name, pNewData));
+            m_List.insert(make_pair(name, pNewData));
         }
     }
     return pNewData;
 }
-KShader* KShaderManager::VLoad(std::wstring name, std::string funName)
+KShader* KShaderManager::VLoad(wstring name, string funName)
 {
     HRESULT hr;
     // 중복제거
-    std::wstring vName = name;
+    wstring vName = name;
     vName += mtw(funName);
     auto iter = m_List.find(vName);
     if (iter != m_List.end())
@@ -44,16 +44,16 @@ KShader* KShaderManager::VLoad(std::wstring name, std::string funName)
         hr = pNewData->Load(m_pd3dDevice, m_pImmediateContext, name);
         if (SUCCEEDED(hr))
         {
-            m_List.insert(std::make_pair(vName, pNewData));
+            m_List.insert(make_pair(vName, pNewData));
         }
     }
     return pNewData;
 };
-KShader* KShaderManager::PLoad(std::wstring name, std::string funName)
+KShader* KShaderManager::PLoad(wstring name, string funName)
 {
     HRESULT hr;
     // 중복제거
-    std::wstring vName = name;
+    wstring vName = name;
     vName += mtw(funName);
     auto iter = m_List.find(vName);
     if (iter != m_List.end())
@@ -67,7 +67,7 @@ KShader* KShaderManager::PLoad(std::wstring name, std::string funName)
         hr = pNewData->Load(m_pd3dDevice, m_pImmediateContext, name);
         if (SUCCEEDED(hr))
         {
-            m_List.insert(std::make_pair(vName, pNewData));
+            m_List.insert(make_pair(vName, pNewData));
         }
     }
     return pNewData;

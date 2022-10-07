@@ -38,7 +38,7 @@ BOOL KWindow::InitInstance(const WCHAR* szTitle, UINT iWidth, UINT iHeight)
     // 운영체제에 등록한 윈도우를 생성한다.
    
     HWND hWnd = CreateWindowW(
-        L"KGCA윈도우",
+        L"PackManwin",
         szTitle,
         m_csStyle,
         0, 0,
@@ -88,7 +88,7 @@ ATOM KWindow::MyRegisterClass()
     wcex.style = CS_HREDRAW | CS_VREDRAW;
     wcex.hInstance = m_hInstance;
     wcex.hbrBackground = CreateSolidBrush(RGB(1, 1, 1));
-    wcex.lpszClassName = L"KGCA윈도우";// 이름
+    wcex.lpszClassName = L"PackManwin";// 이름
     // 윈도우 메세지를 받을 함수를 지정한다.    
     wcex.lpfnWndProc = WndProc;  // 전화번호  
     wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);

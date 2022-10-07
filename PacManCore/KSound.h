@@ -18,7 +18,7 @@ public:
 	FMOD::Channel* m_pChannel = nullptr;
 	float			m_fVolume;
 	unsigned int    m_TotalTime;
-	std::wstring    m_szBuffer;
+	wstring    m_szBuffer;
 public:
 	void Paused();
 	void VolumeUp(float fVolume = 0.1f);
@@ -32,7 +32,7 @@ public:
 public:
 	virtual bool		Load(
 		FMOD::System* pSystem,
-		std::wstring filename);
+		wstring filename);
 	virtual bool		Init();
 	virtual bool		Frame();
 	virtual bool		Render();

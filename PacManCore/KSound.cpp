@@ -1,7 +1,7 @@
 #include "KSound.h"
 #include <tchar.h>
 bool		KSound::Load(FMOD::System* pSystem,
-	std::wstring filename)
+	wstring filename)
 {
 	m_pSystem = pSystem;
 	FMOD_RESULT hr = m_pSystem->createSound(
@@ -12,7 +12,7 @@ bool		KSound::Load(FMOD::System* pSystem,
 	{
 		m_pSound->getLength(&m_TotalTime, FMOD_TIMEUNIT_MS);
 	}
-	return true;
+	return false;
 }
 bool KSound::Init()
 {
