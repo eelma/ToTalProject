@@ -1,0 +1,454 @@
+#include "KScene.h"
+
+bool		KScene::Create(
+	ID3D11Device* pd3dDevice,
+	ID3D11DeviceContext* pImmediateContext,
+	wstring shadername)
+{
+
+	m_pd3dDevice = pd3dDevice;
+	m_pImmediateContext = pImmediateContext;
+
+	return true;
+}
+bool KScene::Init()
+{
+	wstring shaderfilename = L"../../data/shader/DefaultShape.txt";
+	KTexture* pMaskTex = I_Tex.Load(L"../../data/PacManmask.bmp");
+	m_pMap = new KMapObject;
+	m_pMap->Create(m_pd3dDevice,
+		m_pImmediateContext,
+		shaderfilename,
+		L"../../data/PacMan_Map.png");
+	m_pUser = new KUser2D;
+	m_pUser->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/PacMan.png");
+	m_pUser->SetMask(pMaskTex);
+	m_pUser->m_fSpeed = 300.0f;
+	m_pUser->SetRect({ 111,53,30,31 });
+	m_pUser->SetPosition({ g_rtClient.right / 2.0f,g_rtClient.bottom - 50.0f });
+	InitNPC();
+	InitMapObj();
+	return true;
+}
+bool KScene::Frame()
+{
+	static KVector2D vSize = { 800,800 };
+	for (auto iter = m_pNpcList.begin(); iter != m_pNpcList.end(); iter++)
+	{
+		KNpc2D* npc = *iter;
+		npc->SetCameraSize(vSize);
+		npc->SetCameraPos(m_vCamera);
+		npc->Frame();
+	}
+	for (auto nono = m_StaticList.begin(); nono != m_StaticList.end();)
+	{
+		if (KCollision::RectToRect((*nono)->m_rtCollision, m_pUser->m_rtCollision))
+		{
+			if (m_pUser->m_rtCollision.y1 <= ((*nono)->m_rtCollision.y1 + (*nono)->m_rtCollision.h)&& (m_pUser->m_rtCollision.y1 + m_pUser->m_rtCollision.h)>((*nono)->m_rtCollision.y1 + (*nono)->m_rtCollision.h))
+			{
+				if ((m_pUser->m_rtCollision.x1 + m_pUser->m_rtCollision.w) < ((*nono)->m_rtCollision.x1 + (*nono)->m_rtCollision.w))
+				{
+					if ((m_pUser->m_rtCollision.x1) > ((*nono)->m_rtCollision.x1))
+					{
+
+						m_pUser->m_vPos.y = (*nono)->m_rtCollision.y1 + (*nono)->m_rtCollision.h + 20.0f;
+						m_pUser->Frame();
+						continue;
+					}
+				}
+			}else
+			if ((m_pUser->m_rtCollision.y1+ m_pUser->m_rtCollision.h) >= (*nono)->m_rtCollision.y1)
+			{
+				if ((m_pUser->m_rtCollision.x1 + m_pUser->m_rtCollision.w) < ((*nono)->m_rtCollision.x1 + (*nono)->m_rtCollision.w))
+				{
+					if ((m_pUser->m_rtCollision.x1) > ((*nono)->m_rtCollision.x1))
+					{
+
+						m_pUser->m_vPos.y = (*nono)->m_rtCollision.y1 - 20.0f;
+						m_pUser->Frame();
+						continue;
+					}
+				}
+				
+			}
+			if ((m_pUser->m_rtCollision.x1 + m_pUser->m_rtCollision.w) >= ((*nono)->m_rtCollision.x1)&& (m_pUser->m_rtCollision.x1 + m_pUser->m_rtCollision.w) <= ((*nono)->m_rtCollision.x1 + (*nono)->m_rtCollision.w))
+			{
+				m_pUser->m_vPos.x = (*nono)->m_rtCollision.x1- 20.0f;
+				m_pUser->Frame();
+				continue;
+			}else
+			if ((m_pUser->m_rtCollision.x1) <= ((*nono)->m_rtCollision.x1 + (*nono)->m_rtCollision.w)&&(m_pUser->m_rtCollision.x1+m_pUser->m_rtCollision.w)> ((*nono)->m_rtCollision.x1 + (*nono)->m_rtCollision.w))
+			{
+				m_pUser->m_vPos.x = (*nono)->m_rtCollision.x1 + (*nono)->m_rtCollision.w + 20.0f;
+				m_pUser->Frame();
+				continue;
+			}
+			
+			
+		}
+			
+		else nono++;
+	}
+
+	for (auto src = m_pNpcList.begin(); src != m_pNpcList.end();)
+	{
+		if (KCollision::RectToRect((*src)->m_rtCollision, m_pUser->m_rtCollision))
+		{
+			score += 100.0f;
+			delete* src;
+			src = m_pNpcList.erase(src);
+			if (score == 4000)
+			{
+				
+				if (MessageBox(g_hWnd, L"°ÔÀÓ³¡", L"OK", MB_OK) == IDOK)
+				{
+					DestroyWindow(g_hWnd);
+				}
+				
+
+			}
+			continue;
+		}
+		else src++;
+	}
+	
+	m_pUser->Frame();
+	for (auto data: m_pNpcList)
+	{
+		data->Frame();
+	}
+	for (auto data : m_StaticList)
+	{
+		data->Frame();
+	}
+	
+	return true;
+}
+bool KScene::Render()
+{
+	m_pMap->Render();
+
+	for (auto data : m_pNpcList)
+	{
+		data->Render();
+	}
+	/*for (auto data : m_StaticList)
+	{
+		data->Render();
+	}*/
+	m_pUser->PreRender();
+	m_pImmediateContext->PSSetShaderResources(1, 1, &m_pUser->m_pMaskTex->m_pTextureSRV);
+	m_pUser->PostRender();
+
+	return true;
+}
+bool KScene::Release()
+{
+	m_pMap->Release();
+	m_pUser->Release();
+	for (auto data : m_pNpcList)
+	{
+		data->Release();
+		delete data;
+	}
+	for (auto data : m_StaticList)
+	{
+		data->Release();
+		delete data;
+	}
+	return true;
+}
+
+
+void KScene::InitNPC()
+{
+	wstring shaderfilename = L"../../data/shader/DefaultShape.txt";
+	KTexture* pMaskTex = I_Tex.Load(L"../../data/PacManmask.bmp");
+
+
+	for (int iNpc = 0; iNpc < 8; iNpc++)
+	{
+		KNpc2D* npc = new KNpc2D;
+		npc->Create(m_pd3dDevice, m_pImmediateContext,
+			L"../../data/shader/DefaultShapeMask.txt",
+			L"../../data/PacMan.png");
+		npc->SetRect({ 268,108,16,16 });
+		npc->SetPosition({ 50,(float)50+iNpc*30 });
+		npc->SetMask(pMaskTex);
+		m_pNpcList.push_back(npc);
+	}
+	for (int iNpc = 0; iNpc < 11; iNpc++)
+	{
+		KNpc2D* npc = new KNpc2D;
+		npc->Create(m_pd3dDevice, m_pImmediateContext,
+			L"../../data/shader/DefaultShapeMask.txt",
+			L"../../data/PacMan.png");
+		npc->SetRect({ 268,108,16,16 });
+		npc->SetPosition({ (float)50 + iNpc * 30 ,50});
+		npc->SetMask(pMaskTex);
+		m_pNpcList.push_back(npc);
+	}
+	for (int iNpc = 0; iNpc < 5; iNpc++)
+	{
+		KNpc2D* npc = new KNpc2D;
+		npc->Create(m_pd3dDevice, m_pImmediateContext,
+			L"../../data/shader/DefaultShapeMask.txt",
+			L"../../data/PacMan.png");
+		npc->SetRect({ 268,108,16,16 });
+		npc->SetPosition({ 350 ,(float)50 + iNpc * 30 });
+		npc->SetMask(pMaskTex);
+		m_pNpcList.push_back(npc);
+	}
+	for (int iNpc = 0; iNpc < 28; iNpc++)
+	{
+		KNpc2D* npc = new KNpc2D;
+		npc->Create(m_pd3dDevice, m_pImmediateContext,
+			L"../../data/shader/DefaultShapeMask.txt",
+			L"../../data/PacMan.png");
+		npc->SetRect({ 268,108,16,16 });
+		npc->SetPosition({ 200 ,(float)50 + iNpc * 30 });
+		npc->SetMask(pMaskTex);
+		m_pNpcList.push_back(npc);
+	}
+	for (int iNpc = 0; iNpc < 9; iNpc++)
+	{
+		KNpc2D* npc = new KNpc2D;
+		npc->Create(m_pd3dDevice, m_pImmediateContext,
+			L"../../data/shader/DefaultShapeMask.txt",
+			L"../../data/PacMan.png");
+		npc->SetRect({ 268,108,16,16 });
+		npc->SetPosition({ (float)80 + iNpc * 30 ,170 });
+		npc->SetMask(pMaskTex);
+		m_pNpcList.push_back(npc);
+	}
+
+	for (int iNpc = 0; iNpc < 4; iNpc++)
+	{
+		KNpc2D* npc = new KNpc2D;
+		npc->Create(m_pd3dDevice, m_pImmediateContext,
+			L"../../data/shader/DefaultShapeMask.txt",
+			L"../../data/PacMan.png");
+		npc->SetRect({ 268,108,16,16 });
+		npc->SetPosition({ (float)80 + iNpc * 30 ,260 });
+		npc->SetMask(pMaskTex);
+		m_pNpcList.push_back(npc);
+	}
+	for (int iNpc = 0; iNpc < 6; iNpc++)
+	{
+		KNpc2D* npc = new KNpc2D;
+		npc->Create(m_pd3dDevice, m_pImmediateContext,
+			L"../../data/shader/DefaultShapeMask.txt",
+			L"../../data/PacMan.png");
+		npc->SetRect({ 268,108,16,16 });
+		npc->SetPosition({ (float)50 + iNpc * 30 ,860 });
+		npc->SetMask(pMaskTex);
+		m_pNpcList.push_back(npc);
+	}
+	for (int iNpc = 0; iNpc < 6; iNpc++)
+	{
+		KNpc2D* npc = new KNpc2D;
+		npc->Create(m_pd3dDevice, m_pImmediateContext,
+			L"../../data/shader/DefaultShapeMask.txt",
+			L"../../data/PacMan.png");
+		npc->SetRect({ 268,108,16,16 });
+		npc->SetPosition({ (float)50 + iNpc * 30 ,650 });
+		npc->SetMask(pMaskTex);
+		m_pNpcList.push_back(npc);
+	}
+
+	for (int iNpc = 0; iNpc < 5; iNpc++)
+	{
+		KNpc2D* npc = new KNpc2D;
+		npc->Create(m_pd3dDevice, m_pImmediateContext,
+			L"../../data/shader/DefaultShapeMask.txt",
+			L"../../data/PacMan.png");
+		npc->SetRect({ 268,108,16,16 });
+		npc->SetPosition({ 50 ,650 + (float)iNpc * 30 });
+		npc->SetMask(pMaskTex);
+		m_pNpcList.push_back(npc);
+	}
+	KNpc2D* npc1 = new KNpc2D;
+	npc1->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/PacMan.png");
+	npc1->SetRect({ 268,108,16,16 });
+	npc1->SetPosition({ 80 ,750 });
+	npc1->SetMask(pMaskTex);
+	m_pNpcList.push_back(npc1);
+	for (int iNpc = 0; iNpc < 4; iNpc++)
+	{
+		KNpc2D* npc = new KNpc2D;
+		npc->Create(m_pd3dDevice, m_pImmediateContext,
+			L"../../data/shader/DefaultShapeMask.txt",
+			L"../../data/PacMan.png");
+		npc->SetRect({ 268,108,16,16 });
+		npc->SetPosition({ 110 ,(float)750+iNpc*30 });
+		npc->SetMask(pMaskTex);
+		m_pNpcList.push_back(npc);
+	}
+	
+}
+void KScene::InitMapObj()
+{
+	wstring shaderfilename = L"../../data/shader/DefaultShape.txt";
+	KTexture* statictex = I_Tex.Load(L"../../data/whitemask.png");
+
+	KStaticObject* stac = new KStaticObject;
+	stac->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac->SetRect({ 0,0,40,400 });
+	stac->SetPosition({ 5 , 150 });
+	stac->SetMask(statictex);
+	m_StaticList.push_back(stac);
+
+	KStaticObject* stac1 = new KStaticObject;
+	stac1->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac1->SetRect({ 0,100,800,20 });
+	stac1->SetPosition({ 400 , 5 });
+	stac1->SetMask(statictex);
+	m_StaticList.push_back(stac1);
+
+	KStaticObject* stac2 = new KStaticObject;
+	stac2->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac2->SetRect({ 50,150,200,130 });
+	stac2->SetPosition({ 400 , 465 });
+	stac2->SetMask(statictex);
+	m_StaticList.push_back(stac2);
+
+	KStaticObject* stac3 = new KStaticObject;
+	stac3->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac3->SetRect({ 0,0,120,130 });
+	stac3->SetPosition({ 80 , 370 });
+	stac3->SetMask(statictex);
+	m_StaticList.push_back(stac3);
+
+	KStaticObject* stac4 = new KStaticObject;
+	stac4->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac4->SetRect({ 0,0,30,150 });
+	stac4->SetPosition({ 400 , 60 });
+	stac4->SetMask(statictex);
+	m_StaticList.push_back(stac4);
+
+	KStaticObject* stac5 = new KStaticObject;
+	stac5->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac5->SetRect({ 0,0,40,400 });
+	stac5->SetPosition({ (float)g_rtClient.right , 150 });
+	stac5->SetMask(statictex);
+	m_StaticList.push_back(stac5);
+
+	KStaticObject* stac6 = new KStaticObject;
+	stac6->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac6->SetRect({ 50,150,200,130 });
+	stac6->SetPosition({ 740 , 370 });
+	stac6->SetMask(statictex);
+	m_StaticList.push_back(stac6);
+
+	KStaticObject* stac7 = new KStaticObject;
+	stac7->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac7->SetRect({ 50,150,200,130 });
+	stac7->SetPosition({ 740 , 570 });
+	stac7->SetMask(statictex);
+	m_StaticList.push_back(stac7);
+
+	KStaticObject* stac8 = new KStaticObject;
+	stac8->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac8->SetRect({ 0,0,120,130 });
+	stac8->SetPosition({ 80 , 570 });
+	stac8->SetMask(statictex);
+	m_StaticList.push_back(stac8);
+
+	KStaticObject* stac9 = new KStaticObject;
+	stac9->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac9->SetRect({ 0,0,40,400 });
+	stac9->SetPosition({ 5 , 800 });
+	stac9->SetMask(statictex);
+	m_StaticList.push_back(stac9);
+	
+	KStaticObject* stac10 = new KStaticObject;
+	stac10->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac10->SetRect({ 0,0,40,400 });
+	stac10->SetPosition({ (float)g_rtClient.right, 800 });
+	stac10->SetMask(statictex);
+	m_StaticList.push_back(stac10);
+
+	KStaticObject* stac11 = new KStaticObject;
+	stac11->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac11->SetRect({ 0,100,800,20 });
+	stac11->SetPosition({ 400 , (float)g_rtClient.bottom });
+	stac11->SetMask(statictex);
+	m_StaticList.push_back(stac11);
+
+	KStaticObject* stac12 = new KStaticObject;
+	stac12->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac12->SetRect({ 0,0,210,20 });
+	stac12->SetPosition({ 210 , 910 });
+	stac12->SetMask(statictex);
+	m_StaticList.push_back(stac12);
+
+
+	KStaticObject* stac13 = new KStaticObject;
+	stac13->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac13->SetRect({ 0,0,30,50 });
+	stac13->SetPosition({ 220 , 840 });
+	stac13->SetMask(statictex);
+	m_StaticList.push_back(stac13);
+
+	KStaticObject* stac14 = new KStaticObject;
+	stac14->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac14->SetRect({ 0,0,30,80 });
+	stac14->SetPosition({ 150 , 750 });
+	stac14->SetMask(statictex);
+	m_StaticList.push_back(stac14);
+
+
+	KStaticObject* stac15 = new KStaticObject;
+	stac15->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac15->SetRect({ 0,0,30,100 });
+	stac15->SetPosition({ 230 , 570 });
+	stac15->SetMask(statictex);
+	m_StaticList.push_back(stac15);
+
+
+	KStaticObject* stac16 = new KStaticObject;
+	stac16->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac16->SetRect({ 0,0,30,200 });
+	stac16->SetPosition({ 230 , 350 });
+	stac16->SetMask(statictex);
+	m_StaticList.push_back(stac16);
+
+}

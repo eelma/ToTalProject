@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="KBaseObject" Collapsed="true">
+    <Position X="4" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IBgGAAAAAIEAQEAAgAkAAAABAACBgEECARACARAGAAE=</HashCode>
+      <FileName>KBaseObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KCollision" Collapsed="true">
+    <Position X="11.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEQAAQAAAAAAQAAAAAAAAAAAAQAAgAAA=</HashCode>
+      <FileName>KCollision.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KDevice" Collapsed="true">
+    <Position X="0.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CRAAAAAIAAAAIAAAAAAAAIAAAAAAAAAKABACAFACAAE=</HashCode>
+      <FileName>KDevice.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KGameCore" Collapsed="true">
+    <Position X="0.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AApAAAAAARAAEAAAEAgAEAAAAAAAAAAAABACABAAAAM=</HashCode>
+      <FileName>KGameCore.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KInput" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAACAAAABACgBAAAAE=</HashCode>
+      <FileName>KInput.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KMapObject" Collapsed="true">
+    <Position X="3" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAABAAAAE=</HashCode>
+      <FileName>KMapObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KNpc2D" Collapsed="true">
+    <Position X="3" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>KNpc2D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KObject2D" Collapsed="true">
+    <Position X="5.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAACECAAEASAAAAAAAEIATAAAEEgAAAgCAgAAQABE=</HashCode>
+      <FileName>KObject2D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KScene" Collapsed="true">
+    <Position X="4.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAIACAAAAAAAIAAAJAAAAAAAAAAAEACADACABBAABE=</HashCode>
+      <FileName>KScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KSceneTitle" Collapsed="true">
+    <Position X="4.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABACABAAAAE=</HashCode>
+      <FileName>KSceneTitle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KShader" Collapsed="true">
+    <Position X="9.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IBgAgAAAAAAAQAAAAAAAAAABAAAAAAACABACABAAAAE=</HashCode>
+      <FileName>KShader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KShaderManager" Collapsed="true">
+    <Position X="11.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABgAgAAAAAAAQAAAAAAAAAAABACEAAACACAAABAAAAA=</HashCode>
+      <FileName>KShaderManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KSound" Collapsed="true">
+    <Position X="11.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgggAAAABAAACgAAAAIAAAAAAQAECAAohQSKBAAAAE=</HashCode>
+      <FileName>KSound.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KSoundManager" Collapsed="true">
+    <Position X="2.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAEAwgAAgAAAAQAAAEBAAAAAAAAAACABAAAAE=</HashCode>
+      <FileName>KSoundManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KStaticObject" Collapsed="true">
+    <Position X="5.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>KStaticObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KSingleTone&lt;T&gt;" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>KStd.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KTexture" Collapsed="true">
+    <Position X="11.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAJAAAAAAAAEAAEAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>KTexture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KTextureManager" Collapsed="true">
+    <Position X="6" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AhAAgAAAAAAAAAAAAAAAAAAABACIAAACgAAAABAAAAA=</HashCode>
+      <FileName>KTextureManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KTimer" Collapsed="true">
+    <Position X="7.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAABAAAAAJQCABAAAEU=</HashCode>
+      <FileName>KTimer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KUser2D" Collapsed="true">
+    <Position X="7.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>KUser2D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KVector4D" Collapsed="true">
+    <Position X="6.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAQBAAAAAAAAABEAgAAAAAAA=</HashCode>
+      <FileName>KVector.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KVector2D" Collapsed="true">
+    <Position X="3.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAEAAAAAAAAAAAAAAQBAAAAAAAAAAEAgAAAAAAA=</HashCode>
+      <FileName>KVector.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KVector" Collapsed="true">
+    <Position X="7.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAQQBAAAAAAAAAAEAgAAAAAAA=</HashCode>
+      <FileName>KVector.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KWindow" Collapsed="true">
+    <Position X="0.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAgAAQJAAABAAAAQAAABAQAAIAAAAggAAY=</HashCode>
+      <FileName>KWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KWriter" Collapsed="true">
+    <Position X="9.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABgAAAAACABACAIAQAAAAABACABAAACE=</HashCode>
+      <FileName>KWriter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="SimpleVertex" Collapsed="true">
+    <Position X="11.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAEQAAAAAAAA=</HashCode>
+      <FileName>KBaseObject.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Rect" Collapsed="true">
+    <Position X="8.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAQQgAAAAAAAA=</HashCode>
+      <FileName>KCollision.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="KRect" Collapsed="true">
+    <Position X="8.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAABAAAAEAAAQAAAwAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>KCollision.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="KFloat2" Collapsed="true">
+    <Position X="3.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>KVector.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="KFloat3" Collapsed="true">
+    <Position X="7.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>KVector.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="KFloat4" Collapsed="true">
+    <Position X="6.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>KVector.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>
