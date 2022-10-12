@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="KBaseObject.cpp" />
+    <ClCompile Include="KCollision.cpp" />
+    <ClCompile Include="KDevice.cpp" />
+    <ClCompile Include="KGameCore.cpp" />
+    <ClCompile Include="KInput.cpp" />
+    <ClCompile Include="KObject2D.cpp" />
+    <ClCompile Include="KShader.cpp" />
+    <ClCompile Include="KShaderManager.cpp" />
+    <ClCompile Include="KSound.cpp" />
+    <ClCompile Include="KSoundManager.cpp" />
+    <ClCompile Include="KTexture.cpp" />
+    <ClCompile Include="KTextureManager.cpp" />
+    <ClCompile Include="KTimer.cpp" />
+    <ClCompile Include="KVector.cpp" />
+    <ClCompile Include="KWindow.cpp" />
+    <ClCompile Include="KWriter.cpp" />
+    <ClCompile Include="KStaticObject.cpp" />
+    <ClCompile Include="KMapObject.cpp" />
+    <ClCompile Include="KNpc2D.cpp" />
+    <ClCompile Include="KScene.cpp" />
+    <ClCompile Include="KUser2D.cpp" />
+    <ClCompile Include="KSceneTitle.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KBaseObject.h" />
+    <ClInclude Include="KCollision.h" />
+    <ClInclude Include="KDevice.h" />
+    <ClInclude Include="KGameCore.h" />
+    <ClInclude Include="KInput.h" />
+    <ClInclude Include="KObject2D.h" />
+    <ClInclude Include="KShader.h" />
+    <ClInclude Include="KShaderManager.h" />
+    <ClInclude Include="KSound.h" />
+    <ClInclude Include="KSoundManager.h" />
+    <ClInclude Include="KStd.h" />
+    <ClInclude Include="KTexture.h" />
+    <ClInclude Include="KTextureManager.h" />
+    <ClInclude Include="KTimer.h" />
+    <ClInclude Include="KVector.h" />
+    <ClInclude Include="KWindow.h" />
+    <ClInclude Include="KWriter.h" />
+    <ClInclude Include="KStaticObject.h" />
+    <ClInclude Include="KMapObject.h" />
+    <ClInclude Include="KNpc2D.h" />
+    <ClInclude Include="KScene.h" />
+    <ClInclude Include="KUser2D.h" />
+    <ClInclude Include="KSceneTitle.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\data\shader\DefaultShape.txt" />
+  </ItemGroup>
+</Project>
