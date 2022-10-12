@@ -50,6 +50,29 @@ public:
 #define GAME_RUN(s,x,y)  GAME_START  GAME_WINDOW(s,x,y)  GAME_END
 
 
+<<<<<<< HEAD:GameCore/KStd.h
+=======
+
+
+
+// 멀티바이트 문자집합 사용경우
+	// ABC홍길동 = 9
+	// [A][B][C] [0]
+	// 유니코드바이트 문자집합 사용경우
+	// ABC홍길동 = 12
+	// [A][0][B][0][C][0] [][][][][][]
+//static wstring mtw(string str)
+//{
+//	wstring ret = wstring(str.begin(), str.end());
+//	return  ret;
+//}
+//static string wtm(wstring str)
+//{
+//	return  string(str.begin(), str.end());
+//}
+
+//#include <atlconv.h> // A2W
+>>>>>>> 48c3d63ff719d82e4eb39b8415a5f9bf170a0178:PacManCore/KStd.h
 static wstring to_mw(const string& _src)
 {
 	USES_CONVERSION;
@@ -66,6 +89,10 @@ static wstring mtw(string str)
 	wstring_convert<codecvt_utf8_utf16<wchar_t>> conv;
 	return conv.from_bytes(str);
 }
+<<<<<<< HEAD:GameCore/KStd.h
+=======
+//#include <codecvt>
+>>>>>>> 48c3d63ff719d82e4eb39b8415a5f9bf170a0178:PacManCore/KStd.h
 static string wtm(wstring str)
 {
 	wstring_convert<codecvt_utf8_utf16<wchar_t>> conv;

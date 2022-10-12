@@ -35,7 +35,7 @@ BOOL KWindow::InitInstance(const WCHAR* szTitle, UINT iWidth, UINT iHeight)
     RECT rc = { 0,0,iWidth , iHeight };
     AdjustWindowRect(&rc, m_csStyle, FALSE);
     HWND hWnd = CreateWindowW(
-        L"KGCA윈도우",
+        L"PackManwin",
         szTitle,
         m_csStyle,
         0, 0,
@@ -81,8 +81,14 @@ ATOM KWindow::MyRegisterClass()
     wcex.style = CS_HREDRAW | CS_VREDRAW;
     wcex.hInstance = m_hInstance;
     wcex.hbrBackground = CreateSolidBrush(RGB(1, 1, 1));
+<<<<<<< HEAD:GameCore/KWindow.cpp
     wcex.lpszClassName = L"KGCA윈도우";
     wcex.lpfnWndProc = WndProc;
+=======
+    wcex.lpszClassName = L"PackManwin";// 이름
+    // 윈도우 메세지를 받을 함수를 지정한다.    
+    wcex.lpfnWndProc = WndProc;  // 전화번호  
+>>>>>>> 48c3d63ff719d82e4eb39b8415a5f9bf170a0178:PacManCore/KWindow.cpp
     wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
     return RegisterClassEx(&wcex);
 }

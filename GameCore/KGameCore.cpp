@@ -47,7 +47,13 @@ bool		KGameCore::KCoreRender()
 	KCorePreRender();
 	Render(); 
 	I_Input.Render();
+<<<<<<< HEAD:GameCore/KGameCore.cpp
 
+=======
+	//I_Timer.Render();
+	m_Writer.m_szDefaultText = I_Timer.m_szTimer;
+	m_Writer.Render();
+>>>>>>> 48c3d63ff719d82e4eb39b8415a5f9bf170a0178:PacManCore/KGameCore.cpp
 	KCorePostRender();
     return true;
 }

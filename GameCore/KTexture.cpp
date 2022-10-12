@@ -1,5 +1,9 @@
 #include "KTexture.h"
+<<<<<<< HEAD:GameCore/KTexture.cpp
 HRESULT KTexture::Load(ID3D11Device* pd3dDevice,
+=======
+HRESULT KTexture::Load(ID3D11Device* pd3dDevice,// 디바이스 객체
+>>>>>>> 48c3d63ff719d82e4eb39b8415a5f9bf170a0178:PacManCore/KTexture.cpp
 	ID3D11DeviceContext* pImmediateContext, wstring name)
 {
 	HRESULT hr;

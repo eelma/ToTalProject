@@ -28,6 +28,10 @@ bool KScene::Init()
 	m_pUser->m_fSpeed = 300.0f;
 	m_pUser->SetRect({ 111,53,30,31 });
 	m_pUser->SetPosition({ g_rtClient.right / 2.0f,g_rtClient.bottom - 50.0f });
+<<<<<<< HEAD:GameCore/KScene.cpp
+=======
+
+>>>>>>> 48c3d63ff719d82e4eb39b8415a5f9bf170a0178:PacManCore/KScene.cpp
 	InitNPC();
 	InitMapObj();
 	return true;
@@ -134,10 +138,10 @@ bool KScene::Render()
 	{
 		data->Render();
 	}
-	/*for (auto data : m_StaticList)
+	for (auto data : m_StaticList)
 	{
 		data->Render();
-	}*/
+	}
 	m_pUser->PreRender();
 	m_pImmediateContext->PSSetShaderResources(1, 1, &m_pUser->m_pMaskTex->m_pTextureSRV);
 	m_pUser->PostRender();
@@ -293,7 +297,7 @@ void KScene::InitNPC()
 void KScene::InitMapObj()
 {
 	wstring shaderfilename = L"../../data/shader/DefaultShape.txt";
-	KTexture* statictex = I_Tex.Load(L"../../data/whitemask.png");
+	KTexture* statictex = I_Tex.Load(L"../../data/whitemask.bmp");
 
 	KStaticObject* stac = new KStaticObject;
 	stac->Create(m_pd3dDevice, m_pImmediateContext,
@@ -402,6 +406,34 @@ void KScene::InitMapObj()
 	stac11->SetPosition({ 400 , (float)g_rtClient.bottom });
 	stac11->SetMask(statictex);
 	m_StaticList.push_back(stac11);
+	
+	KStaticObject* stac12 = new KStaticObject;
+	stac12->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac12->SetRect({ 0,0,70,55 });
+	stac12->SetPosition({ 115 , 110 });
+	stac12->SetMask(statictex);
+	m_StaticList.push_back(stac12);
+
+	KStaticObject* stac13 = new KStaticObject;
+	stac13->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac13->SetRect({ 0,0,110,55 });
+	stac13->SetPosition({ 270 , 110 });
+	stac13->SetMask(statictex);
+	m_StaticList.push_back(stac13);
+
+	KStaticObject* stac14 = new KStaticObject;
+	stac14->Create(m_pd3dDevice, m_pImmediateContext,
+		L"../../data/shader/DefaultShapeMask.txt",
+		L"../../data/white.png");
+	stac14->SetRect({ 0,0,70,55 });
+	stac14->SetPosition({ 675 , 110 });
+	stac14->SetMask(statictex);
+	m_StaticList.push_back(stac14);
+
 
 	KStaticObject* stac12 = new KStaticObject;
 	stac12->Create(m_pd3dDevice, m_pImmediateContext,

@@ -25,6 +25,10 @@ public:
 	void InitNPC();
 	void InitMapObj();
 public:
+<<<<<<< HEAD:GameCore/KScene.h
+=======
+	//vector<KBaseObject*>	m_pNpcList;
+>>>>>>> 48c3d63ff719d82e4eb39b8415a5f9bf170a0178:PacManCore/KScene.h
 	vector<KTexture*>		m_ObjectTextureList;
 	list<KNpc2D*> m_pNpcList;
 	

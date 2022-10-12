@@ -28,6 +28,10 @@ KShader* KShaderManager::Load(wstring name)
 KShader* KShaderManager::VLoad(wstring name, string funName)
 {
     HRESULT hr;
+<<<<<<< HEAD:GameCore/KShaderManager.cpp
+=======
+    // 중복제거
+>>>>>>> 48c3d63ff719d82e4eb39b8415a5f9bf170a0178:PacManCore/KShaderManager.cpp
     wstring vName = name;
     vName += mtw(funName);
     auto iter = m_List.find(vName);
@@ -50,6 +54,10 @@ KShader* KShaderManager::VLoad(wstring name, string funName)
 KShader* KShaderManager::PLoad(wstring name, string funName)
 {
     HRESULT hr;
+<<<<<<< HEAD:GameCore/KShaderManager.cpp
+=======
+    // 중복제거
+>>>>>>> 48c3d63ff719d82e4eb39b8415a5f9bf170a0178:PacManCore/KShaderManager.cpp
     wstring vName = name;
     vName += mtw(funName);
     auto iter = m_List.find(vName);

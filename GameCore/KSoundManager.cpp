@@ -1,6 +1,10 @@
 #include "KSoundManager.h"
 #include <tchar.h>
+<<<<<<< HEAD:GameCore/KSoundManager.cpp
 #include <io.h>
+=======
+#include <io.h>//_findclose
+>>>>>>> 48c3d63ff719d82e4eb39b8415a5f9bf170a0178:PacManCore/KSoundManager.cpp
 void	KSoundManager::LoadDir(wstring path)
 {
     W_STR dirpath = path + L"*.*";

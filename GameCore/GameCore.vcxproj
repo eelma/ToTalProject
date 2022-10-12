@@ -94,13 +94,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -172,7 +172,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+<<<<<<< HEAD:GameCore/GameCore.vcxproj
       <AdditionalIncludeDirectories>../../PacInclude;../../PacInclude/dxtk;../../PacInclude/fmod;</AdditionalIncludeDirectories>
+=======
+      <AdditionalIncludeDirectories>../../include/Pach;../../include/Pach/dxtk;../../include/Pach/fmod</AdditionalIncludeDirectories>
+>>>>>>> 48c3d63ff719d82e4eb39b8415a5f9bf170a0178:PacManCore/PacManCore.vcxproj
     </ClCompile>
     <Link>
       <SubSystem>
@@ -180,7 +184,14 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
+<<<<<<< HEAD:GameCore/GameCore.vcxproj
       <OutputFile>GameCore_D.lib</OutputFile>
+=======
+      <OutputFile>PacManCore_d.lib</OutputFile>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../lib/Paclib;</AdditionalLibraryDirectories>
+>>>>>>> 48c3d63ff719d82e4eb39b8415a5f9bf170a0178:PacManCore/PacManCore.vcxproj
     </Lib>
     <PostBuildEvent>
       <Command>copy "*.h" "..\\..\\PacInclude\\"
@@ -203,6 +214,17 @@ copy "GameCore_D.lib" "..\\..\\Paclib"</Command>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+<<<<<<< HEAD:GameCore/GameCore.vcxproj
+=======
+    <Lib>
+      <OutputFile>PacManCore_R.lib</OutputFile>
+      <AdditionalLibraryDirectories>../../lib/Paclib;</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>copy "*.h" "..\\..\\include"
+copy "PacManCore_R.lib" "..\\..\\lib\\"</Command>
+    </PostBuildEvent>
+>>>>>>> 48c3d63ff719d82e4eb39b8415a5f9bf170a0178:PacManCore/PacManCore.vcxproj
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

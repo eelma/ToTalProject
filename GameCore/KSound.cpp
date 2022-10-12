@@ -12,7 +12,7 @@ bool		KSound::Load(FMOD::System* pSystem,
 	{
 		m_pSound->getLength(&m_TotalTime, FMOD_TIMEUNIT_MS);
 	}
-	return true;
+	return false;
 }
 bool KSound::Init()
 {

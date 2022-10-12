@@ -2,12 +2,12 @@
 #include"KWindow.h"
 bool Sample::Init()
 {
-	m_pTitle = new KSceneTitle;
+	//m_pTitle = new KSceneTitle;
 	m_pInGame = new KScene;
-	m_pTitle->Create(m_pd3dDevice, m_pImmediateContext, L"");
+	//m_pTitle->Create(m_pd3dDevice, m_pImmediateContext, L"");
 	m_pInGame->Create(m_pd3dDevice, m_pImmediateContext, L"");
 
-	m_pTitle->Init();
+	//m_pTitle->Init();
 	m_pInGame->Init();
 	m_pCurrentScene = m_pInGame;
 	//m_pCurrentScene = m_pTitle;
@@ -47,10 +47,10 @@ bool Sample::Render()
 }
 bool Sample::Release()
 {
-	m_pTitle->Release();
+	//m_pTitle->Release();
 	m_pInGame->Release();
 	
-	delete m_pTitle;
+	//delete m_pTitle;
 
 	delete m_pInGame;
 	return true;
@@ -83,7 +83,7 @@ void Sample::KeyDown()
 int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR    lpCmdLine, int       nCmdShow)
 {
  Sample demo;
- demo.SetWindow(hInstance,L"¿Ö ¾ÈµÅ",800,1000);
+ demo.SetWindow(hInstance,L"PackMan",800,1000);
  demo.Run(); return 1;
 
 }
