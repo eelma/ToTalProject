@@ -247,6 +247,14 @@ float     KVector::Angle(KVector& v)
 	float fDegree = RadianToDegree(fRadian);
 	return fDegree;
 }
+float KVector::operator | (KVector const& v0)
+{
+	return x * v0.x + y * v0.y + z * v0.z;
+}
+KVector KVector::operator ^ (KVector const& v0)
+{
+	return KVector((y * v0.z - z * v0.y), (z * v0.x - x * v0.z), (x * v0.y - y * v0.x));
+}
 
 KVector4D::KVector4D()
 {

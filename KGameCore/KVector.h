@@ -106,9 +106,13 @@ public:
 	KVector operator *= (float scala);
 	KVector operator += (KVector& v);
 	KVector operator -= (KVector& v);
-	bool      operator == (KVector& v);
-	bool      operator <= (KVector& v);
-	bool      operator >= (KVector& v);
+	bool    operator == (KVector& v);
+	bool    operator <= (KVector& v);
+	bool    operator >= (KVector& v);
+	float	operator| (KVector const& v0);
+	KVector operator ^ (KVector const& v0);
+
+
 public:
 	float     LengthSquared();
 	float     Length();
