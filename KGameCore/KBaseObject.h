@@ -29,6 +29,7 @@ public:
 	ID3DBlob* m_pPSCode = nullptr;
 
 	std::vector<SimpleVertex>    m_VertexList;
+	std::vector<SimpleVertex>    m_InitVertexList;
 	std::vector<DWORD>			 m_IndexList;
 	KRect m_rtCollision;
 public:

@@ -1,4 +1,5 @@
 #include "KVector.h"
+#include"KMatrix.h"
 KVector2D::KVector2D()
 {
 	x = y = 0.0f;
@@ -401,4 +402,12 @@ float     KVector4D::Angle(KVector4D& v)
 	float fRadian = acos(fCos);
 	float fDegree = RadianToDegree(fRadian);
 	return fDegree;
+}
+KVector  KVector::operator* (KMatrix& m)
+{
+	KVector v;
+	v.x = x * m._11 + y * m._21 + z * m._31 + 1.0f * m._41;
+	v.y = x * m._12 + y * m._22 + z * m._32 + 1.0f * m._42;
+	v.z = x * m._13 + y * m._23 + z * m._33 + 1.0f * m._43;
+	return v;
 }

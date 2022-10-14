@@ -2,9 +2,9 @@
 bool		KGameCore::KCoreInit()
 {
 	KDevice::Init();
-	KDxState::SetState(m_pd3dDevice);
-	I_Tex.SetDevice(m_pd3dDevice, m_pImmediateContext);
-	I_Shader.SetDevice(m_pd3dDevice, m_pImmediateContext);
+	KDxState::SetState(m_pd3dDevice.Get());
+	I_Tex.SetDevice(m_pd3dDevice.Get(), m_pImmediateContext.Get());
+	I_Shader.SetDevice(m_pd3dDevice.Get(), m_pImmediateContext.Get());
 	I_Sound.Init();
 	I_Input.Init();
 	I_Timer.Init();
@@ -28,13 +28,14 @@ bool		KGameCore::KCoreFrame()
 bool		KGameCore::KCorePreRender()
 {
 
-	m_pImmediateContext->OMSetRenderTargets(1, &m_pRTV, NULL);
+	m_pImmediateContext->OMSetRenderTargets(1, m_pRTV.GetAddressOf(), NULL);
 	float color[4] = { 0.34324f,0.52342f,0.798320f,1.0f };
-	m_pImmediateContext->ClearRenderTargetView(m_pRTV, color);
+	m_pImmediateContext->ClearRenderTargetView(m_pRTV.Get(), color);
 	m_pImmediateContext->PSSetSamplers(0, 1, &KDxState::g_pDefaultSSWrap);
 	m_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	m_pImmediateContext->RSSetViewports(1 ,&m_vp);
 	m_pImmediateContext->RSSetState(KDxState::g_pDefaultRSSolid);
+
     return true;
 }
 bool		KGameCore::KCoreRender()
@@ -45,7 +46,7 @@ bool		KGameCore::KCoreRender()
 	I_Timer.Render();
 	m_Writer.m_szDefaultText = I_Timer.m_szTimer;
 	m_Writer.Render();
-	KCorePostRender();
+		KCorePostRender();
     return true;
 }
 bool		KGameCore::KCorePostRender()

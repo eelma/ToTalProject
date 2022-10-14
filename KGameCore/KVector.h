@@ -6,6 +6,7 @@
 #define DegreeToRadian(x)  (x *(T_PI / 180.0f))
 #define RadianToDegree(x) (x *(180.0f / T_PI))
 #define T_Epsilon 0.001f
+class KMatrix;
 struct KFloat2
 {
 	union
@@ -119,5 +120,6 @@ public:
 	void      Normalized();
 	KVector Identity();
 	float     Angle(KVector& v);
+	KVector  operator* (KMatrix& m);
 };
 

@@ -10,6 +10,7 @@
 #include <atlconv.h> 
 #include <d3d11.h>
 #include <d3dcompiler.h>
+#include <wrl.h>
 #include"KVector.h"
 extern float g_fGameTimer;
 extern float g_fSecondPerFrame;
@@ -18,6 +19,7 @@ extern float g_fSecondPerFrame;
 #pragma comment(lib,"d3dcompiler.lib")
 #pragma comment(lib,"dxgi.lib")
 #define KCORE
+using namespace Microsoft::WRL;
 using namespace std;
 
 extern HWND g_hWnd;

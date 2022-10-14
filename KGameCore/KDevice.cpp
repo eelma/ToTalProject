@@ -99,7 +99,7 @@ HRESULT KDevice::CreateSwapChain( )
     sd.SampleDesc.Quality = 0;
 
     sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
-    return m_pGIFactory->CreateSwapChain(m_pd3dDevice, &sd, &m_pSwapChain);
+    return m_pGIFactory->CreateSwapChain(m_pd3dDevice.Get(), &sd, &m_pSwapChain);
 }
 
 HRESULT KDevice::CreateRenderTargetView()

@@ -16,6 +16,7 @@ void    KBaseObject::CreateVertexData()
     m_VertexList[1].t = { 1.0f, 0.0f };
     m_VertexList[2].t = { 0.0f, 1.0f };
     m_VertexList[3].t = { 1.0f, 1.0f };
+    m_InitVertexList = m_VertexList;
 }
 void    KBaseObject::CreateIndexData()
 {
