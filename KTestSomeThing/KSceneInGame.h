@@ -3,6 +3,7 @@
 class KSceneInGame : public KScene
 {
 public:
+	KVector2D		m_vCamera;
 	KMapObject* m_pMap;
 	vector<KNpc2D*>		m_pNpcList;
 	vector<KTexture*>		m_ObjectTextureList;

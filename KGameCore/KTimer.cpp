@@ -35,7 +35,7 @@ bool		KTimer::Frame()
     g_fSecondPerFrame = m_fElapseTimer;
     m_dwBeforeTime = dwCurrentTime;
 
-
+    
     return true;
 }
 bool		KTimer::Render()

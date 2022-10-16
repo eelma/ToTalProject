@@ -12,7 +12,7 @@ bool KSceneInGame::Init()
 		shaderfilename,
 		L"../../data/kgcabk.bmp");//"L"../../data/gameHeight.png");
 	m_pMap->SetRect({ 0, 0,	2000.0f,2000.0f });
-	m_pMap->SetPosition({ -1000.0f, -1000.0f });
+	m_pMap->SetPosition({ 0.0f, 0.0f });
 	// user character
    // { 90, 1, 40, 60 } , { 400,300 }
    // -1 ~ +1

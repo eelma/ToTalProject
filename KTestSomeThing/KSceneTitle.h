@@ -4,7 +4,7 @@ class KSceneTitle : public KScene
 {
 public:
 	KUser2D* m_pUser;
-	KBaseObject* m_pMapTitle;
+	KBaseObject* m_pBG;
 public:
 	virtual bool		Init();
 	virtual bool		Frame();

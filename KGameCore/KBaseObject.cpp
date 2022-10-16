@@ -146,6 +146,10 @@ HRESULT KBaseObject::CreatePixelShader(wstring filename)
 HRESULT KBaseObject::CreateVertexLayout()
 {
     HRESULT hr;
+    if (m_pVSCode == nullptr)
+    {
+        return E_FAIL;
+    }
     // 정점레이아웃은 정점쉐이더 밀접한 관련.
     // 정점레이아웃 생성시 사전에 정점쉐이더 생성이 필요하다.
     D3D11_INPUT_ELEMENT_DESC ied[] =

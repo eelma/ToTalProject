@@ -6,11 +6,11 @@ bool       KSceneTitle::IsNextScene()
 bool KSceneTitle::Init()
 {
 	wstring shaderfilename = L"../../data/shader/DefaultShape.txt";
-	m_pMapTitle = new KBaseObject;
-	m_pMapTitle->Create(m_pd3dDevice,
+	m_pBG = new KBaseObject;
+	m_pBG->Create(m_pd3dDevice,
 		m_pImmediateContext,
 		shaderfilename,
-		L"../../data/kgcabk.bmp");
+		L"../../data/gameHeight.bmp");
 	return true;
 }
 bool KSceneTitle::Frame()
@@ -21,22 +21,22 @@ bool KSceneTitle::Frame()
 	m = m.RotationZ(g_fGameTimer);
 	t = t.Translation(0.5f, 0.0f, 0.0f);
 	c = s * m * t;
-	for (int i = 0; i < m_pMapTitle->m_InitVertexList.size(); i++)
+	for (int i = 0; i < m_pBG->m_InitVertexList.size(); i++)
 	{
-		KVector v = m_pMapTitle->m_InitVertexList[i].p;
+		KVector v = m_pBG->m_InitVertexList[i].p;
 		v = v * c;
-		m_pMapTitle->m_InitVertexList[i].p = v;
+		m_pBG->m_InitVertexList[i].p = v;
 	}
-	m_pMapTitle->UpdateVertexBuffer();
+	m_pBG->UpdateVertexBuffer();
 	return true;
 }
 bool KSceneTitle::Render()
 {
-	m_pMapTitle->Render();
+	m_pBG->Render();
 	return true;
 }
 bool KSceneTitle::Release()
 {
-	m_pMapTitle->Release();
+	m_pBG->Release();
 	return true;
 }
