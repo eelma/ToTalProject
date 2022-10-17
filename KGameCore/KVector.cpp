@@ -416,8 +416,8 @@ KVector KVector::Normal()
 {
 	KVector ret = *this;
 	float fInvertLength = 1.0f / Length();
-	x = x * fInvertLength;
-	y = y * fInvertLength;
-	z = z * fInvertLength;
+	ret.x = ret.x * fInvertLength;
+	ret.y = ret.y * fInvertLength;
+	ret.z = ret.z * fInvertLength;
 	return ret;
 }

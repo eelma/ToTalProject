@@ -11,7 +11,7 @@ bool KSceneTitle::Init()
 	m_pBG->Create(m_pd3dDevice,
 		m_pImmediateContext,
 		shaderfilename,
-		L"../../data/gameHeight.png");
+		L"../../data/KGCABK.bmp");
 	return true;
 }
 bool KSceneTitle::Frame()
@@ -39,28 +39,31 @@ bool KSceneTitle::Frame()
 		vPos.x += 10.0f * g_fSecondPerFrame;
 		vTarget.x += 10.0f * g_fSecondPerFrame;
 	}
-	if (I_Input.GetKey('E') == KEY_HOLD)
-	{
-		vPos.y -= 10.0f * g_fSecondPerFrame;
-		vTarget.y -= 10.0f * g_fSecondPerFrame;
-	}
 	if (I_Input.GetKey('Q') == KEY_HOLD)
 	{
 		vPos.y += 10.0f * g_fSecondPerFrame;
 		vTarget.y += 10.0f * g_fSecondPerFrame;
+	}
+	if (I_Input.GetKey('E') == KEY_HOLD)
+	{
+		vPos.y -= 10.0f * g_fSecondPerFrame;
+		vTarget.y -= 10.0f * g_fSecondPerFrame;
 	}
 	KVector vUp = { 0,1,0 };
 	//https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/lookat-function
 	matView.ViewLookAt(vPos, vTarget, vUp);
 	
 	KMatrix matProj;
-	matProj.PerspectiveFovLH(1.0f,100.0f, T_PI*0.5f,800.0f/600.0f);
+	matProj.PerspectiveFovLH(1.0f,100.0f, 3.141592f * 0.5f,800.0f/600.0f);
 	
 	KMatrix m, s, t, c;
-	float fScale=cos(g_fGameTimer)*0.5f+0.5f;
-	s = s.Scale(fScale, fScale, fScale);
+	float fScale = cos(g_fGameTimer) * 0.5f + 0.5f;
+	s = s.Scale(10, 10, 10);
 	m = m.RotationZ(g_fGameTimer);
-	t = t.Translation(0.5f, 0.0f, 0.0f);
+	//TVector vObjPos = { 0,0,0 };
+	//TVector vObjTarget = { 0,5,5 };
+	//m.ObjectLookAt(vObjPos, vObjTarget, vUp);
+	t = t.Translation(0.0f, 0, 0);
 	c = s * m * t;
 	for (int i = 0; i < m_pBG->m_InitVertexList.size(); i++)
 	{
@@ -75,9 +78,12 @@ bool KSceneTitle::Frame()
 		vProj.x /= w;
 		vProj.y /= w;
 		vProj.z /= w;
-		m_pBG->m_VertexList[i].p = vProj;
+		m_pBG->m_VertexList[i].p = vProj;	
 	}
 	m_pBG->UpdateVertexBuffer();
+
+
+
 
 
 	return true;

@@ -162,7 +162,6 @@ KMatrix KMatrix::PerspectiveFovLH(float fNearPlane, float fFarPlane, float fovy,
 	_33 = Q;
 	_43 = -Q * fNearPlane;
 	_34 = 1;
-	_44 = 0.0f;
 	memcpy((void*)&ret, this, 16 * sizeof(float));
 	
 	
