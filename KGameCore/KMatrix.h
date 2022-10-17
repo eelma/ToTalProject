@@ -52,6 +52,8 @@ public:
 	KMatrix RotationZ(float fRadian);
 	KMatrix Scale(float x, float y,float z);
 	KMatrix Translation(float x, float y, float z);
+	KMatrix ViewLookAt(KVector& vPosition, KVector& vTarget, KVector& vUp);
+	KMatrix PerspectiveFovLH(float fNearPlane, float fFarPlane, float fovy, float Aspect);
 
 	
 

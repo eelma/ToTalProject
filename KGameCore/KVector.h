@@ -120,6 +120,7 @@ public:
 	void      Normalized();
 	KVector Identity();
 	float     Angle(KVector& v);
+
 	KVector  operator* (KMatrix& m);
 
 

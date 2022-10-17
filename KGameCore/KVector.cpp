@@ -412,3 +412,12 @@ KVector  KVector::operator* (KMatrix& m)
 	v.z = x * m._13 + y * m._23 + z * m._33 + 1.0f * m._43;
 	return v;
 }
+KVector KVector::Normal()
+{
+	KVector ret = *this;
+	float fInvertLength = 1.0f / Length();
+	x = x * fInvertLength;
+	y = y * fInvertLength;
+	z = z * fInvertLength;
+	return ret;
+}

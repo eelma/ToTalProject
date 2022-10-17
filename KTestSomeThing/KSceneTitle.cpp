@@ -16,6 +16,46 @@ bool KSceneTitle::Init()
 }
 bool KSceneTitle::Frame()
 {
+	KMatrix matView;
+	static KVector vPos = { 0,0,-10 };
+	static KVector vTarget = { 0,0,10 };
+	if (I_Input.GetKey('W') == KEY_HOLD)
+	{
+		vPos.z += 10.0f * g_fSecondPerFrame;
+		vTarget.z += 10.0f * g_fSecondPerFrame;
+	}
+	if (I_Input.GetKey('S') == KEY_HOLD)
+	{
+		vPos.z -= 10.0f * g_fSecondPerFrame;
+		vTarget.z -= 10.0f * g_fSecondPerFrame;
+	}
+	if (I_Input.GetKey('A') == KEY_HOLD)
+	{
+		vPos.x -= 10.0f * g_fSecondPerFrame;
+		vTarget.x -= 10.0f * g_fSecondPerFrame;
+	}
+	if (I_Input.GetKey('D') == KEY_HOLD)
+	{
+		vPos.x += 10.0f * g_fSecondPerFrame;
+		vTarget.x += 10.0f * g_fSecondPerFrame;
+	}
+	if (I_Input.GetKey('E') == KEY_HOLD)
+	{
+		vPos.y -= 10.0f * g_fSecondPerFrame;
+		vTarget.y -= 10.0f * g_fSecondPerFrame;
+	}
+	if (I_Input.GetKey('Q') == KEY_HOLD)
+	{
+		vPos.y += 10.0f * g_fSecondPerFrame;
+		vTarget.y += 10.0f * g_fSecondPerFrame;
+	}
+	KVector vUp = { 0,1,0 };
+	//https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/lookat-function
+	matView.ViewLookAt(vPos, vTarget, vUp);
+	
+	KMatrix matProj;
+	matProj.PerspectiveFovLH(1.0f,100.0f, T_PI*0.5f,800.0f/600.0f);
+	
 	KMatrix m, s, t, c;
 	float fScale=cos(g_fGameTimer)*0.5f+0.5f;
 	s = s.Scale(fScale, fScale, fScale);
@@ -28,7 +68,14 @@ bool KSceneTitle::Frame()
 		//v = v * s; // s * r * t 		
 		//v = v * m;
 		//v = v * t;
-		m_pBG->m_VertexList[i].p = v*c;
+		KVector vWorld = v * c;
+		KVector vView = vWorld * matView;
+		KVector vProj = vView * matProj;
+		float w = vProj.x * matProj._14 + vProj.y * matProj._24 + vProj.z * matProj._34 + 1.0f * matProj._44;
+		vProj.x /= w;
+		vProj.y /= w;
+		vProj.z /= w;
+		m_pBG->m_VertexList[i].p = vProj;
 	}
 	m_pBG->UpdateVertexBuffer();
 

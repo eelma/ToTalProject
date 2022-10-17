@@ -132,3 +132,39 @@ KMatrix KMatrix::operator*(KMatrix& matrix)
 	return mat;
 }
 
+KMatrix KMatrix::ViewLookAt(KVector& vPosition, KVector& vTarget, KVector& vUp)
+{
+	KMatrix matrix;
+	KVector vDirection = (vTarget - vPosition).Normal();
+	KVector vRightVector = (vUp ^ vDirection).Normal();
+	KVector vUpVector = (vDirection ^ vRightVector).Normal();
+
+	_11 = vRightVector.x; _12 = vUpVector.x; _13 = vDirection.x;
+	_21 = vRightVector.y; _12 = vUpVector.y; _23 = vDirection.y;
+	_31 = vRightVector.z; _32 = vUpVector.z; _33 = vDirection.z;
+
+	_41 = -(vPosition.x * _11 + vPosition.y * _21 + vPosition.z * _31);
+	_42 = -(vPosition.x * _12 + vPosition.y * _22 + vPosition.z * _32);
+	_43 = -(vPosition.x * _13 + vPosition.y * _23 + vPosition.z * _33);
+	memcpy(&matrix, this, 16*sizeof(float));
+	return matrix;
+}
+KMatrix KMatrix::PerspectiveFovLH(float fNearPlane, float fFarPlane, float fovy, float Aspect)
+{
+	float h, w, Q;
+	h = 1 / tan(fovy * 0.5f);
+	w = h / Aspect;
+	Q = fFarPlane / (fFarPlane - fNearPlane);
+	KMatrix ret;
+	ZeroMemory(this, sizeof(KMatrix));
+	_11 = w;
+	_22 = h;
+	_33 = Q;
+	_43 = -Q * fNearPlane;
+	_34 = 1;
+	_44 = 0.0f;
+	memcpy((void*)&ret, this, 16 * sizeof(float));
+	
+	
+	return ret;
+}
