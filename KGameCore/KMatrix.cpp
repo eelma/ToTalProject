@@ -131,3 +131,4 @@ KMatrix KMatrix::operator*(KMatrix& matrix)
 	}
 	return mat;
 }
+

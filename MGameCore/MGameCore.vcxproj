@@ -153,10 +153,12 @@ copy "mGameCore_D.lib" "..\\..\\mlib\\"</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="mDevice.h" />
     <ClInclude Include="mStd.h" />
     <ClInclude Include="mWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="mDevice.cpp" />
     <ClCompile Include="mWindow.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

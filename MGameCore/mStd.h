@@ -7,12 +7,25 @@
 #include <set>
 #include <string>
 #include <d3d11.h>
+#include <codecvt>
 #include <d3dcompiler.h>
 #include<crtdbg.h>
 #include<cstdlib>
+#include <wrl.h>
+using namespace std;
+using namespace Microsoft::WRL;
+#pragma comment(lib, "d3d11.lib")
+#pragma comment(lib, "d3dcompiler.lib")
+#pragma comment(lib, "dxgi.lib")
 #define mCore
 extern HWND g_hWnd;
 extern RECT g_rtClient;
+
+typedef basic_string<TCHAR> T_STR;
+typedef basic_string<wchar_t> W_STR;
+typedef basic_string<char>  C_STR;
+typedef vector<std::basic_string<TCHAR>>		TCHAR_STRING_VECTOR;
+typedef vector<DWORD>					DWORD_VECTOR;
 
 template<class T>
 class KSingleTone

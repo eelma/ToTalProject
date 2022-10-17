@@ -52,6 +52,9 @@ public:
 	KMatrix RotationZ(float fRadian);
 	KMatrix Scale(float x, float y,float z);
 	KMatrix Translation(float x, float y, float z);
+
+	
+
 public:
 	KMatrix operator* (KMatrix& m);
 

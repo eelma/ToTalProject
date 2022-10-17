@@ -31,11 +31,11 @@ bool		KDevice::Render()
 }
 bool		KDevice::Release()
 {
-    if (m_pd3dDevice) m_pd3dDevice->Release();// 디바이스 객체        
-    if (m_pImmediateContext)m_pImmediateContext->Release();
-    if (m_pGIFactory)m_pGIFactory->Release();
-    if (m_pSwapChain)m_pSwapChain->Release();
-    if (m_pRTV) m_pRTV->Release();
+    //if (m_pd3dDevice) m_pd3dDevice->Release();// 디바이스 객체        
+    //if (m_pImmediateContext)m_pImmediateContext->Release();
+    //if (m_pGIFactory)m_pGIFactory->Release();
+    //if (m_pSwapChain)m_pSwapChain->Release();
+    //if (m_pRTV) m_pRTV->Release();
     return true;
 }
 

@@ -6,26 +6,35 @@ LRESULT CALLBACK WndProc(
     HWND hWnd,
     UINT message,
     WPARAM wParam,
-    LPARAM lParam)
+    LPARAM IParam)
 {
     _ASSERT(g_pWindow);
-    return g_pWindow->MsgProc(hWnd, message, wParam, lParam);
+    return g_pWindow->MsgProc(hWnd, message, wParam, IParam);
 }
 LRESULT mWindow::MsgProc(
     HWND hWnd,
     UINT message,
     WPARAM wParam,
-    LPARAM lParam)
+    LPARAM IParam)
 {
 
     switch (message)
     {
+    case WM_SIZE:
+    {
+        if (SIZE_MINIMIZED != wParam)
+        {
+            UINT width = LOWORD(IParam);
+            UINT height = HIWORD(IParam);
+            
+        }
+    }
     case WM_DESTROY:
         PostQuitMessage(0); // 메세지큐에 직접 WM_QUIT
         break;
     }
     // 메세지 내가 처리 불가 니가 대신 해줘.
-    return  DefWindowProc(hWnd, message, wParam, lParam);
+    return  DefWindowProc(hWnd, message, wParam, IParam);
 }
 BOOL mWindow::InitInstance(const WCHAR* szTitle, UINT iWidth, UINT iHeight)
 {

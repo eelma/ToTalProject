@@ -1,4 +1,5 @@
 #include "KSceneTitle.h"
+#include "KInput.h"
 bool       KSceneTitle::IsNextScene()
 {
 	return false;
@@ -10,7 +11,7 @@ bool KSceneTitle::Init()
 	m_pBG->Create(m_pd3dDevice,
 		m_pImmediateContext,
 		shaderfilename,
-		L"../../data/gameHeight.bmp");
+		L"../../data/gameHeight.png");
 	return true;
 }
 bool KSceneTitle::Frame()
@@ -24,10 +25,14 @@ bool KSceneTitle::Frame()
 	for (int i = 0; i < m_pBG->m_InitVertexList.size(); i++)
 	{
 		KVector v = m_pBG->m_InitVertexList[i].p;
-		v = v * c;
-		m_pBG->m_InitVertexList[i].p = v;
+		//v = v * s; // s * r * t 		
+		//v = v * m;
+		//v = v * t;
+		m_pBG->m_VertexList[i].p = v*c;
 	}
 	m_pBG->UpdateVertexBuffer();
+
+
 	return true;
 }
 bool KSceneTitle::Render()

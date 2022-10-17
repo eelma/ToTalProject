@@ -218,6 +218,7 @@ float KVector::LengthSquared()
 	return (x * x + y * y + z*z);
 }
 
+
 float KVector::Length()
 {
 	return sqrt(LengthSquared());
