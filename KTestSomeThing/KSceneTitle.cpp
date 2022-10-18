@@ -54,16 +54,20 @@ bool KSceneTitle::Frame()
 	matView.ViewLookAt(vPos, vTarget, vUp);
 	
 	KMatrix matProj;
+	//원근 투영 행렬
 	matProj.PerspectiveFovLH(1.0f,100.0f, 3.141592f * 0.5f,800.0f/600.0f);
+	//matProj.OrthoLH(800, 600, 0.0f, 100.0f);
+	//matProj.OrthoOffCenterLH(-400, 400, -300, 300, 0.0f, 100.0f);
 	
 	KMatrix m, s, t, c;
 	float fScale = cos(g_fGameTimer) * 0.5f + 0.5f;
-	s = s.Scale(10, 10, 10);
-	m = m.RotationZ(g_fGameTimer);
-	//TVector vObjPos = { 0,0,0 };
-	//TVector vObjTarget = { 0,5,5 };
-	//m.ObjectLookAt(vObjPos, vObjTarget, vUp);
-	t = t.Translation(0.0f, 0, 0);
+	//s = KMath::Scale(400,300,10);
+	//s = s.Scale(10, 10, 10);
+	//m = m.RotationZ(g_fGameTimer);
+	////TVector vObjPos = { 0,0,0 };
+	////TVector vObjTarget = { 0,5,5 };
+	////m.ObjectLookAt(vObjPos, vObjTarget, vUp);
+	//t = t.Translation(0.0f, 0, 0);
 	c = s * m * t;
 	for (int i = 0; i < m_pBG->m_InitVertexList.size(); i++)
 	{

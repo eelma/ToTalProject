@@ -15,6 +15,12 @@ public:
 	KVector2D m_vPos;
 	//	KVector2D m_vSize;
 	KVector2D m_vDir;
+	KVector2D	m_vNDCPos;
+	KVector2D	m_vBeforePos;
+	KVector2D	m_vOffsetPos;
+
+
+
 	float m_fSpeed = 100.0f;
 public:
 	KVector2D m_vDrawPos;

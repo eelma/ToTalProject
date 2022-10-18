@@ -28,14 +28,15 @@ void KObject2D::SetRect(KRect rt)
     m_rtInit = rt;
     m_pkImageSize.x = m_pTexture->m_Desc.Width;
     m_pkImageSize.y = m_pTexture->m_Desc.Height;
-    //image w,h
-    //사실상 정점에 들어가는 uv값
-    m_rtUV.x1 = rt.x1 / m_pkImageSize.x;//u
-    //1
-    m_rtUV.y1 = rt.y1 / m_pkImageSize.y;//v
-    //40
+    float fPixelX = (1.0f / m_pTexture->m_Desc.Width) / 2.0f;
+    float fPixelY = (1.0f / m_pTexture->m_Desc.Height) / 2.0f;
+    // 90  -> 0 ~ 1
+    m_rtUV.x1 = rt.x1 / m_pkImageSize.x + fPixelX; // u
+    // 1
+    m_rtUV.y1 = rt.y1 / m_pkImageSize.y + fPixelY; // v
+    // 40
     m_rtUV.w = rt.w / m_pkImageSize.x;
-    //60
+    // 60
     m_rtUV.h = rt.h / m_pkImageSize.y;
 
 }
@@ -87,9 +88,12 @@ void  KObject2D::ScreenToCamera(KVector2D vCameraPos, KVector2D vViewPort)
 
 void KObject2D::SetPosition(KVector2D vPos)
 {
+    m_vBeforePos = m_vPos;
     m_vPos = vPos;//앞으로 렉트의 정중앙이다
     ScreenToNDC();//
     UpdateVertexBuffer();
+    m_vOffsetPos = m_vPos - m_vBeforePos;
+
 }
 //vPos(화면 좌표)를 ndc 좌표로 변경(컨버팅)해야한다
 //화면 좌표로 세팅하고 내부적으로 ndc로 랜더링을한다
