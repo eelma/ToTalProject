@@ -12,34 +12,34 @@ public:
 	KRect m_rtInit;
 	KRect m_rtUV;
 	//스크린의 포지션
-	KVector2D m_vPos;
-	//	KVector2D m_vSize;
-	KVector2D m_vDir;
-	KVector2D	m_vNDCPos;
-	KVector2D	m_vBeforePos;
-	KVector2D	m_vOffsetPos;
+	KVector2 m_vPos;
+	//	KVector2 m_vSize;
+	KVector2 m_vDir;
+	KVector2	m_vNDCPos;
+	KVector2	m_vBeforePos;
+	KVector2	m_vOffsetPos;
 
 
 
 	float m_fSpeed = 100.0f;
 public:
-	KVector2D m_vDrawPos;
-	KVector2D m_vDrawSize;
+	KVector2 m_vDrawPos;
+	KVector2 m_vDrawSize;
 
 public:
-	KVector2D m_vCameraPos;
-	KVector2D m_vViewSize;
-	void SetCameraPos(KVector2D vCamera) { m_vCameraPos = vCamera; }
-	void SetCameraSize(KVector2D vSize) { m_vViewSize = vSize; }
+	KVector2 m_vCameraPos;
+	KVector2 m_vViewSize;
+	void SetCameraPos(KVector2 vCamera) { m_vCameraPos = vCamera; }
+	void SetCameraSize(KVector2 vSize) { m_vViewSize = vSize; }
 	void ScreenToNDC();
-	void ScreenToCamera(KVector2D vCameraPos,
-		KVector2D vViewPort = {2000.0f,2000.0f});
+	void ScreenToCamera(KVector2 vCameraPos,
+		KVector2 vViewPort = {2000.0f,2000.0f});
 public:
 	bool Frame()override;
 	virtual void SetRect(KRect vPos);
-	virtual void SetPosition(KVector2D vPos);
-	virtual void SetPosition(KVector2D vPos, KVector2D vCamera);
-	virtual void SetDirection(KVector2D vDir)
+	virtual void SetPosition(KVector2 vPos);
+	virtual void SetPosition(KVector2 vPos, KVector2 vCamera);
+	virtual void SetDirection(KVector2 vDir)
 	{
 		m_vDir = vDir;
 	}

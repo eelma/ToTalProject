@@ -43,54 +43,54 @@ struct KFloat4
 		float v[4];
 	};
 };
-class KVector4D : public KFloat4
+class KVector4 : public KFloat4
 {
 public:
-	KVector4D();
-	KVector4D(float x, float y, float z, float w);
-	KVector4D(const KVector4D& v);
+	KVector4();
+	KVector4(float x, float y, float z, float w);
+	KVector4(const KVector4& v);
 public:
-	KVector4D operator + (KVector4D& v);
-	KVector4D operator - (KVector4D& v);
-	KVector4D operator * (float scala);
-	KVector4D operator / (float scala);
-	KVector4D operator *= (float scala);
-	KVector4D operator += (KVector4D& v);
-	KVector4D operator -= (KVector4D& v);
-	bool      operator == (KVector4D& v);
-	bool      operator <= (KVector4D& v);
-	bool      operator >= (KVector4D& v);
+	KVector4 operator + (KVector4& v);
+	KVector4 operator - (KVector4& v);
+	KVector4 operator * (float scala);
+	KVector4 operator / (float scala);
+	KVector4 operator *= (float scala);
+	KVector4 operator += (KVector4& v);
+	KVector4 operator -= (KVector4& v);
+	bool      operator == (KVector4& v);
+	bool      operator <= (KVector4& v);
+	bool      operator >= (KVector4& v);
 public:
 	float     LengthSquared();
 	float     Length();
 	void      Normalized();
-	KVector4D Identity();
-	float     Angle(KVector4D& v);
+	KVector4 Identity();
+	float     Angle(KVector4& v);
 };
 
-class KVector2D : public KFloat2
+class KVector2 : public KFloat2
 {
 public:
-	KVector2D();
-	KVector2D(float x, float y);
-	KVector2D(const KVector2D& v);
+	KVector2();
+	KVector2(float x, float y);
+	KVector2(const KVector2& v);
 public:
-	KVector2D operator + (KVector2D& v);
-	KVector2D operator - (KVector2D& v);
-	KVector2D operator * (float scala);
-	KVector2D operator / (float scala);
-	KVector2D operator *= (float scala);
-	KVector2D operator += (KVector2D& v);
-	KVector2D operator -= (KVector2D& v);
-	bool      operator == (KVector2D& v);
-	bool      operator <= (KVector2D& v);
-	bool      operator >= (KVector2D& v);
+	KVector2 operator + (KVector2& v);
+	KVector2 operator - (KVector2& v);
+	KVector2 operator * (float scala);
+	KVector2 operator / (float scala);
+	KVector2 operator *= (float scala);
+	KVector2 operator += (KVector2& v);
+	KVector2 operator -= (KVector2& v);
+	bool      operator == (KVector2& v);
+	bool      operator <= (KVector2& v);
+	bool      operator >= (KVector2& v);
 public:
 	float     LengthSquared();
 	float     Length();
 	void      Normalized();
-	KVector2D Identity();
-	float     Angle(KVector2D& v);
+	KVector2 Identity();
+	float     Angle(KVector2& v);
 };
 
 class KVector : public KFloat3

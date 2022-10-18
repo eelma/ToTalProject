@@ -6,8 +6,8 @@
 struct SimpleVertex
 {
 	KVector    p;
-	KVector4D  c;
-	KVector2D  t;
+	KVector4  c;
+	KVector2  t;
 };
 //dx와 관련된 기능만 있음
 class KBaseObject

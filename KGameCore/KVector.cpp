@@ -1,54 +1,54 @@
 #include "KVector.h"
 #include"KMatrix.h"
-KVector2D::KVector2D()
+KVector2::KVector2()
 {
 	x = y = 0.0f;
 }
-KVector2D::KVector2D(float x, float y)
+KVector2::KVector2(float x, float y)
 {
 	v[0] = x;
 	v[1] = y;
 }
-KVector2D::KVector2D(const KVector2D& v)
+KVector2::KVector2(const KVector2& v)
 {
 	x = v.x;
 	y = v.y;
 }
-KVector2D KVector2D::operator + (KVector2D& v)
+KVector2 KVector2::operator + (KVector2& v)
 {
-	return KVector2D(x + v.x, y + v.y);
+	return KVector2(x + v.x, y + v.y);
 }
-KVector2D KVector2D::operator - (KVector2D& v)
+KVector2 KVector2::operator - (KVector2& v)
 {
-	return KVector2D(x - v.x, y - v.y);
+	return KVector2(x - v.x, y - v.y);
 }
-KVector2D KVector2D::operator * (float scala)
+KVector2 KVector2::operator * (float scala)
 {
-	return KVector2D(x *scala, y * scala);
+	return KVector2(x *scala, y * scala);
 }
-KVector2D KVector2D::operator / (float scala)
+KVector2 KVector2::operator / (float scala)
 {
-	return KVector2D(x / scala, y / scala);
+	return KVector2(x / scala, y / scala);
 }
-KVector2D KVector2D::operator *= (float scala)
+KVector2 KVector2::operator *= (float scala)
 {
 	x *= scala;
 	y *= scala;
 	return *this;
 }
-KVector2D KVector2D::operator += (KVector2D& v)
+KVector2 KVector2::operator += (KVector2& v)
 {
 	x += v.x;
 	y += v.y;
 	return *this;
 }
-KVector2D KVector2D::operator -= (KVector2D& v)
+KVector2 KVector2::operator -= (KVector2& v)
 {
 	x -= v.x;
 	y -= v.y;
 	return *this;
 }
-bool      KVector2D::operator == (KVector2D& v)
+bool      KVector2::operator == (KVector2& v)
 {
 	if (fabs(x - v.x) < T_Epsilon)
 	{
@@ -59,7 +59,7 @@ bool      KVector2D::operator == (KVector2D& v)
 	}
 	return false;
 }
-bool      KVector2D::operator <= (KVector2D& b)
+bool      KVector2::operator <= (KVector2& b)
 {
 	if (x <= b.x)
 	{
@@ -70,7 +70,7 @@ bool      KVector2D::operator <= (KVector2D& b)
 	}
 	return false;
 }
-bool      KVector2D::operator >= (KVector2D& b)
+bool      KVector2::operator >= (KVector2& b)
 {
 	if (x >= b.x)
 	{
@@ -81,32 +81,32 @@ bool      KVector2D::operator >= (KVector2D& b)
 	}
 	return false;
 }
-float KVector2D::LengthSquared()
+float KVector2::LengthSquared()
 {
 	return (x*x + y*y);
 }
 
-float KVector2D::Length()
+float KVector2::Length()
 {
 	return sqrt(LengthSquared());
 }
 // 정규화 -> 단위벡터(자신을) 계산
-void KVector2D::Normalized()
+void KVector2::Normalized()
 {
 	float fInvertLength = 1.0f/ Length();
 	x = x * fInvertLength;
 	y = y * fInvertLength;
 }
 // 단위벡터 반환
-KVector2D KVector2D::Identity()
+KVector2 KVector2::Identity()
 {
-	KVector2D ret = *this;
+	KVector2 ret = *this;
 	float fInvertLength = 1.0f / Length();
 	ret.x = ret.x * fInvertLength;
 	ret.y = ret.y * fInvertLength;
 	return ret;
 }
-float     KVector2D::Angle(KVector2D& v)
+float     KVector2::Angle(KVector2& v)
 {
 	float fCos = x * v.x + y * v.y;//내적
 	fCos = fCos / (Length() * v.Length());
@@ -258,41 +258,41 @@ KVector KVector::operator ^ (KVector const& v0)
 	return KVector((y * v0.z - z * v0.y), (z * v0.x - x * v0.z), (x * v0.y - y * v0.x));
 }
 
-KVector4D::KVector4D()
+KVector4::KVector4()
 {
 	x = y=z=w = 0.0f;
 }
-KVector4D::KVector4D(float x, float y,float z,float w)
+KVector4::KVector4(float x, float y,float z,float w)
 {
 	v[0] = x;
 	v[1] = y;
 	v[2] = z;
 	v[3] = w;
 }
-KVector4D::KVector4D(const KVector4D& v)
+KVector4::KVector4(const KVector4& v)
 {
 	x = v.x;
 	y = v.y;
 	z = v.z;
 	w = v.w;
 }
-KVector4D KVector4D::operator + (KVector4D& v)
+KVector4 KVector4::operator + (KVector4& v)
 {
-	return KVector4D(x + v.x, y + v.y,z+v.z,w+v.w);
+	return KVector4(x + v.x, y + v.y,z+v.z,w+v.w);
 }
-KVector4D KVector4D::operator - (KVector4D& v)
+KVector4 KVector4::operator - (KVector4& v)
 {
-	return KVector4D(x - v.x, y - v.y, z - v.z, w - v.w);
+	return KVector4(x - v.x, y - v.y, z - v.z, w - v.w);
 }
-KVector4D KVector4D::operator * (float scala)
+KVector4 KVector4::operator * (float scala)
 {
-	return KVector4D(x * scala, y * scala, z * scala, w * scala);
+	return KVector4(x * scala, y * scala, z * scala, w * scala);
 }
-KVector4D KVector4D::operator / (float scala)
+KVector4 KVector4::operator / (float scala)
 {
-	return KVector4D(x / scala, y / scala, z / scala, w / scala);
+	return KVector4(x / scala, y / scala, z / scala, w / scala);
 }
-KVector4D KVector4D::operator *= (float scala)
+KVector4 KVector4::operator *= (float scala)
 {
 	x *= scala;
 	y *= scala;
@@ -300,7 +300,7 @@ KVector4D KVector4D::operator *= (float scala)
 	w *= scala;
 	return *this;
 }
-KVector4D KVector4D::operator += (KVector4D& v)
+KVector4 KVector4::operator += (KVector4& v)
 {
 	x += v.x;
 	y += v.y;
@@ -308,7 +308,7 @@ KVector4D KVector4D::operator += (KVector4D& v)
 	w += v.w;
 	return *this;
 }
-KVector4D KVector4D::operator -= (KVector4D& v)
+KVector4 KVector4::operator -= (KVector4& v)
 {
 	x -= v.x;
 	y -= v.y;
@@ -316,7 +316,7 @@ KVector4D KVector4D::operator -= (KVector4D& v)
 	w -= v.w;
 	return *this;
 }
-bool      KVector4D::operator == (KVector4D& v)
+bool      KVector4::operator == (KVector4& v)
 {
 	if (fabs(x - v.x) < T_Epsilon)
 	{
@@ -333,7 +333,7 @@ bool      KVector4D::operator == (KVector4D& v)
 	}
 	return false;
 }
-bool      KVector4D::operator <= (KVector4D& b)
+bool      KVector4::operator <= (KVector4& b)
 {
 	if (x <= b.x)
 	{
@@ -350,7 +350,7 @@ bool      KVector4D::operator <= (KVector4D& b)
 	}
 	return false;
 }
-bool      KVector4D::operator >= (KVector4D& b)
+bool      KVector4::operator >= (KVector4& b)
 {
 	if (x >= b.x)
 	{
@@ -367,17 +367,17 @@ bool      KVector4D::operator >= (KVector4D& b)
 	}
 	return false;
 }
-float KVector4D::LengthSquared()
+float KVector4::LengthSquared()
 {
 	return (x * x + y * y + z*z + w*w);
 }
 
-float KVector4D::Length()
+float KVector4::Length()
 {
 	return sqrt(LengthSquared());
 }
 // 정규화 -> 단위벡터(자신을) 계산
-void KVector4D::Normalized()
+void KVector4::Normalized()
 {
 	float fInvertLength = 1.0f / Length();
 	x = x * fInvertLength;
@@ -386,9 +386,9 @@ void KVector4D::Normalized()
 	w = w * fInvertLength;
 }
 // 단위벡터 반환
-KVector4D KVector4D::Identity()
+KVector4 KVector4::Identity()
 {
-	KVector4D ret = *this;
+	KVector4 ret = *this;
 	float fInvertLength = 1.0f / Length();
 	ret.x = ret.x * fInvertLength;
 	ret.y = ret.y * fInvertLength;
@@ -396,7 +396,7 @@ KVector4D KVector4D::Identity()
 	ret.w = ret.w * fInvertLength;
 	return ret;
 }
-float     KVector4D::Angle(KVector4D& v)
+float     KVector4::Angle(KVector4& v)
 {
 	float fCos = x * v.x + y * v.y + z * v.z + w * v.w;//내적
 	fCos = fCos / (Length() * v.Length());
