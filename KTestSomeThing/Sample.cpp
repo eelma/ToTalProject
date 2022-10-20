@@ -1,48 +1,9 @@
 #include "Sample.h"
 
-class KTest
-{
-public:
-	using xText = shared_ptr<KTest>;
-	int k;
-public:
-	KTest()
-	{
-		k = 10;
-	}
-	~KTest()
-	{
-		k = 0;
-	}
-};
-void Function(KTest::xText data)
-{
-	data.get()->k = 20;
-}
-void Function(unique_ptr<KTest> data)
-{
-	data.get()->k = 20;
-}
-
-
 
 bool Sample::Init()
 {
-	{
-	KTest::xText nullText = nullptr;
-	KTest::xText pTitleShared = make_shared<KTest>();
-		{
-			KTest* pData = pTitleShared.get();
-			Function(pTitleShared);
-		}
-	}
-
-	{
-	/*unique_ptr<KTest> pTitle = make_unique<KTest>;
-	{
-		KTest* pData = pTitle.get();
-	}*/
-	}
+	
 
 	m_pTitle = make_shared<KSceneTitle>();
 	m_pInGame = make_shared<KSceneInGame>();

@@ -2,11 +2,9 @@
 #include "KBaseObject.h"
 class KObject3D : public KBaseObject
 {
-
 public:
 	KObject3D() {};
 	virtual ~KObject3D() {};
-
 };
 
 class KShape : public KObject3D

@@ -190,11 +190,15 @@ bool KBaseObject::CreateShader(wstring filename)
 bool	KBaseObject::Create(
     ID3D11Device* pd3dDevice,// 디바이스 객체
     ID3D11DeviceContext* pImmediateContext,
-    std::wstring shadername,
-    std::wstring texturename)
+    wstring shadername,
+    wstring texturename)
 {
     m_pd3dDevice = pd3dDevice;
     m_pImmediateContext = pImmediateContext;
+    if (FAILED(CreateConstantBuffer()))
+    {
+        return false;
+    }
     if (FAILED(CreateVertexBuffer()))
     {
         return false;
@@ -249,6 +253,8 @@ bool KBaseObject::PreRender()
         &m_pVertexBuffer, &stride, &offset);
     m_pImmediateContext->IASetIndexBuffer(m_pIndexBuffer,
         DXGI_FORMAT_R32_UINT, 0);
+    m_pImmediateContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
+
     return true;
 }
 
@@ -285,4 +291,60 @@ void   KBaseObject::UpdateVertexBuffer()
     m_pImmediateContext->UpdateSubresource(
         m_pVertexBuffer, 0, nullptr,
         &m_VertexList.at(0), 0, 0);
+}
+
+void		KBaseObject::CreateConstantData()
+{
+    m_cbData.matWorld.Identity();
+    m_cbData.matView.Identity();
+    m_cbData.matProj.Identity();
+    m_cbData.fTimer = 0.0f;
+    m_cbData.matWorld.Transpose();
+    m_cbData.matView.Transpose();
+    m_cbData.matProj.Transpose();
+}
+HRESULT		KBaseObject::CreateConstantBuffer()
+{
+    HRESULT hr;
+    CreateConstantData();
+    D3D11_BUFFER_DESC       bd;
+    ZeroMemory(&bd, sizeof(bd));
+    bd.ByteWidth = sizeof(VS_CONSTANT_BUFFER) * 1; // 바이트 용량
+    // GPU 메모리에 할당
+    bd.Usage = D3D11_USAGE_DEFAULT; // 버퍼의 할당 장소 내지는 버퍼용도
+    bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+
+    D3D11_SUBRESOURCE_DATA  sd;
+    ZeroMemory(&sd, sizeof(sd));
+    sd.pSysMem = &m_cbData;
+    hr = m_pd3dDevice->CreateBuffer(
+        &bd, // 버퍼 할당
+        &sd, // 초기 할당된 버퍼를 체우는 CPU메모리 주소
+        &m_pConstantBuffer);
+    return hr;
+}
+void   KBaseObject::UpdateConstantBuffer()
+{
+    m_cbData.matWorld = m_matWorld.Transpose();
+    m_cbData.matView = m_matView.Transpose();
+    m_cbData.matProj = m_matProj.Transpose();
+    m_pImmediateContext->UpdateSubresource(
+        m_pConstantBuffer, 0, nullptr,
+        &m_cbData, 0, 0);
+}
+void	KBaseObject::SetMatrix(KMatrix* matWorld, KMatrix* matView, KMatrix* matProj)
+{
+    if (matWorld != nullptr)
+    {
+        m_matWorld = *matWorld;
+    }
+    if (matView != nullptr)
+    {
+        m_matView = *matView;
+    }
+    if (matProj != nullptr)
+    {
+        m_matProj = *matProj;
+    }
+    UpdateConstantBuffer();
 }

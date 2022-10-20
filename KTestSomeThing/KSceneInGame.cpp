@@ -52,7 +52,7 @@ bool KSceneInGame::Init()
 }
 bool KSceneInGame::Frame()
 {
-	static KVector2D vSize = { 800, 800 };
+	static KVector2 vSize = { 800, 800 };
 	if (I_Input.GetKey(VK_LEFT) == KEY_HOLD)
 	{
 		vSize.x -= g_fSecondPerFrame * 100.0f;
@@ -113,7 +113,7 @@ void KSceneInGame::DrawMiniMap(UINT x, UINT y, UINT w, UINT h)
 	//ºäÆ÷Æ® º¯°æ
 	m_pImmediateContext->RSSetViewports(1, &vp);
 
-	KVector2D vSize = { 2000,2000 };
+	KVector2 vSize = { 2000,2000 };
 	m_pMap->SetCameraSize(vSize);
 	m_pMap->SetCameraPos(m_vCamera);
 	m_pMap->Frame();

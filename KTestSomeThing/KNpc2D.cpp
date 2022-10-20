@@ -2,9 +2,9 @@
 #include "KNpc2D.h"
 bool KNpc2D::Frame()
 {
-    KVector2D vPos = m_vPos;
+    KVector2 vPos = m_vPos;
     ////벡터의 직선의 방정식 &  시간의 동기화
-    KVector2D m_vVelocity = m_vDir * m_fSpeed * g_fSecondPerFrame;
+    KVector2 m_vVelocity = m_vDir * m_fSpeed * g_fSecondPerFrame;
     vPos = vPos + m_vVelocity;
 
     if (vPos.x > 1000.0f)

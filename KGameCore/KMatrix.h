@@ -46,7 +46,7 @@ class KMatrix: public float4x4
 public:
 	KMatrix();
 	void Identity();
-	void Transpose();
+	KMatrix Transpose();
 	void RotationX(float fRadian);
 	void RotationY(float fRadian);
 	void RotationZ(float fRadian);
@@ -56,8 +56,11 @@ public:
 	KMatrix PerspectiveFovLH(float fNearPlane, float fFarPlane, float fovy, float Aspect);
 	KMatrix OrthoLH(float w, float h, float n, float f);
 	KMatrix OrthoOffCenterLH(float l, float r, float b, float t, float n, float f);
-	friend 	KMatrix OrthoLH(float w, float h, float n, float f);
-	friend 	KMatrix OrthoOffCenterLH(float l, float r, float b, float t, float n, float f);
+	friend 	KMatrix OrthoLH(KMatrix& mat, float w, float h, float n, float f);
+	friend 	KMatrix OrthoOffCenterLH(KMatrix& mat, float l, float r, float b, float t, float n, float f);
+	friend	KMatrix PerspectiveFovLH(KMatrix& mat, float fNearPlane, float fFarPlane, float fovy, float Aspect);
+	friend KMatrix PerspectiveFovLH(KMatrix& mat, float fNearPlane, float fFarPlane, float fovy, float Aspect);
+
 
 
 public:

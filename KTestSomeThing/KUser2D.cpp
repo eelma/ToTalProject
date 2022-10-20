@@ -2,7 +2,7 @@
 #include "KInput.h"
 bool KUser2D::Frame()
 {
-    KVector2D vPos = m_vPos;
+    KVector2 vPos = m_vPos;
     if (I_Input.GetKey('W'))
     {
         vPos.y += -1.0f * g_fSecondPerFrame * m_fSpeed;
