@@ -1,4 +1,35 @@
 #include "KBaseObject.h"
+
+void		KBaseObject::CreateConstantData()
+{
+    m_cbData.matWorld.Identity();
+    m_cbData.matView.Identity();
+    m_cbData.matProj.Identity();
+    m_cbData.fTimer = 0.0f;
+    m_cbData.matWorld.Transpose();
+    m_cbData.matView.Transpose();
+    m_cbData.matProj.Transpose();
+}
+HRESULT		KBaseObject::CreateConstantBuffer()
+{
+    HRESULT hr;
+    CreateConstantData();
+    D3D11_BUFFER_DESC       bd;
+    ZeroMemory(&bd, sizeof(bd));
+    bd.ByteWidth = sizeof(VS_CONSTANT_BUFFER) * 1; // 바이트 용량
+    // GPU 메모리에 할당
+    bd.Usage = D3D11_USAGE_DEFAULT; // 버퍼의 할당 장소 내지는 버퍼용도
+    bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+
+    D3D11_SUBRESOURCE_DATA  sd;
+    ZeroMemory(&sd, sizeof(sd));
+    sd.pSysMem = &m_cbData;
+    hr = m_pd3dDevice->CreateBuffer(
+        &bd, // 버퍼 할당
+        &sd, // 초기 할당된 버퍼를 체우는 CPU메모리 주소
+        &m_pConstantBuffer);
+    return hr;
+}
 void    KBaseObject::CreateVertexData()
 {
     m_VertexList.resize(4);
@@ -71,6 +102,25 @@ HRESULT KBaseObject::CreateIndexBuffer()
         &sd, // 초기 할당된 버퍼를 체우는 CPU메모리 주소
         &m_pIndexBuffer);
     return hr;
+}
+bool KBaseObject::CreateShader(wstring filename)
+{
+
+    m_pShader = I_Shader.Load(filename);
+    if (m_pShader)
+    {
+        m_pVS = m_pShader->m_pVS;
+        m_pPS = m_pShader->m_pPS;
+        m_pVSCode = m_pShader->m_pVSCode;
+        return true;
+    }
+
+    /*m_pVS = m_pShader->m_pVS;
+    m_pPS = m_pShader->m_pPS;
+    m_pVSCode = m_pShader->m_pVSCode;
+    return true;*/
+
+    return false;
 }
 HRESULT KBaseObject::CreateVertexShader(wstring filename)
 {
@@ -168,25 +218,7 @@ HRESULT KBaseObject::CreateVertexLayout()
 
     return hr;
 }
-bool KBaseObject::CreateShader(wstring filename)
-{
 
-    m_pShader = I_Shader.Load(filename);
-    if (m_pShader)
-    {
-        m_pVS = m_pShader->m_pVS;
-        m_pPS = m_pShader->m_pPS;
-        m_pVSCode = m_pShader->m_pVSCode;
-        return true;
-    }
-   
-    /*m_pVS = m_pShader->m_pVS;
-    m_pPS = m_pShader->m_pPS;
-    m_pVSCode = m_pShader->m_pVSCode;
-    return true;*/
-
-    return false;
-}
 bool	KBaseObject::Create(
     ID3D11Device* pd3dDevice,// 디바이스 객체
     ID3D11DeviceContext* pImmediateContext,
@@ -211,18 +243,18 @@ bool	KBaseObject::Create(
     {
         return false;
     }
-        /*if (FAILED(CreateVertexShader(shadername)))
-        {
-            return false;
-        }
-        if (FAILED(CreatePixelShader(shadername)))
-        {
-            return false;
-        }*/
-        if (FAILED(CreateVertexLayout()))
-        {
-            return false;
-        }
+    /*if (FAILED(CreateVertexShader(shadername)))
+    {
+        return false;
+    }
+    if (FAILED(CreatePixelShader(shadername)))
+    {
+        return false;
+    }*/
+    if (FAILED(CreateVertexLayout()))
+    {
+        return false;
+    }
     m_pTexture = I_Tex.Load(texturename);
     if (m_pTexture != nullptr)
     {
@@ -237,6 +269,45 @@ bool KBaseObject::Init()
 bool KBaseObject::Frame()
 {
 
+    return true;
+}
+void   KBaseObject::UpdateVertexBuffer()
+{
+    m_pImmediateContext->UpdateSubresource(
+        m_pVertexBuffer, 0, nullptr,
+        &m_VertexList.at(0), 0, 0);
+}
+void   KBaseObject::UpdateConstantBuffer()
+{
+    m_cbData.matWorld = m_matWorld.Transpose();
+    m_cbData.matView = m_matView.Transpose();
+    m_cbData.matProj = m_matProj.Transpose();
+    m_pImmediateContext->UpdateSubresource(
+        m_pConstantBuffer, 0, nullptr,
+        &m_cbData, 0, 0);
+}
+
+void	KBaseObject::SetMatrix(KMatrix* matWorld, KMatrix* matView, KMatrix* matProj)
+{
+    if (matWorld != nullptr)
+    {
+        m_matWorld = *matWorld;
+    }
+    if (matView != nullptr)
+    {
+        m_matView = *matView;
+    }
+    if (matProj != nullptr)
+    {
+        m_matProj = *matProj;
+    }
+    UpdateConstantBuffer();
+}
+bool KBaseObject::Render()
+{
+
+    PreRender();
+    PostRender();
     return true;
 }
 bool KBaseObject::PreRender()
@@ -267,18 +338,13 @@ bool KBaseObject::PostRender()
         m_pImmediateContext->DrawIndexed(m_IndexList.size(), 0, 0);
 
     return true;
-}bool KBaseObject::Render()
-{
-   
-    PreRender();
-    PostRender();
-    return true;
 }
 bool KBaseObject::Release()
 {
     if (m_pVertexBuffer) m_pVertexBuffer->Release();
     if (m_pIndexBuffer) m_pIndexBuffer->Release();
     if (m_pVertexLayout) m_pVertexLayout->Release();
+    if (m_pConstantBuffer) m_pConstantBuffer->Release();
     /* if (m_pVS) m_pVS->Release();
      if (m_pPS) m_pPS->Release();
      if (m_pVSCode) m_pVSCode->Release();
@@ -286,65 +352,4 @@ bool KBaseObject::Release()
     return true;
 }
 
-void   KBaseObject::UpdateVertexBuffer()
-{
-    m_pImmediateContext->UpdateSubresource(
-        m_pVertexBuffer, 0, nullptr,
-        &m_VertexList.at(0), 0, 0);
-}
 
-void		KBaseObject::CreateConstantData()
-{
-    m_cbData.matWorld.Identity();
-    m_cbData.matView.Identity();
-    m_cbData.matProj.Identity();
-    m_cbData.fTimer = 0.0f;
-    m_cbData.matWorld.Transpose();
-    m_cbData.matView.Transpose();
-    m_cbData.matProj.Transpose();
-}
-HRESULT		KBaseObject::CreateConstantBuffer()
-{
-    HRESULT hr;
-    CreateConstantData();
-    D3D11_BUFFER_DESC       bd;
-    ZeroMemory(&bd, sizeof(bd));
-    bd.ByteWidth = sizeof(VS_CONSTANT_BUFFER) * 1; // 바이트 용량
-    // GPU 메모리에 할당
-    bd.Usage = D3D11_USAGE_DEFAULT; // 버퍼의 할당 장소 내지는 버퍼용도
-    bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-
-    D3D11_SUBRESOURCE_DATA  sd;
-    ZeroMemory(&sd, sizeof(sd));
-    sd.pSysMem = &m_cbData;
-    hr = m_pd3dDevice->CreateBuffer(
-        &bd, // 버퍼 할당
-        &sd, // 초기 할당된 버퍼를 체우는 CPU메모리 주소
-        &m_pConstantBuffer);
-    return hr;
-}
-void   KBaseObject::UpdateConstantBuffer()
-{
-    m_cbData.matWorld = m_matWorld.Transpose();
-    m_cbData.matView = m_matView.Transpose();
-    m_cbData.matProj = m_matProj.Transpose();
-    m_pImmediateContext->UpdateSubresource(
-        m_pConstantBuffer, 0, nullptr,
-        &m_cbData, 0, 0);
-}
-void	KBaseObject::SetMatrix(KMatrix* matWorld, KMatrix* matView, KMatrix* matProj)
-{
-    if (matWorld != nullptr)
-    {
-        m_matWorld = *matWorld;
-    }
-    if (matView != nullptr)
-    {
-        m_matView = *matView;
-    }
-    if (matProj != nullptr)
-    {
-        m_matProj = *matProj;
-    }
-    UpdateConstantBuffer();
-}

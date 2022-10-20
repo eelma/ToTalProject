@@ -17,11 +17,11 @@ bool KSceneTitle::Init()
 	m_pBoxObj->Create(m_pd3dDevice, m_pImmediateContext, L"DefaultObject.txt", L"../../data/box.jpg");	
 
 	m_pMainCamera = new KCamera;
-	m_pMainCamera->CreateViewMatrix(KVector(0, 0, -10), KVector(0, 0, 0), KVector(0, 1, 0));
+	m_pMainCamera->CreateViewMatrix(KVector(0, 2, -10), KVector(0, 0, 0), KVector(0, 1, 0));
 	m_pMainCamera->CreateProjMatrix(1.0f, 100.0f, T_PI * 0.5f,
 		(float)g_rtClient.right / (float)g_rtClient.bottom);
 
-
+		
 	return true;
 }
 bool KSceneTitle::Frame()

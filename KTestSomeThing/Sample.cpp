@@ -3,15 +3,13 @@
 
 bool Sample::Init()
 {
-	
-
 	m_pTitle = make_shared<KSceneTitle>();
-	m_pInGame = make_shared<KSceneInGame>();
+	//m_pInGame = make_shared<KSceneInGame>();
 	
 	m_pTitle->Create(m_pd3dDevice.Get(), m_pImmediateContext.Get(), L"");
-	m_pInGame->Create(m_pd3dDevice.Get(), m_pImmediateContext.Get(), L"");
+	//m_pInGame->Create(m_pd3dDevice.Get(), m_pImmediateContext.Get(), L"");
 	m_pTitle->Init();
-	m_pInGame->Init();
+	//m_pInGame->Init();
 	m_pCurrentScene = m_pTitle;
 
 	return true;
@@ -39,7 +37,7 @@ bool Sample::Render()
 bool Sample::Release()
 {
 	m_pTitle->Release();
-	m_pInGame->Release();
+	//m_pInGame->Release();
 
 	
 	return true;
