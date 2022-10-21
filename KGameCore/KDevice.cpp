@@ -113,19 +113,41 @@ HRESULT KDevice::CreateRenderTargetView()
     return hr;
 }
 
-//HRESULT KDevice::CreateDepthStencilView()
-//{
-//    HRESULT hr;
-//
-//       //1번 텍스처를 생성한다
-//       //2번 이걸로 깊이 스텐실 뷰로 생성한다
-//       //우리가 버퍼도 만든다음 만드는거 따로 채우는거 따로다
-//       //우리는 텍스쳐를 생성할때 채울 이유가 없다 따로 렌더링할거라서
-//       //3번 뷰 적용
-//       //4번 깊이스텐실 뷰 상태 객체 생성해서 적용
-//
-//   return hr;
-//}
+HRESULT KDevice::CreateDepthStencilView()
+{
+    HRESULT hr;
+    D3D11_RENDER_TARGET_VIEW_DESC rtvd;
+    m_pRTV->GetDesc(&rtvd);
+    DXGI_SWAP_CHAIN_DESC scd;
+    m_pSwapChain->GetDesc(&scd);
+
+       //1번 텍스처를 생성한다
+    ComPtr<ID3D11Texture2D> pDSTexture;
+    D3D11_TEXTURE2D_DESC td;
+    td.Width = scd.BufferDesc.Width;
+    td.Height = scd.BufferDesc.Height;
+    td.MipLevels = 1;
+    td.ArraySize = 1;
+    td.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+    UINT Width;
+    UINT Height;
+    UINT MipLevels;
+    UINT ArraySize;
+    DXGI_FORMAT Format;
+    DXGI_SAMPLE_DESC SampleDesc;
+    D3D11_USAGE Usage;
+    UINT BindFlags;
+    UINT CPUAccessFlags;
+    UINT MiscFlags;
+
+       //2번 이걸로 깊이 스텐실 뷰로 생성한다
+       //우리가 버퍼도 만든다음 만드는거 따로 채우는거 따로다
+       //우리는 텍스쳐를 생성할때 채울 이유가 없다 따로 렌더링할거라서
+       //3번 뷰 적용
+       //4번 깊이스텐실 뷰 상태 객체 생성해서 적용
+
+   return hr;
+}
 
 void KDevice::CreateViewport()
 {
