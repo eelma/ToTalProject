@@ -18,6 +18,10 @@ bool		KDevice::Init()
     {
         return false;
     }
+    if (FAILED(hr = CreateDepthStencilView()))
+    {
+        return false;
+    }
     CreateViewport();
     return true;
 }
@@ -175,6 +179,7 @@ HRESULT KDevice::ResizeDevice(UINT width, UINT height)
     //하나 이상의 렌더 타겟을 원자적으로 바인딩하고 깊이 스텐실 버퍼를 output-merger 스테이지에 바인딩 합니다.
     m_pImmediateContext->OMSetRenderTargets(0, nullptr, NULL);
     m_pRTV.ReleaseAndGetAddressOf();
+    m_pDepthStencilView.ReleaseAndGetAddressOf();
     //변경된 윈도우의 크기를 얻고 백버퍼의 크기를 재 조정.
     //백버퍼의 크기를 조정한다.
     DXGI_SWAP_CHAIN_DESC CurrentSD, AfterSD;
@@ -183,6 +188,10 @@ HRESULT KDevice::ResizeDevice(UINT width, UINT height)
     // 변경된 백 버퍼의 크기를 얻고 랜더타켓 뷰를 다시 생성 및적용.
     //뷰포트 재지어.
     if (FAILED(hr = CreateRenderTargetView()))
+    {
+        return false;
+    }
+    if (FAILED(hr = CreateDepthStencilView()))
     {
         return false;
     }
