@@ -14,6 +14,10 @@ LRESULT CALLBACK WndProc(
     _ASSERT(g_pWindow);
     return g_pWindow->MsgProc(hWnd, message, wParam, lParam);
 }
+HRESULT KWindow::ResizeDevice(UINT width, UINT height)
+{
+    return S_OK;
+}
 LRESULT KWindow::MsgProc(
     HWND hWnd,
     UINT message,
@@ -23,6 +27,24 @@ LRESULT KWindow::MsgProc(
     
     switch (message)
     {
+    case WM_SIZE:
+    {
+        if (SIZE_MINIMIZED != wParam)//최소화
+        {
+            UINT width = LOWORD(lParam);
+            UINT height = HIWORD(lParam);
+            GetWindowRect(hWnd, &m_rtWindow);
+            GetClientRect(hWnd, &m_rtClient);
+            g_rtClient = m_rtClient;
+
+            m_iClientWidth = m_rtClient.right - m_rtClient.left;
+            m_iClientHeight = m_rtClient.bottom - m_rtClient.top;
+            if (FAILED(ResizeDevice(width, height)))
+            {
+
+            }
+        }
+    }break;
     case WM_DESTROY:
         PostQuitMessage(0); // 메세지큐에 직접 WM_QUIT
         break;

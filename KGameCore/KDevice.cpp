@@ -129,18 +129,20 @@ HRESULT KDevice::CreateDepthStencilView()
     td.MipLevels = 1;
     td.ArraySize = 1;
     td.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-    UINT Width;
-    UINT Height;
-    UINT MipLevels;
-    UINT ArraySize;
-    DXGI_FORMAT Format;
-    DXGI_SAMPLE_DESC SampleDesc;
-    D3D11_USAGE Usage;
-    UINT BindFlags;
-    UINT CPUAccessFlags;
-    UINT MiscFlags;
-
+    td.SampleDesc.Count = 1;
+    td.SampleDesc.Quality = 0;
+    td.Usage = D3D11_USAGE_DEFAULT;
+    td.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+    td.CPUAccessFlags = 0;
+    td.MiscFlags = 0;
+    
+    hr = m_pd3dDevice->CreateTexture2D(&td, NULL, pDSTexture.GetAddressOf());
        //2번 이걸로 깊이 스텐실 뷰로 생성한다
+    D3D11_DEPTH_STENCIL_VIEW_DESC dtvd;
+    ZeroMemory(&dtvd, sizeof(dtvd));
+    dtvd.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+    dtvd.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+    hr = m_pd3dDevice->CreateDepthStencilView(pDSTexture.Get(), &dtvd, m_pDepthStencilView.GetAddressOf());
        //우리가 버퍼도 만든다음 만드는거 따로 채우는거 따로다
        //우리는 텍스쳐를 생성할때 채울 이유가 없다 따로 렌더링할거라서
        //3번 뷰 적용
@@ -161,4 +163,41 @@ void KDevice::CreateViewport()
     m_vp.MinDepth = 0.0f;
     m_vp.MaxDepth = 1.0f;
     m_pImmediateContext->RSSetViewports(1, &m_vp);
+}
+
+HRESULT KDevice::ResizeDevice(UINT width, UINT height)
+{
+    HRESULT hr;
+    //윈도우 크기 변경 메시지 검출(WM_SIZE)
+    if (m_pd3dDevice == nullptr)return S_OK;
+    //현재 설정된 랜더타켓 해제 및 소멸
+    DeleteDXResource();
+    //하나 이상의 렌더 타겟을 원자적으로 바인딩하고 깊이 스텐실 버퍼를 output-merger 스테이지에 바인딩 합니다.
+    m_pImmediateContext->OMSetRenderTargets(0, nullptr, NULL);
+    m_pRTV.ReleaseAndGetAddressOf();
+    //변경된 윈도우의 크기를 얻고 백버퍼의 크기를 재 조정.
+    //백버퍼의 크기를 조정한다.
+    DXGI_SWAP_CHAIN_DESC CurrentSD, AfterSD;
+    m_pSwapChain->GetDesc(&CurrentSD);
+    hr = m_pSwapChain->ResizeBuffers(CurrentSD.BufferCount, width, height, CurrentSD.BufferDesc.Format, 0);
+    // 변경된 백 버퍼의 크기를 얻고 랜더타켓 뷰를 다시 생성 및적용.
+    //뷰포트 재지어.
+    if (FAILED(hr = CreateRenderTargetView()))
+    {
+        return false;
+    }
+    CreateViewport();
+
+    CreateDXResource();
+    return S_OK;
+}
+
+HRESULT KDevice::CreateDXResource()
+{
+    return true;
+}
+
+HRESULT KDevice::DeleteDXResource()
+{
+    return true;
 }

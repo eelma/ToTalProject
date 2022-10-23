@@ -25,7 +25,8 @@ public:
 	virtual bool		Frame();// 실시간 계산
 	virtual bool		Render();// 실시간 랜더링
 	virtual bool		Release();// 소멸 및 삭제
-	
+	virtual HRESULT CreateDXResource();
+	virtual HRESULT DeleteDXResource();
 
 public:
 	bool Set(IDXGISurface1* dxgiSurface);

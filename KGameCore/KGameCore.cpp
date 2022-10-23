@@ -27,14 +27,15 @@ bool		KGameCore::KCoreFrame()
 }
 bool		KGameCore::KCorePreRender()
 {
-
-	m_pImmediateContext->OMSetRenderTargets(1, m_pRTV.GetAddressOf(), NULL);
+	m_pImmediateContext->OMSetRenderTargets(1, m_pRTV.GetAddressOf(), m_pDepthStencilView.Get());
 	float color[4] = { 0.34324f,0.52342f,0.798320f,1.0f };
 	m_pImmediateContext->ClearRenderTargetView(m_pRTV.Get(), color);
+	m_pImmediateContext->ClearDepthStencilView(m_pDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	m_pImmediateContext->PSSetSamplers(0, 1, &KDxState::g_pDefaultSSWrap);
 	m_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	m_pImmediateContext->RSSetViewports(1 ,&m_vp);
 	m_pImmediateContext->RSSetState(KDxState::g_pDefaultRSSolid);
+	m_pImmediateContext->OMSetDepthStencilState(KDxState::g_pDefaultDepthStencil, 0xff);
 
     return true;
 }
@@ -89,4 +90,20 @@ bool        KGameCore::Run()
 	KCoreRelease();
 	
     return true;
+}
+
+HRESULT KGameCore::CreateDXResource()
+{
+	m_Writer.Init();
+	IDXGISurface1* pBackBuffer;
+	m_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface1), (void**)&pBackBuffer);
+	m_Writer.Set(pBackBuffer);
+	pBackBuffer ->Release();
+	return S_OK;
+}
+
+HRESULT KGameCore::DeleteDXResource()
+{
+	m_Writer.DeleteDXResource();
+	return E_NOTIMPL;
 }

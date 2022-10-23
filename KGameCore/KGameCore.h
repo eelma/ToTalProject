@@ -29,6 +29,8 @@ private:
 	bool		KCoreRelease();// 家戈 棺 昏力	
 public:
 	bool		Run()override; // 家戈 棺 昏力	
+	virtual HRESULT CreateDXResource();
+	virtual HRESULT DeleteDXResource();
 
 };
 

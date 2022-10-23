@@ -93,3 +93,16 @@ bool KWriter::Release()
 	
 	return true;
 }
+
+HRESULT KWriter::CreateDXResource()
+{
+	HRESULT hr = m_d2dRT->CreateSolidColorBrush({ 0,0,0,1 }, &m_pTextColor);
+	return true;
+}
+
+HRESULT KWriter::DeleteDXResource()
+{
+	if (m_pTextColor)m_pTextColor->Release();
+	if (m_d2dRT)m_d2dRT->Release();
+	return true;
+}

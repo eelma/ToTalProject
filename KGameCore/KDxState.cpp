@@ -6,6 +6,8 @@ ID3D11BlendState* KDxState::g_pDefaultBS = nullptr;
 ID3D11RasterizerState* KDxState::g_pDefaultRSWireFrame=nullptr;
 ID3D11RasterizerState* KDxState::g_pDefaultRSSolid=nullptr;
 
+ID3D11DepthStencilState* KDxState::g_pDefaultDepthStencil = nullptr;
+ID3D11DepthStencilState* KDxState::g_pGreaterDepthStencil = nullptr;
 //샘플러 스테이트라는 것은 항상 구조체를 채워서 그 구조체에 의해서 만들어지는 과정을 가지고있다
 bool KDxState::SetState(ID3D11Device* pd3dDevice)
 {
@@ -44,6 +46,12 @@ bool KDxState::SetState(ID3D11Device* pd3dDevice)
     rd.FillMode = D3D11_FILL_SOLID;//필모드는 와이어프레임 솔리드
     pd3dDevice->CreateRasterizerState(&rd, &g_pDefaultRSSolid);//솔리드는 가득차있다
 
+    D3D11_DEPTH_STENCIL_DESC dsd;
+    ZeroMemory(&dsd, sizeof(dsd));
+    dsd.DepthEnable = TRUE;
+    dsd.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+    dsd.DepthFunc = D3D11_COMPARISON_GREATER;
+    hr = pd3dDevice->CreateDepthStencilState(&dsd, &g_pGreaterDepthStencil);
 
 	return true;
 }
@@ -53,5 +61,7 @@ bool KDxState::Release()
     if (g_pDefaultSSWrap)g_pDefaultSSWrap->Release();
     if (g_pDefaultRSWireFrame)g_pDefaultRSWireFrame->Release();
     if (g_pDefaultRSSolid)g_pDefaultRSSolid->Release();
+    if (g_pDefaultDepthStencil)g_pDefaultDepthStencil->Release();
+    if (g_pGreaterDepthStencil)g_pGreaterDepthStencil->Release();
 	return true;
 }
