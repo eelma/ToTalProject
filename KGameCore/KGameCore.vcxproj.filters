@@ -72,6 +72,9 @@
     <ClInclude Include="KMatrix.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="KCamera.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KWindow.cpp">
@@ -126,6 +129,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="KMatrix.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="KCamera.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

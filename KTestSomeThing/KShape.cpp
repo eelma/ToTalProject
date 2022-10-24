@@ -58,8 +58,8 @@ void KShapeBox::CreateIndexData()
 bool KShapeBox::Frame()
 {
 
-	KMatrix m, s, t, c;
-	float fScale = cos(g_fGameTimer) * 0.5f + 0.5f;
+	//KMatrix m, s, t, c;
+	//float fScale = cos(g_fGameTimer) * 0.5f + 0.5f;
 	//s = KMath::Scale(400, 300, 10);
 	//m = KMath::RotationZ(g_fGameTimer);
 	//t = KMath::Translation(0.0f, 0, 0);
@@ -77,6 +77,70 @@ bool KShapeBox::Render()
 	
 	return true;
 }
+
+void KShapeLine::CreateVertexData()
+{
+	//상단
+	//5  6
+	//1  2
+	//하단
+	//4  7
+	//0  3
+	//앞면
+	m_VertexList.resize(2);
+	m_VertexList[0] = SimpleVertex(KVector(0.0f, 0.0f, 0.0f), KVector4(1.0, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
+	m_VertexList[1] = SimpleVertex(KVector(0.0f, 0.0f, 1000.0f), KVector4(1.0, 0.0f, 0.0f, 1.0f), KVector2(1.0f, 0.0f));
+	m_InitVertexList = m_VertexList;
+}
+void KShapeLine::CreateIndexData()
+{
+	m_IndexList.resize(2);
+	int iIndex = 0;
+	m_IndexList[iIndex++] = 0;
+	m_IndexList[iIndex++] = 1;
+}
+bool KShapeLine::Render()
+{
+	m_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
+	PreRender();
+	PostRender();
+	m_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	return true;
+}
+bool KShapeLine :: Frame()
+{
+	m_cbData.fTimer = g_fGameTimer;
+	return true;
+}
+void KShapeDirectionLine::CreateVertexData()
+{
+	//상단
+	//5  6
+	// 1  2
+	// 하단
+	// 4  7
+	// 0  3
+	// 앞면
+	m_VertexList.resize(6);
+	m_VertexList[0] = SimpleVertex(KVector(0.0f, 0.0f, 0.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
+	m_VertexList[1] = SimpleVertex(KVector(1.0f, 0.0f, 0.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(1.0f, 0.0f));
+	m_VertexList[2] = SimpleVertex(KVector(0.0f, 0.0f, 0.0f), KVector4(0.0f, 1.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
+	m_VertexList[3] = SimpleVertex(KVector(0.0f, 1.0f, 0.0f), KVector4(0.0f, 1.0f, 0.0f, 1.0f), KVector2(1.0f, 0.0f));
+	m_VertexList[4] = SimpleVertex(KVector(0.0f, 0.0f, 0.0f), KVector4(0.0f, 0.0f, 1.0f, 1.0f), KVector2(0.0f, 0.0f));
+	m_VertexList[5] = SimpleVertex(KVector(0.0f, 0.0f, 1.0f), KVector4(0.0f, 0.0f, 1.0f, 1.0f), KVector2(1.0f, 0.0f));
+	m_InitVertexList = m_VertexList;
+}
+void KShapeDirectionLine::CreateIndexData()
+{
+	m_IndexList.resize(6);
+	int iIndex = 0;
+	m_IndexList[iIndex++] = 0; m_IndexList[iIndex++] = 1;
+	m_IndexList[iIndex++] = 2; m_IndexList[iIndex++] = 3;
+	m_IndexList[iIndex++] = 4; m_IndexList[iIndex++] = 5;
+	
+
+}
+
 
 
 

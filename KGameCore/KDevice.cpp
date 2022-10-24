@@ -128,13 +128,14 @@ HRESULT KDevice::CreateDepthStencilView()
        //1번 텍스처를 생성한다
     ComPtr<ID3D11Texture2D> pDSTexture;
     D3D11_TEXTURE2D_DESC td;
+    ZeroMemory(&td, sizeof(td));
     td.Width = scd.BufferDesc.Width;
     td.Height = scd.BufferDesc.Height;
     td.MipLevels = 1;
     td.ArraySize = 1;
-    td.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+    td.Format = DXGI_FORMAT_R24G8_TYPELESS;
     td.SampleDesc.Count = 1;
-    td.SampleDesc.Quality = 0;
+    //td.SampleDesc.Quality = 0;
     td.Usage = D3D11_USAGE_DEFAULT;
     td.BindFlags = D3D11_BIND_DEPTH_STENCIL;
     td.CPUAccessFlags = 0;

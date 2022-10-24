@@ -32,6 +32,11 @@ HRESULT		KBaseObject::CreateConstantBuffer()
 }
 void    KBaseObject::CreateVertexData()
 {
+    if (m_VertexList.size() > 0)
+    {
+        m_InitVertexList = m_VertexList;
+        return;
+    }
     m_VertexList.resize(4);
     m_VertexList[0].p = { -1.0f, 1.0f, 0.0f };
     m_VertexList[1].p = { +1.0f, 1.0f,  0.0f };
@@ -51,6 +56,7 @@ void    KBaseObject::CreateVertexData()
 }
 void    KBaseObject::CreateIndexData()
 {
+    if (m_IndexList.size() > 0)return;
     // 정점버퍼에 인덱스
     m_IndexList.resize(6);
     m_IndexList[0] = 0;
@@ -259,6 +265,10 @@ bool	KBaseObject::Create(
     if (m_pTexture != nullptr)
     {
         m_pTextureSRV = m_pTexture->m_pTextureSRV;
+    }
+    if (!Init())
+    {
+        return false;
     }
     return true;
 }

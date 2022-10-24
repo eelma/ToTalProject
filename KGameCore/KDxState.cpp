@@ -50,6 +50,8 @@ bool KDxState::SetState(ID3D11Device* pd3dDevice)
     ZeroMemory(&dsd, sizeof(dsd));
     dsd.DepthEnable = TRUE;
     dsd.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+    dsd.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+    hr = pd3dDevice->CreateDepthStencilState(&dsd, &g_pDefaultDepthStencil);
     dsd.DepthFunc = D3D11_COMPARISON_GREATER;
     hr = pd3dDevice->CreateDepthStencilState(&dsd, &g_pGreaterDepthStencil);
 

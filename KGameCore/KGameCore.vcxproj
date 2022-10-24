@@ -165,6 +165,7 @@ copy "KGameCore_R.lib" "..\\..\\lib\\"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="KBaseObject.h" />
+    <ClInclude Include="KCamera.h" />
     <ClInclude Include="KCollision.h" />
     <ClInclude Include="KDevice.h" />
     <ClInclude Include="KDxState.h" />
@@ -186,6 +187,7 @@ copy "KGameCore_R.lib" "..\\..\\lib\\"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KBaseObject.cpp" />
+    <ClCompile Include="KCamera.cpp" />
     <ClCompile Include="KCollision.cpp" />
     <ClCompile Include="KDevice.cpp" />
     <ClCompile Include="KDxState.cpp" />

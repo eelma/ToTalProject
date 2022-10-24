@@ -34,12 +34,12 @@ bool KWriter::Init()
 		,DWRITE_FONT_WEIGHT_NORMAL
 		,DWRITE_FONT_STYLE_NORMAL
 		,DWRITE_FONT_STRETCH_NORMAL
-		,50
+		,30
 		, L"ko-kr"//L"ko-kr" L"en-us"
 		,&m_pTextForamat);
 	//백버퍼는 연동한다
 
-	m_szDefaultText = L"KGCA Game Academy";
+	//m_szDefaultText = L"KGCA Game Academy";
 
 	//hr = m_pDWriteFactory->CreateTextLayout(
 	//	m_szDefaultText.c_str()//L"고딕" L"Gabriola"
@@ -60,7 +60,7 @@ bool KWriter::Frame()
 
 bool KWriter::Render()
 {
-	Draw(0, 0, m_szDefaultText,{1,0,0,1});
+	Draw(0, 0, m_szDefaultText,{1,1,1,1});
 	
 	return true;
 }

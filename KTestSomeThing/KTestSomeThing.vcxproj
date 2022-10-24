@@ -149,9 +149,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="KCamera.h" />
+    <ClInclude Include="KMap.h" />
     <ClInclude Include="KMapObject.h" />
     <ClInclude Include="KNpc2D.h" />
+    <ClInclude Include="KObject3D.h" />
     <ClInclude Include="KScene.h" />
     <ClInclude Include="KSceneInGame.h" />
     <ClInclude Include="KSceneTitle.h" />
@@ -160,9 +161,10 @@
     <ClInclude Include="Sample.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="KCamera.cpp" />
+    <ClCompile Include="KMap.cpp" />
     <ClCompile Include="KMapObject.cpp" />
     <ClCompile Include="KNpc2D.cpp" />
+    <ClCompile Include="KObject3D.cpp" />
     <ClCompile Include="KScene.cpp" />
     <ClCompile Include="KSceneInGame.cpp" />
     <ClCompile Include="KSceneTitle.cpp" />
@@ -177,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="DefaultObject.txt" />
+    <Text Include="DefaultShape.txt" />
     <Text Include="DefaultShapeMask.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,5 +1,5 @@
 #include "KTimer.h"
-
+#include"KInput.h"
 float g_fGameTimer = 0.0f;
 float g_fSecondPerFrame = 10.0f;
 
@@ -40,11 +40,16 @@ bool		KTimer::Frame()
 }
 bool		KTimer::Render()
 {
+    
     m_szTimer = to_wstring(m_fGameTimer);
     m_szTimer += L" ";
     m_szTimer += to_wstring(m_iFPS);
+    m_szTimer += L" ";
+    m_szTimer += to_wstring(I_Input.m_ptPos.x);
+    m_szTimer += L" ";
+    m_szTimer += to_wstring(I_Input.m_ptPos.y);
     m_szTimer += L"\n";
-
+    ;
     OutputDebugString(m_szTimer.c_str());
 
     return true;

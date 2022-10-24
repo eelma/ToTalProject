@@ -2,11 +2,13 @@
 #include "KMapObject.h"
 #include "KUser2D.h"
 #include "KNpc2D.h"
+#include"KCamera.h"
 class KScene
 {
 public:
 	ID3D11Device* m_pd3dDevice = nullptr;// 디바이스 객체
 	ID3D11DeviceContext* m_pImmediateContext = nullptr;
+	KCamera* m_pMainCamera = nullptr;
 public:
 	KVector2   m_vCamera = { 0, 0 };
 	KUser2D* m_pUser;
