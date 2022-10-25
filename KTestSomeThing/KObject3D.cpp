@@ -66,36 +66,39 @@ void KObjectBox::CreateVertexData()
 	//0  3
 	//¾Õ¸é
 	m_VertexList.resize(24);
-	//¾Õ¸é
-	m_VertexList[0] = SimpleVertex(KVector(-1.0f, 1.0f, -1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[1] = SimpleVertex(KVector(1.0f, 1.0f, -1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[2] = SimpleVertex(KVector(1.0f, -1.0f, -1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[3] = SimpleVertex(KVector(-1.0f, -1.0f, -1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	//µÞ¸é
-	m_VertexList[4] = SimpleVertex(KVector(1.0f, 1.0f, 1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[5] = SimpleVertex(KVector(-1.0f, 1.0f, 1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[6] = SimpleVertex(KVector(-1.0f, -1.0f, 1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[7] = SimpleVertex(KVector(1.0f, -1.0f, 1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	//¿À¸¥ÂÊ
-	m_VertexList[8] = SimpleVertex(KVector(1.0f, 1.0f, -1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[9] = SimpleVertex(KVector(1.0f, 1.0f, 1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[10] = SimpleVertex(KVector(1.0f, -1.0f, 1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[11] = SimpleVertex(KVector(1.0f, -1.0f, -1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	//¿ÞÂÊ
-	m_VertexList[12] = SimpleVertex(KVector(-1.0f, 1.0f, 1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[13] = SimpleVertex(KVector(-1.0f, 1.0f, -1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[14] = SimpleVertex(KVector(-1.0f, -1.0f, -1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[15] = SimpleVertex(KVector(-1.0f, -1.0f, 1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	//À­¸é
-	m_VertexList[16] = SimpleVertex(KVector(-1.0f, 1.0f, 1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[17] = SimpleVertex(KVector(1.0f, 1.0f, 1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[18] = SimpleVertex(KVector(1.0f, 1.0f, -1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[19] = SimpleVertex(KVector(-1.0f, 1.0f, -1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	//¾Æ·§¸é
-	m_VertexList[20] = SimpleVertex(KVector(-1.0f, -1.0f, -1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[21] = SimpleVertex(KVector(1.0f, -1.0f, -1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[22] = SimpleVertex(KVector(1.0f, -1.0f, 1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[23] = SimpleVertex(KVector(-1.0f, -1.0f, 1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
+	m_VertexList[0] = SimpleVertex(KVector(-1.0f, 1.0f, -1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 0.0f));
+	m_VertexList[1] = SimpleVertex(KVector(1.0f, 1.0f, -1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 0.0f));
+	m_VertexList[2] = SimpleVertex(KVector(1.0f, -1.0f, -1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 1.0f));
+	m_VertexList[3] = SimpleVertex(KVector(-1.0f, -1.0f, -1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 1.0f));
+	// µÞ¸é																
+	m_VertexList[4] = SimpleVertex(KVector(1.0f, 1.0f, 1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 0.0f));
+	m_VertexList[5] = SimpleVertex(KVector(-1.0f, 1.0f, 1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 0.0f));
+	m_VertexList[6] = SimpleVertex(KVector(-1.0f, -1.0f, 1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 1.0f));
+	m_VertexList[7] = SimpleVertex(KVector(1.0f, -1.0f, 1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 1.0f));
+
+	// ¿À¸¥ÂÊ															  
+	m_VertexList[8] = SimpleVertex(KVector(1.0f, 1.0f, -1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 0.0f));
+	m_VertexList[9] = SimpleVertex(KVector(1.0f, 1.0f, 1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 0.0f));
+	m_VertexList[10] = SimpleVertex(KVector(1.0f, -1.0f, 1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 1.0f));
+	m_VertexList[11] = SimpleVertex(KVector(1.0f, -1.0f, -1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 1.0f));
+
+	// ¿ÞÂÊ																
+	m_VertexList[12] = SimpleVertex(KVector(-1.0f, 1.0f, 1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 0.0f));
+	m_VertexList[13] = SimpleVertex(KVector(-1.0f, 1.0f, -1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 0.0f));
+	m_VertexList[14] = SimpleVertex(KVector(-1.0f, -1.0f, -1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 1.0f));
+	m_VertexList[15] = SimpleVertex(KVector(-1.0f, -1.0f, 1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 1.0f));
+	//À§																	
+	m_VertexList[16] = SimpleVertex(KVector(-1.0f, 1.0f, 1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 0.0f));
+	m_VertexList[17] = SimpleVertex(KVector(1.0f, 1.0f, 1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 0.0f));
+	m_VertexList[18] = SimpleVertex(KVector(1.0f, 1.0f, -1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 1.0f));
+	m_VertexList[19] = SimpleVertex(KVector(-1.0f, 1.0f, -1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 1.0f));
+	//¾Æ·¡																
+	m_VertexList[20] = SimpleVertex(KVector(-1.0f, -1.0f, -1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 0.0f));
+	m_VertexList[21] = SimpleVertex(KVector(1.0f, -1.0f, -1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 0.0f));
+	m_VertexList[22] = SimpleVertex(KVector(1.0f, -1.0f, 1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 1.0f));
+	m_VertexList[23] = SimpleVertex(KVector(-1.0f, -1.0f, 1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 1.0f));
+
+
 
 	m_InitVertexList = m_VertexList;
 }

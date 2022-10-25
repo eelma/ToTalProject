@@ -9,6 +9,7 @@ public:
 	shared_ptr < KSceneInGame> m_pInGame = nullptr;
 	shared_ptr < KScene> m_pCurrentScene = nullptr;
 	KShapeDirectionLine m_DirLine;
+
 public:
 	virtual bool		Init() override;
 	virtual bool		Frame() override;

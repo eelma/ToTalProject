@@ -82,26 +82,30 @@ void KMatrix::RotationX(float fRadian)
 }
 void KMatrix::RotationY(float fRadian)
 {
+	Identity();
 	float fCosTheta = cos(fRadian);
 	float fSinTheta = sin(fRadian);
-	_11 = fCosTheta; _13 = fSinTheta;
+	_11 = fCosTheta; _13 = -fSinTheta;
 	_31 = fSinTheta; _33 = fCosTheta;
 }
 void KMatrix::RotationZ(float fRadian)
 {
+	Identity();
 	float fCosTheta = cos(fRadian);
 	float fSinTheta = sin(fRadian);
-	_11 = fCosTheta; _12= fSinTheta;
+	_11 = fCosTheta; _12 = fSinTheta;
 	_21 = -fSinTheta; _22 = fCosTheta;
 }
 void KMatrix::Scale(float x, float y, float z)
 {
+	Identity();
 	_11 = x;
 	_22 = y;
 	_33 = z;
 }
 void KMatrix::Translation(float x, float y, float z)
 {
+	Identity();
 	_41 = x;
 	_42 = y;
 	_43 = z;
