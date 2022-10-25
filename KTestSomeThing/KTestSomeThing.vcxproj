@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="KCameraDebug.h" />
     <ClInclude Include="KMap.h" />
     <ClInclude Include="KMapObject.h" />
     <ClInclude Include="KNpc2D.h" />
@@ -161,6 +162,7 @@
     <ClInclude Include="Sample.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="KCameraDebug.cpp" />
     <ClCompile Include="KMap.cpp" />
     <ClCompile Include="KMapObject.cpp" />
     <ClCompile Include="KNpc2D.cpp" />

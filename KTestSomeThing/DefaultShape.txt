@@ -14,11 +14,11 @@ struct VS_OUT
 //레지스터 단위란: float4(x,y,z,w)
 cbuffer cb_data:register(b0)
 {
-matrix g_matWorld:packoffset(c));
-matrix g)matView: packoffset(c4);
-matrix g_matProj: packoffset(c8);
-float fTimer: packoffset(c12.z);
-}
+matrix g_matWorld:	packoffset(c0);
+matrix g_matView:	packoffset(c4);
+matrix g_matProj:	packoffset(c8);
+float fTimer:		packoffset(c12.z);
+};
 VS_OUT VS(VS_IN input) 
 {
 	VS_OUT output = (VS_OUT)0;

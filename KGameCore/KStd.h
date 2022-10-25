@@ -12,6 +12,7 @@
 #include <d3dcompiler.h>
 #include <wrl.h>
 #include"KVector.h"
+#include"TMath.h"
 extern float g_fGameTimer;
 extern float g_fSecondPerFrame;
 

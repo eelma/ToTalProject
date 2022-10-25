@@ -184,6 +184,7 @@ copy "KGameCore_R.lib" "..\\..\\lib\\"</Command>
     <ClInclude Include="KVector.h" />
     <ClInclude Include="KWindow.h" />
     <ClInclude Include="KWriter.h" />
+    <ClInclude Include="TMath.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KBaseObject.cpp" />
@@ -205,6 +206,7 @@ copy "KGameCore_R.lib" "..\\..\\lib\\"</Command>
     <ClCompile Include="KVector.cpp" />
     <ClCompile Include="KWindow.cpp" />
     <ClCompile Include="KWriter.cpp" />
+    <ClCompile Include="TMath.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\data\shader\DefaultShape.txt" />

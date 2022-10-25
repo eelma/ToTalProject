@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{179baac2-055d-4ffc-ad4b-96a72aa251ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KStd.h">
@@ -75,6 +78,9 @@
     <ClInclude Include="KCamera.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="TMath.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KWindow.cpp">
@@ -133,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="KCamera.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TMath.cpp">
+      <Filter>Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -12,6 +12,10 @@ bool Sample::Init()
 	//m_pInGame->Init();
 	m_pCurrentScene = m_pTitle;
 
+	wstring shaderfilename = L"DefaultShape.txt";
+	m_DirLine.Create(m_pd3dDevice.Get(), m_pImmediateContext.Get(), shaderfilename, L"../../data/gameHeight.png");
+	m_DirLine.m_matWorld.Scale(1000.0f, 1000.0f, 1000.0f);
+	
 	return true;
 }
 bool Sample::Frame()
@@ -32,10 +36,15 @@ bool Sample::Render()
 	}
 	
 	m_pCurrentScene->Render();
+	
+	m_DirLine.SetMatrix(nullptr, &m_pCurrentScene->m_pMainCamera->m_matView, &m_pCurrentScene->m_pMainCamera->m_matProj);
+	m_DirLine.Render();
+
 	return true;
 }
 bool Sample::Release()
 {
+	m_DirLine.Release();
 	m_pTitle->Release();
 	//m_pInGame->Release();
 

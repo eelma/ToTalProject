@@ -13,6 +13,9 @@ bool KInput::Frame()
 {
     ::GetCursorPos(&m_ptPos);//화면좌표 화면전체에 대한 좌표
     ::ScreenToClient(g_hWnd, &m_ptPos);//클라이언트에 대한 좌표
+    m_ptOffset.x = m_ptPos.x - m_ptPrePos.x;
+    m_ptOffset.y = m_ptPos.y - m_ptPrePos.y;
+
 
     for (int iKey = 0; iKey < 256; iKey++)
     {
@@ -33,6 +36,7 @@ bool KInput::Frame()
                 m_dwKeyState[iKey] = KEY_FREE;
         }
     }
+    m_ptPrePos = m_ptPos;
     return true;
 }
 

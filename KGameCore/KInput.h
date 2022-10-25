@@ -16,7 +16,8 @@ private:
 	DWORD m_dwKeyState[256];//mouse 포함 모든 버튼 
 public:
 	POINT m_ptPos;//mouse position
-
+	POINT m_ptPrePos;
+	POINT m_ptOffset;
 public:
 	virtual bool		Init(); // 초기화
 	virtual bool		Frame();// 실시간 계산

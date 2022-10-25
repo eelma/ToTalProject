@@ -1,13 +1,7 @@
 #pragma once
 #include "KBaseObject.h"
-class KObject3D : public KBaseObject
-{
-public:
-	KObject3D() {};
-	virtual ~KObject3D() {};
-};
 
-class KShape : public KObject3D
+class KShape : public KBaseObject
 {
 
 public:
@@ -15,7 +9,7 @@ public:
 	virtual ~KShape() {};
 
 };
-class KShapeBox :public KObject3D
+class KShapeBox :public KShape
 {
 
 public:

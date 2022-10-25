@@ -14,6 +14,9 @@ void KCamera::Update()
 	m_vLook.x = m_matView._13;
 	m_vLook.y = m_matView._23;
 	m_vLook.z = m_matView._33;
+	m_vRight.Normalized();
+	m_vUp.Normalized();
+	m_vLook.Normalized();
 }
 void KCamera::CreateViewMatrix(KVector vEye, KVector vAt, KVector vUp)
 {
