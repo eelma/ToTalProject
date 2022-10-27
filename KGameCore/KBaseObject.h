@@ -21,6 +21,7 @@ struct VS_CONSTANT_BUFFER
 	KMatrix  matWorld;
 	KMatrix  matView;
 	KMatrix  matProj;
+
 	float    x;
 	float    y;
 	float    fTimer;
@@ -36,6 +37,7 @@ public:
 	KMatrix		m_matWorld;
 	KMatrix		m_matView;
 	KMatrix		m_matProj;
+	DWORD m_dwFace;
 public:
 	ID3D11Device* m_pd3dDevice = nullptr;// 디바이스 객체
 	ID3D11DeviceContext* m_pImmediateContext = nullptr;

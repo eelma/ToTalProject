@@ -114,6 +114,28 @@ struct KBox : Box
         vCenter = (vMin + vMax) / 2.0f;
     }
 };
+class K_AABB
+{
+    KVector vMin;
+    KVector vMax;
+};
+class K_OBB
+{
+    KVector vCenter;
+    KVector vAxis[3];
+    float fDistance[3];
+};
+struct K_BOX
+{
+    KVector vPos[8];
+    //aabb
+    KVector vMin;
+    KVector vMax;
+    //obb
+    KVector vCenter;
+    KVector vAxis[3];
+    float fExtent[3];
+};
 
 class KCollision
 {
