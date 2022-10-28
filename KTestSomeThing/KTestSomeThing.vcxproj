@@ -149,30 +149,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="KCameraDebug.h" />
-    <ClInclude Include="KFrustum.h" />
     <ClInclude Include="KMap.h" />
     <ClInclude Include="KMapObject.h" />
     <ClInclude Include="KNpc2D.h" />
-    <ClInclude Include="KObject3D.h" />
     <ClInclude Include="KScene.h" />
     <ClInclude Include="KSceneInGame.h" />
     <ClInclude Include="KSceneTitle.h" />
-    <ClInclude Include="KShape.h" />
     <ClInclude Include="KUser2D.h" />
     <ClInclude Include="Sample.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="KCameraDebug.cpp" />
-    <ClCompile Include="KFrustum.cpp" />
     <ClCompile Include="KMap.cpp" />
     <ClCompile Include="KMapObject.cpp" />
     <ClCompile Include="KNpc2D.cpp" />
-    <ClCompile Include="KObject3D.cpp" />
     <ClCompile Include="KScene.cpp" />
     <ClCompile Include="KSceneInGame.cpp" />
     <ClCompile Include="KSceneTitle.cpp" />
-    <ClCompile Include="KShape.cpp" />
     <ClCompile Include="KUser2D.cpp" />
     <ClCompile Include="Sample.cpp" />
   </ItemGroup>

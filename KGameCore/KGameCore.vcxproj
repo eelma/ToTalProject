@@ -166,15 +166,20 @@ copy "KGameCore_R.lib" "..\\..\\lib\\"</Command>
   <ItemGroup>
     <ClInclude Include="KBaseObject.h" />
     <ClInclude Include="KCamera.h" />
+    <ClInclude Include="KCameraDebug.h" />
     <ClInclude Include="KCollision.h" />
     <ClInclude Include="KDevice.h" />
     <ClInclude Include="KDxState.h" />
+    <ClInclude Include="KFrustum.h" />
     <ClInclude Include="KGameCore.h" />
     <ClInclude Include="KInput.h" />
     <ClInclude Include="KMatrix.h" />
     <ClInclude Include="KObject2D.h" />
+    <ClInclude Include="KObject3D.h" />
+    <ClInclude Include="KRenderTarget.h" />
     <ClInclude Include="KShader.h" />
     <ClInclude Include="KShaderManager.h" />
+    <ClInclude Include="KShape.h" />
     <ClInclude Include="KSound.h" />
     <ClInclude Include="KSoundManager.h" />
     <ClInclude Include="KStd.h" />
@@ -189,15 +194,20 @@ copy "KGameCore_R.lib" "..\\..\\lib\\"</Command>
   <ItemGroup>
     <ClCompile Include="KBaseObject.cpp" />
     <ClCompile Include="KCamera.cpp" />
+    <ClCompile Include="KCameraDebug.cpp" />
     <ClCompile Include="KCollision.cpp" />
     <ClCompile Include="KDevice.cpp" />
     <ClCompile Include="KDxState.cpp" />
+    <ClCompile Include="KFrustum.cpp" />
     <ClCompile Include="KGameCore.cpp" />
     <ClCompile Include="KInput.cpp" />
     <ClCompile Include="KMatrix.cpp" />
     <ClCompile Include="KObject2D.cpp" />
+    <ClCompile Include="KObject3D.cpp" />
+    <ClCompile Include="KRenderTarget.cpp" />
     <ClCompile Include="KShader.cpp" />
     <ClCompile Include="KShaderManager.cpp" />
+    <ClCompile Include="KShape.cpp" />
     <ClCompile Include="KSound.cpp" />
     <ClCompile Include="KSoundManager.cpp" />
     <ClCompile Include="KTexture.cpp" />

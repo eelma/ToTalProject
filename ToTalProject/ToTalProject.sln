@@ -100,6 +100,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KTestSomeThing", "..\KTestS
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sample", "..\Sample\Sample.vcxproj", "{61EA9395-B6B4-4729-8136-F95A63D432E4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFBXLoader", "..\KFBXLoader\KFBXLoader.vcxproj", "{5C7F33E7-B2E8-416F-A1EA-A6A5A61019F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -718,6 +720,18 @@ Global
 		{61EA9395-B6B4-4729-8136-F95A63D432E4}.Release|x64.Build.0 = Release|x64
 		{61EA9395-B6B4-4729-8136-F95A63D432E4}.Release|x86.ActiveCfg = Release|Win32
 		{61EA9395-B6B4-4729-8136-F95A63D432E4}.Release|x86.Build.0 = Release|Win32
+		{5C7F33E7-B2E8-416F-A1EA-A6A5A61019F4}.Debug|ARM.ActiveCfg = Debug|Win32
+		{5C7F33E7-B2E8-416F-A1EA-A6A5A61019F4}.Debug|ARM64.ActiveCfg = Debug|Win32
+		{5C7F33E7-B2E8-416F-A1EA-A6A5A61019F4}.Debug|x64.ActiveCfg = Debug|x64
+		{5C7F33E7-B2E8-416F-A1EA-A6A5A61019F4}.Debug|x64.Build.0 = Debug|x64
+		{5C7F33E7-B2E8-416F-A1EA-A6A5A61019F4}.Debug|x86.ActiveCfg = Debug|Win32
+		{5C7F33E7-B2E8-416F-A1EA-A6A5A61019F4}.Debug|x86.Build.0 = Debug|Win32
+		{5C7F33E7-B2E8-416F-A1EA-A6A5A61019F4}.Release|ARM.ActiveCfg = Release|Win32
+		{5C7F33E7-B2E8-416F-A1EA-A6A5A61019F4}.Release|ARM64.ActiveCfg = Release|Win32
+		{5C7F33E7-B2E8-416F-A1EA-A6A5A61019F4}.Release|x64.ActiveCfg = Release|x64
+		{5C7F33E7-B2E8-416F-A1EA-A6A5A61019F4}.Release|x64.Build.0 = Release|x64
+		{5C7F33E7-B2E8-416F-A1EA-A6A5A61019F4}.Release|x86.ActiveCfg = Release|Win32
+		{5C7F33E7-B2E8-416F-A1EA-A6A5A61019F4}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

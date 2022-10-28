@@ -14,6 +14,10 @@ bool		KGameCore::KCoreInit()
 	m_Writer.Set(pBackBuffer);
 	pBackBuffer->Release();
 
+	wstring shaderfilename = L"../../data/shader/DefaultRT.hlsl";
+	m_BG.Create(m_pd3dDevice.Get(),
+		m_pImmediateContext.Get(), shaderfilename, L"../../data/_RAINBOW.bmp");
+	m_RT.Create(m_pd3dDevice.Get(), m_pImmediateContext.Get(), 2048, 2048);
     return Init();
 }
 bool		KGameCore::KCoreFrame()
@@ -43,7 +47,18 @@ bool		KGameCore::KCorePreRender()
 bool		KGameCore::KCoreRender()
 {
 	KCorePreRender();
-	Render(); //디버그 렌더 화면에 뭔가 뿌리고 나서 마지막에 해주는게 좋다
+	m_RT.m_pOldRTV = m_pRTV.Get();
+	m_RT.m_pOldDSV = m_pDepthStencilView.Get();
+	m_RT.m_vpOld[0] = m_vp;
+	if (m_RT.Begin(m_pImmediateContext.Get()))
+	{
+		Render(); //디버그 렌더 화면에 뭔가 뿌리고 나서 마지막에 해주는게 좋다
+		m_RT.End(m_pImmediateContext.Get());
+	}
+	if (m_RT.m_pSRV)
+	{
+		m_BG.m_pTextureSRV = m_RT.m_pSRV.Get();
+	}
 	I_Input.Render();
 	I_Timer.Render();
 	m_Writer.m_szDefaultText = I_Timer.m_szTimer;
@@ -58,6 +73,8 @@ bool		KGameCore::KCorePostRender()
 }
 bool		KGameCore::KCoreRelease()
 {
+	m_RT.Release();
+	m_BG.Release();
 	Release();
 	I_Input.Release();
 	I_Timer.Release();

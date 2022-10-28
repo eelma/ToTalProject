@@ -16,6 +16,7 @@ bool Sample::Init()
 	m_DirLine.Create(m_pd3dDevice.Get(), m_pImmediateContext.Get(), shaderfilename, L"../../data/gameHeight.png");
 	m_DirLine.m_matWorld.Scale(1000.0f, 1000.0f, 1000.0f);
 
+
 	return true;
 }
 bool Sample::Frame()
@@ -30,15 +31,17 @@ bool Sample::Frame()
 bool Sample::Render()
 {
 
-	if (I_Input.GetKey('V') == KEY_HOLD)
-	{
-		m_pImmediateContext->RSSetState(KDxState::g_pDefaultRSWireFrame);
-	}
+		if (I_Input.GetKey('V') == KEY_HOLD)
+		{
+			m_pImmediateContext->RSSetState(KDxState::g_pDefaultRSWireFrame);
+		}
 
-	m_pCurrentScene->Render();
+		m_pCurrentScene->Render();
 
-	m_DirLine.SetMatrix(nullptr, &m_pCurrentScene->m_pMainCamera->m_matView, &m_pCurrentScene->m_pMainCamera->m_matProj);
-	m_DirLine.Render();
+		m_DirLine.SetMatrix(nullptr, &m_pCurrentScene->m_pMainCamera->m_matView, &m_pCurrentScene->m_pMainCamera->m_matProj);
+		m_DirLine.Render();
+
+	
 
 	return true;
 }

@@ -2,6 +2,7 @@
 #include "KGameCore.h"
 #include "KSceneTitle.h"
 #include "KSceneInGame.h"
+#include "KRenderTarget.h"
 class Sample : public KGameCore
 {
 public:

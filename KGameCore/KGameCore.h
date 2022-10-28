@@ -1,4 +1,5 @@
 #pragma once
+#include"KBaseObject.h"
 #include"KDevice.h"
 #include"KInput.h"
 #include"KTimer.h"
@@ -7,11 +8,14 @@
 #include"KTextureManager.h"
 #include"KShaderManager.h"
 #include"KDxState.h"
+#include"KRenderTarget.h"
 class KGameCore:public KDevice
 {
 public:
 
 	KWriter m_Writer;
+	KBaseObject m_BG;
+	KRenderTarget m_RT;
 	bool bGameRun = true;
 public:
 	virtual bool		Init() { return true; }; // √ ±‚»≠
