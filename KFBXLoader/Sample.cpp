@@ -23,28 +23,28 @@ bool	Sample::Init()
 }
 bool	Sample::Frame()
 {
-	//m_FBXLoader.Frame();
+	m_FBXLoader.Frame();
 	return true;
 }
 bool	Sample::Render()
 {
-	//if (I_Input.GetKey('V') == KEY_HOLD)
-	//{
-	//	m_pImmediateContext->RSSetState(KDxState::g_pDefaultRSWireFrame);
-	//}
-	//for (int iObj = 0; iObj < m_FBXLoader.m_pDrawObjList.size(); iObj++)
-	//{
-	//	m_FBXLoader.m_pDrawObjList[iObj]->SetMatrix(nullptr,
-	//		&m_pMainCamera->m_matView,
-	//		&m_pMainCamera->m_matProj);
-	//	m_FBXLoader.m_pDrawObjList[iObj]->Render();
-	//}
-	//m_pImmediateContext->RSSetState(KDxState::g_pDefaultRSSolid);
+	if (I_Input.GetKey('V') == KEY_HOLD)
+	{
+		m_pImmediateContext->RSSetState(KDxState::g_pDefaultRSWireFrame);
+	}
+	for (int iObj = 0; iObj < m_FBXLoader.m_pDrawObjList.size(); iObj++)
+	{
+		m_FBXLoader.m_pDrawObjList[iObj]->SetMatrix(nullptr,
+			&m_pMainCamera->m_matView,
+			&m_pMainCamera->m_matProj);
+		m_FBXLoader.m_pDrawObjList[iObj]->Render();
+	}
+	m_pImmediateContext->RSSetState(KDxState::g_pDefaultRSSolid);
 	return true;
 }
 bool	Sample::Release()
 {
-	//m_FBXLoader.Release();
+	m_FBXLoader.Release();
 	return true;
 }
 GAME_RUN(TFBXLoader, 800, 600)
