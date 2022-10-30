@@ -57,6 +57,7 @@ bool		KGameCore::KCoreRender()
 	}
 	if (m_RT.m_pSRV)
 	{
+		//m_BG.m_pTextureSRV = m_RT.m_pDsvSRV.Get();
 		m_BG.m_pTextureSRV = m_RT.m_pSRV.Get();
 	}
 	I_Input.Render();

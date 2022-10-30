@@ -12,6 +12,8 @@ bool Sample::Init()
 	//m_pInGame->Init();
 	m_pCurrentScene = m_pTitle;
 
+	m_Quadtree.Create(((KSceneTitle*)m_pCurrentScene.get())->m_pMap);
+
 	wstring shaderfilename = L"DefaultShape.txt";
 	m_DirLine.Create(m_pd3dDevice.Get(), m_pImmediateContext.Get(), shaderfilename, L"../../data/gameHeight.png");
 	m_DirLine.m_matWorld.Scale(1000.0f, 1000.0f, 1000.0f);

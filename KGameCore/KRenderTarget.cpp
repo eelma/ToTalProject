@@ -48,7 +48,7 @@ bool KRenderTarget::Create(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmed
 	DescDepth.SampleDesc.Quality = 0;
 	DescDepth.Usage = D3D11_USAGE_DEFAULT;
 	//백 버퍼 깊이 및 스텐실 버퍼 생성
-	DescDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	DescDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
 	DescDepth.CPUAccessFlags = 0;
 	DescDepth.MiscFlags = 0;
 	if (FAILED(hr = pd3dDevice->CreateTexture2D(&DescDepth, NULL, &pDSTexture)))
@@ -63,6 +63,16 @@ bool KRenderTarget::Create(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pImmed
 	{
 		return hr;
 	}
+	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
+	ZeroMemory(&srvDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
+	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	srvDesc.Texture2D.MipLevels = 1;
+	srvDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
+	if (FAILED(hr = pd3dDevice->CreateShaderResourceView(pDSTexture.Get(), &srvDesc, &m_pDsvSRV)))
+	{
+		return hr;
+	}
+
 	return true;
 
 }
@@ -75,7 +85,7 @@ bool KRenderTarget::Begin(ID3D11DeviceContext* pContext)
 	pContext->OMSetRenderTargets(1, m_pRenderTargetView.GetAddressOf(), m_pDepthStencilView.Get());
 	const FLOAT color[] = {1,1,1,1};
 	pContext->ClearRenderTargetView(m_pRenderTargetView.Get(), color);
-	pContext->ClearDepthStencilView(m_pDepthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
+	pContext->ClearDepthStencilView(m_pDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	pContext->RSSetViewports(1, &m_Viewport);
 
 	return true;

@@ -4,6 +4,8 @@ bool KMap::Build(UINT iWidth, UINT iHeight)
 	//전체 셀 개수 = (iWidth)*(iHeight)
 	//전체 페이스 개수 = (iWidth)*(iHeight)*2
 	//전체 정점 개수 = iWidth * iHeight
+	m_dwNumRows = iWidth;
+	m_dwNumColumns = iHeight;
 	m_VertexList.resize(iWidth * iHeight);
 	int iHalfWidth = iWidth / 2;
 	int iHalfHeight = iHeight / 2;

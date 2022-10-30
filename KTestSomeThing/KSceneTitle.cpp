@@ -16,16 +16,16 @@ bool KSceneTitle::Init()
 
 	m_pMap = new KMap;
 	//2*n½Â+1
-	m_pMap->Build(512 + 1, 512 + 1);
+	m_pMap->Build(256 + 1, 256 + 1);
 	m_pMap->Create(m_pd3dDevice, m_pImmediateContext, L"DefaultObject.txt", L"../../data/map/038.bmp");
 
 	m_pBoxObj = new KObjectBox;
 	m_pBoxObj->Create(m_pd3dDevice, m_pImmediateContext, L"DefaultObject.txt", L"../../data/box.jpg");
-	m_pBoxObj->m_matWorld.Translation(0, 0, 0);
+	m_pBoxObj->m_matWorld.Translation(0, 5, 0);
 
 	m_pMainCamera = new KCameraDebug;
-	m_pMainCamera->CreateViewMatrix(KVector(0, 0, -10), KVector(0, 0, 0), KVector(0, 1, 0));
-	m_pMainCamera->CreateProjMatrix(1.0f, 10000.0f, T_PI * 0.25f,
+	m_pMainCamera->CreateViewMatrix(KVector(0, 30, -30), KVector(0, 0, 0), KVector(0, 1, 0));
+	m_pMainCamera->CreateProjMatrix(1.0f, 1000.0f, T_PI * 0.25f,
 		(float)g_rtClient.right / (float)g_rtClient.bottom);
 
 
@@ -40,10 +40,10 @@ bool KSceneTitle::Frame()
 	}
 	m_pMainCamera->Frame();
 	m_pBoxObj->Frame();
-	m_pBoxObj->m_matWorld.RotationY(g_fGameTimer);
+	/*m_pBoxObj->m_matWorld.RotationY(g_fGameTimer);
 	m_pBoxObj->m_matWorld._41 = m_pBoxObj->m_vPos.x;
 	m_pBoxObj->m_matWorld._42 = m_pBoxObj->m_vPos.y;
-	m_pBoxObj->m_matWorld._43 = m_pBoxObj->m_vPos.z;
+	m_pBoxObj->m_matWorld._43 = m_pBoxObj->m_vPos.z;*/
 
 	return true;
 }

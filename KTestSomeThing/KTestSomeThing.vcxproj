@@ -151,7 +151,9 @@
   <ItemGroup>
     <ClInclude Include="KMap.h" />
     <ClInclude Include="KMapObject.h" />
+    <ClInclude Include="KNode.h" />
     <ClInclude Include="KNpc2D.h" />
+    <ClInclude Include="KQuadtree.h" />
     <ClInclude Include="KScene.h" />
     <ClInclude Include="KSceneInGame.h" />
     <ClInclude Include="KSceneTitle.h" />
@@ -161,7 +163,9 @@
   <ItemGroup>
     <ClCompile Include="KMap.cpp" />
     <ClCompile Include="KMapObject.cpp" />
+    <ClCompile Include="KNode.cpp" />
     <ClCompile Include="KNpc2D.cpp" />
+    <ClCompile Include="KQuadtree.cpp" />
     <ClCompile Include="KScene.cpp" />
     <ClCompile Include="KSceneInGame.cpp" />
     <ClCompile Include="KSceneTitle.cpp" />

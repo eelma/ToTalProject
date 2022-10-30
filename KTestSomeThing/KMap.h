@@ -5,6 +5,9 @@
 class KMap :
     public KBaseObject
 {
+public:
+    DWORD        m_dwNumRows;
+    DWORD        m_dwNumColumns;
     DWORD_VECTOR indexlist;
 public:
     bool Build(UINT iWidth, UINT iHeight);

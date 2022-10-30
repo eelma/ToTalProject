@@ -38,9 +38,9 @@ void KFrustum::CreateFrustum(KMatrix* matView, KMatrix*matProj)
 	m_Plane[3].Create(*((KVector*)&m_vFrustum[0]),
 					  *((KVector*)&m_vFrustum[7]),
 					  *((KVector*)&m_vFrustum[3]));//bottom
-	m_Plane[4].Create(*((KVector*)&m_vFrustum[0]),
-					  *((KVector*)&m_vFrustum[2]),
-					  *((KVector*)&m_vFrustum[1]));//near
+	m_Plane[4].Create(*((KVector*)&m_vFrustum[2]),
+					  *((KVector*)&m_vFrustum[1]),
+					  *((KVector*)&m_vFrustum[0]));//near
 	m_Plane[5].Create(*((KVector*)&m_vFrustum[5]),
 					  *((KVector*)&m_vFrustum[6]),
 					  *((KVector*)&m_vFrustum[4]));//far
