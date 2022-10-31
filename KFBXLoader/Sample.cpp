@@ -1,7 +1,7 @@
 #include "Sample.h"
 bool	Sample::Init()
 {
-	/*if (m_FBXLoader.Init())
+	if (m_FBXLoader.Init())
 	{
 		m_FBXLoader.Load("../../fbx/box.fbx");
 	}
@@ -18,7 +18,7 @@ bool	Sample::Init()
 	m_pMainCamera->CreateViewMatrix(KVector(50, 6, -50), KVector(0, 6, 0), KVector(0, 1, 0));
 	m_pMainCamera->CreateProjMatrix(1.0f, 1000.0f, T_PI * 0.25f,
 		(float)g_rtClient.right / (float)g_rtClient.bottom);
-		*/
+		
 	return true;
 }
 bool	Sample::Frame()

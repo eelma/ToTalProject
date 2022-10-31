@@ -102,5 +102,5 @@ void KCameraDebug::Update()
     m_vUp.Normalized();
     m_vLook.Normalized();
 
-    //m_vFrustum.CreateFrustum(&m_matView ,&m_matProj);
+    m_vFrustum.CreateFrustum(&m_matView ,&m_matProj);
 }
