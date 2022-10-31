@@ -46,7 +46,7 @@ void KFrustum::CreateFrustum(KMatrix* matView, KMatrix*matProj)
 					  *((KVector*)&m_vFrustum[4]));//far
 
 }
-bool KFrustum::ClassifyPoint(KVector v)
+K_POSITION KFrustum::ClassifyPoint(KVector v)
 {
 	for (int i = 0; i < 6; i++)
 	{
@@ -55,30 +55,60 @@ bool KFrustum::ClassifyPoint(KVector v)
 			m_Plane[i].b * v.y +
 			m_Plane[i].c * v.z +
 			m_Plane[i].d;
-		if (fDistance < 0)return false;
+		if (fDistance == 0)return P_ONPLANE;
+		if (fDistance < 0)return P_FRONT;
 
 	}
-	return true;
+	return P_BACK;
 
 }
 
-bool KFrustum::ClassifySphere(KSphere v)
+K_POSITION KFrustum::ClassifySphere(KSphere v)
 {
 
-	return true;
+	return P_SPANNING;
 }
 
-bool KFrustum::ClassifyAABB(K_AABB v)
+K_POSITION KFrustum::ClassifyAABB(K_AABB v)
 {
-	return true;
+	return P_SPANNING;
 }
 
-bool KFrustum::ClassifyOBB(K_OBB v)
+K_POSITION KFrustum::ClassifyOBB(K_OBB v)
 {
-	return true;
+	return P_SPANNING;
 }
 
-bool KFrustum::ClassifyKBOX(K_BOX v)
+K_POSITION KFrustum::ClassifyKBOX(K_BOX box)
 {
-	return true;
+	float fPlaneToCenter = 0.0;
+	float fDistance = 0.0f;
+	KVector vDir;
+	K_POSITION k_Position;
+	k_Position = P_FRONT;
+
+	for (int iplane = 0; iplane < 6; iplane++)
+	{
+
+		vDir = box.vAxis[0] * box.fExtent[0];
+		fDistance = fabs(m_Plane[iplane].a * vDir.x + m_Plane[iplane].b * vDir.y + m_Plane[iplane].c * vDir.z);
+		vDir = box.vAxis[1] * box.fExtent[1];
+		fDistance = fabs(m_Plane[iplane].a * vDir.x + m_Plane[iplane].b * vDir.y + m_Plane[iplane].c * vDir.z);
+		vDir = box.vAxis[2] * box.fExtent[2];
+		fDistance = fabs(m_Plane[iplane].a * vDir.x + m_Plane[iplane].b * vDir.y + m_Plane[iplane].c * vDir.z);
+
+		fPlaneToCenter = m_Plane[iplane].a * box.vCenter.x + m_Plane[iplane].b * box.vCenter.y + m_Plane[iplane].c * box.vCenter.z + m_Plane[iplane].d;
+
+		if (fPlaneToCenter > 0)
+		{
+			if (fPlaneToCenter < fDistance)
+			{
+				k_Position = P_SPANNING;
+			}
+			break;
+		}
+
+	}
+
+	return k_Position;
 }

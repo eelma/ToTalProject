@@ -49,10 +49,10 @@ bool KSceneTitle::Frame()
 }
 bool KSceneTitle::Render()
 {
-	m_pImmediateContext->OMSetDepthStencilState(KDxState::g_pDefaultDepthStencil, 0xff);
+	/*m_pImmediateContext->OMSetDepthStencilState(KDxState::g_pDefaultDepthStencil, 0xff);
 	m_pMap->SetMatrix(nullptr, &m_pMainCamera->m_matView, &m_pMainCamera->m_matProj);
 	m_pMap->UpdateBuffer((KCameraDebug*)m_pMainCamera);
-	m_pMap->Render();
+	m_pMap->Render();*/
 		KCameraDebug* pDCam = (KCameraDebug*)m_pMainCamera;
 	bool bRender = pDCam->m_vFrustum.ClassifyPoint(m_pBoxObj->m_vPos);
 	if (bRender)
@@ -69,7 +69,9 @@ bool KSceneTitle::Release()
 {
 	m_pBoxObj->Release();
 	delete m_pBoxObj;
+
 	m_pBG->Release();
+
 	m_pMap->Release();
 	delete m_pMap;
 	return true;

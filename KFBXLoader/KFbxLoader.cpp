@@ -112,8 +112,8 @@ bool KFbxLoader::Release()
 		obj->Release();
 	}
 
-	m_pFbxScene->Destroy();
-	m_pFbxImporter->Destroy();
-	m_pFbxManager->Destroy();
+	if(m_pFbxScene)m_pFbxScene->Destroy();
+	if(m_pFbxImporter)m_pFbxImporter->Destroy();
+	if(m_pFbxManager)m_pFbxManager->Destroy();
 	return true;
 }

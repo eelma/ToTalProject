@@ -12,7 +12,8 @@ bool Sample::Init()
 	//m_pInGame->Init();
 	m_pCurrentScene = m_pTitle;
 
-	m_Quadtree.Create(((KSceneTitle*)m_pCurrentScene.get())->m_pMap);
+	m_Quadtree.Create(((KSceneTitle*)m_pCurrentScene.get())->m_pMainCamera,
+						((KSceneTitle*)m_pCurrentScene.get())->m_pMap);
 
 	wstring shaderfilename = L"DefaultShape.txt";
 	m_DirLine.Create(m_pd3dDevice.Get(), m_pImmediateContext.Get(), shaderfilename, L"../../data/gameHeight.png");
@@ -37,6 +38,14 @@ bool Sample::Render()
 		{
 			m_pImmediateContext->RSSetState(KDxState::g_pDefaultRSWireFrame);
 		}
+
+		m_pImmediateContext->OMSetDepthStencilState(KDxState::g_pDefaultDepthStencil, 0xff);
+		KSceneTitle* pScene = (KSceneTitle*)m_pCurrentScene.get();
+		pScene->m_pMap->SetMatrix(nullptr,
+			&pScene->m_pMainCamera->m_matView,
+			&pScene->m_pMainCamera->m_matProj);
+		m_Quadtree.Frame();
+		m_Quadtree.Render();
 
 		m_pCurrentScene->Render();
 

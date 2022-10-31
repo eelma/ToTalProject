@@ -1,7 +1,8 @@
 #pragma once
 #include "KBaseObject.h"
 #include "KVector.h"
-#include"KCameraDebug.h"
+#include "KCameraDebug.h"
+#include"KFrustum.h"
 class KMap :
     public KBaseObject
 {

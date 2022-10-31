@@ -1,6 +1,12 @@
 #pragma once
 #include"KShape.h"
-
+enum K_POSITION
+{
+	P_BACK = 0,
+	P_FRONT,
+	P_ONPLANE,
+	P_SPANNING,
+};
 class KPlane
 {
 public:
@@ -36,11 +42,11 @@ public:
 	KPlane m_Plane[6];
 public:
 	void CreateFrustum(KMatrix* , KMatrix* );
-	bool ClassifyPoint(KVector v);
-	bool ClassifySphere(KSphere v);
-	bool ClassifyAABB(K_AABB v);
-	bool ClassifyOBB(K_OBB v);
-	bool ClassifyKBOX(K_BOX v);
+	K_POSITION ClassifyPoint(KVector v);
+	K_POSITION ClassifySphere(KSphere v);
+	K_POSITION ClassifyAABB(K_AABB v);
+	K_POSITION ClassifyOBB(K_OBB v);
+	K_POSITION ClassifyKBOX(K_BOX v);
 	
 
 };

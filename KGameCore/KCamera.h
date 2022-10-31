@@ -1,8 +1,10 @@
 #pragma once
 #include "KBaseObject.h"
+#include"KFrustum.h"
 class KCamera :public KBaseObject
 {
-
+public:
+	KFrustum m_vFrustum;
 public:
 	KVector m_vPos;
 	KVector m_vLook;
