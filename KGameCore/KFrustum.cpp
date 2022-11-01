@@ -93,9 +93,9 @@ K_POSITION KFrustum::ClassifyKBOX(K_BOX box)
 		vDir = box.vAxis[0] * box.fExtent[0];
 		fDistance = fabs(m_Plane[iplane].a * vDir.x + m_Plane[iplane].b * vDir.y + m_Plane[iplane].c * vDir.z);
 		vDir = box.vAxis[1] * box.fExtent[1];
-		fDistance = fabs(m_Plane[iplane].a * vDir.x + m_Plane[iplane].b * vDir.y + m_Plane[iplane].c * vDir.z);
+		fDistance += fabs(m_Plane[iplane].a * vDir.x + m_Plane[iplane].b * vDir.y + m_Plane[iplane].c * vDir.z);
 		vDir = box.vAxis[2] * box.fExtent[2];
-		fDistance = fabs(m_Plane[iplane].a * vDir.x + m_Plane[iplane].b * vDir.y + m_Plane[iplane].c * vDir.z);
+		fDistance += fabs(m_Plane[iplane].a * vDir.x + m_Plane[iplane].b * vDir.y + m_Plane[iplane].c * vDir.z);
 
 		fPlaneToCenter = m_Plane[iplane].a * box.vCenter.x + m_Plane[iplane].b * box.vCenter.y + m_Plane[iplane].c * box.vCenter.z + m_Plane[iplane].d;
 
@@ -104,10 +104,20 @@ K_POSITION KFrustum::ClassifyKBOX(K_BOX box)
 			if (fPlaneToCenter < fDistance)
 			{
 				k_Position = P_SPANNING;
+				break;
 			}
-			break;
 		}
-
+		else
+			if (fPlaneToCenter < 0)
+			{
+				k_Position = P_BACK;
+				if(fPlaneToCenter> -fDistance)
+				{ 
+				k_Position = P_SPANNING;
+				}
+				break;
+			}
+	
 	}
 
 	return k_Position;

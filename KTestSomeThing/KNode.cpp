@@ -59,7 +59,7 @@ KNode::~KNode()
 	m_pChild[2] = nullptr;
 	m_pChild[3] = nullptr;
 }
-void KNode::CreateindexData(KMap* pMap, DWORD dwNumRows, DWORD dwNumCols)
+void KNode::CreateIndexData(KMap* pMap, DWORD dwNumRows, DWORD dwNumCols)
 {
 
 	DWORD dwTL = m_Corner[0];
@@ -116,5 +116,21 @@ void KNode::CreateindexData(KMap* pMap, DWORD dwNumRows, DWORD dwNumCols)
 }
 HRESULT KNode::CreateIndexBuffer(KMap* pMap, DWORD dwNumRows, DWORD dNumCols)
 {
-	return E_NOTIMPL;
+	HRESULT hr;
+	CreateIndexData(pMap, dwNumRows, dNumCols);
+	D3D11_BUFFER_DESC       bd;
+	ZeroMemory(&bd, sizeof(bd));
+	bd.ByteWidth = sizeof(DWORD) * m_IndexList.size(); // 바이트 용량
+	// GPU 메모리에 할당
+	bd.Usage = D3D11_USAGE_DEFAULT; // 버퍼의 할당 장소 내지는 버퍼용도
+	bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+
+	D3D11_SUBRESOURCE_DATA  sd;
+	ZeroMemory(&sd, sizeof(sd));
+	sd.pSysMem = &m_IndexList.at(0);
+	hr = pMap->m_pd3dDevice->CreateBuffer(
+		&bd, // 버퍼 할당
+		&sd, // 초기 할당된 버퍼를 체우는 CPU메모리 주소
+		&m_pIndexBuffer);
+	return hr;
 }

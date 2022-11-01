@@ -60,15 +60,20 @@ bool		KGameCore::KCoreRender()
 		//m_BG.m_pTextureSRV = m_RT.m_pDsvSRV.Get();
 		m_BG.m_pTextureSRV = m_RT.m_pSRV.Get();
 	}
-	I_Input.Render();
-	I_Timer.Render();
-	m_Writer.m_szDefaultText = I_Timer.m_szTimer;
-	m_Writer.Render();
+	
 		KCorePostRender();
     return true;
 }
 bool		KGameCore::KCorePostRender()
 {
+	m_BG.SetMatrix(nullptr, nullptr, nullptr );
+	m_BG.Render();
+
+	I_Input.Render();
+	I_Timer.Render();
+	m_Writer.m_szDefaultText = I_Timer.m_szTimer;
+	m_Writer.Render();
+
     m_pSwapChain->Present(0, 0);
     return true;
 }

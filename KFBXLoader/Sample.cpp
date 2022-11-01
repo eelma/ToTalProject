@@ -11,7 +11,7 @@ bool	Sample::Init()
 	{
 		KBaseObject* pObj = m_FBXLoader.m_pDrawObjList[iObj];
 		pObj->Create(m_pd3dDevice.Get(), m_pImmediateContext.Get(),
-			shaderfilename, L"../../data/_RAINBOW.bmp");
+			shaderfilename, L"../../data/box.jpg");
 	}
 
 	m_pMainCamera = new KCameraDebug;

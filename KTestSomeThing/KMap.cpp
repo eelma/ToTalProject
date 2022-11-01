@@ -30,7 +30,7 @@ bool KMap::Build(UINT iWidth, UINT iHeight)
 	UINT iIndex = 0;
 	for (int iRow = 0; iRow < iHeight - 1; iRow++)
 	{
-		for (int iCol = 0; iCol < iHeight - 1; iCol++)
+		for (int iCol = 0; iCol < iWidth - 1; iCol++)
 		{
 			UINT iNextRow = iRow + 1;
 			UINT iNextCol = iCol + 1;

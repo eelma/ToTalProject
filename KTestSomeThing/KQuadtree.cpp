@@ -120,10 +120,7 @@ KNode* KQuadtree::VisibleNode(KNode* pNode)
                 VisibleNode(pNode->m_pChild[iNode]);
             }
         }
-
-
     }
-    return nullptr;
 }
 KQuadtree::~KQuadtree()
 {

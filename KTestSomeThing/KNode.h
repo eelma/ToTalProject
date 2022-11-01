@@ -18,7 +18,7 @@ public:
 	vector<KObject3D*>	m_pDynamicObjectlist;// ½Ç½Ã°£
 public:
 	void   CreateChildNode(KNode* pParent, KMap* pMap, DWORD dwNumCols, DWORD dwNumPows);
-	void CreateindexData(KMap* pMap, DWORD dwNumRows, DWORD dNumCols);
+	void CreateIndexData(KMap* pMap, DWORD dwNumRows, DWORD dNumCols);
 	HRESULT CreateIndexBuffer(KMap* pMap, DWORD dwNumRows, DWORD dNumCols);
 public:
 	KNode(KNode* pParent,KMap* pMpap, DWORD dwLT, DWORD dwRT, DWORD dwRB, DWORD dwLB,
