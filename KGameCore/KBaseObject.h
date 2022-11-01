@@ -46,6 +46,8 @@ public:
 	ID3D11InputLayout* m_pVertexLayout;
 	KTexture* m_pTexture;
 	KShader* m_pShader;
+	wstring m_szShaderName;
+	wstring m_szTextureName;
 	ID3D11ShaderResourceView* m_pTextureSRV = nullptr;
 	VS_CONSTANT_BUFFER  m_cbData;
 	ID3D11Buffer* m_pConstantBuffer;
@@ -80,6 +82,7 @@ public:
 	virtual HRESULT		CreateConstantBuffer();
 	virtual void		UpdateConstantBuffer();
 	virtual void		SetMatrix(KMatrix* matWorld, KMatrix* matView, KMatrix* matProj);
+	virtual bool		LoadTexture(W_STR texturename);
 
 public:
 	virtual bool		Init();

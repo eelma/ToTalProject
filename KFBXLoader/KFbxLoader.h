@@ -34,5 +34,6 @@ public:
 	bool Load(C_STR filename);
 	void PreProcess(FbxNode* pFbxNode);
 	void ParseMesh(FbxMesh* pFbxMesh);
-	FbxVector2 ReadTextureCoord(FbxMesh* pFbxMesh, FbxLayerElementUV* VertexUVSet);
+	FbxVector2 ReadTextureCoord(FbxMesh* pFbxMesh, FbxLayerElementUV* pUVSet,
+		int posIndex, int uvIndex);
 };

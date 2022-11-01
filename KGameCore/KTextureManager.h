@@ -14,6 +14,9 @@ public:
 public:
 	KTexture* Load(wstring name);
 	KTexture* Find(wstring name);
+	W_STR GetSplitName(wstring fullpath);
+	W_STR GetSplitName(string fullpath);
+
 	bool Release();
 private:
 	KTextureManager();

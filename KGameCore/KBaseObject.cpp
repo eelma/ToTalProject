@@ -235,6 +235,8 @@ bool	KBaseObject::Create(
 {
     m_pd3dDevice = pd3dDevice;
     m_pImmediateContext = pImmediateContext;
+    m_szShaderName = shadername;
+    m_szTextureName = texturename;
     if (FAILED(CreateConstantBuffer()))
     {
         return false;
@@ -263,8 +265,7 @@ bool	KBaseObject::Create(
     {
         return false;
     }
-    m_pTexture = I_Tex.Load(texturename);
-    if (m_pTexture != nullptr)
+    if(LoadTexture(texturename))
     {
         m_pTextureSRV = m_pTexture->m_pTextureSRV;
     }
@@ -362,6 +363,17 @@ bool KBaseObject::Release()
      if (m_pVSCode) m_pVSCode->Release();
      if (m_pPSCode) m_pPSCode->Release();*/
     return true;
+}
+
+bool KBaseObject::LoadTexture(W_STR texturename)
+{
+    m_pTexture = I_Tex.Load(texturename);
+    if (m_pTexture != nullptr)
+    {
+        m_pTextureSRV = m_pTexture->m_pTextureSRV;
+        return true;
+    }
+    return false;
 }
 
 

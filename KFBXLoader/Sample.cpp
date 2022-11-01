@@ -1,19 +1,32 @@
 #include "Sample.h"
 bool	Sample::Init()
 {
-	if (m_FBXLoader.Init())
+	KFbxLoader* pFbxLoaderA = new KFbxLoader;
+	if (pFbxLoaderA->Init())
 	{
-		m_FBXLoader.Load("../../data/fbx/box.fbx");
+		pFbxLoaderA->Load("../../data/fbx/box.fbx");
 	}
+	m_fbxList.push_back(pFbxLoaderA);
 
-	std::wstring shaderfilename = L"../../data/shader/DefaultObject.txt";
-	for (int iObj = 0; iObj < m_FBXLoader.m_pDrawObjList.size(); iObj++)
+	KFbxLoader* pFbxLoaderB = new KFbxLoader;
+	if (pFbxLoaderB->Init())
 	{
-		KBaseObject* pObj = m_FBXLoader.m_pDrawObjList[iObj];
-		pObj->Create(m_pd3dDevice.Get(), m_pImmediateContext.Get(),
-			shaderfilename, L"../../data/box.jpg");
+		pFbxLoaderB->Load("../../data/fbx/SM_Rock.fbx");
 	}
+	m_fbxList.push_back(pFbxLoaderB);
 
+	W_STR szDefaultDir = L"../../data/fbx/";
+	wstring shaderfilename = L"../../data/shader/DefaultObject.txt";
+	for(auto fbx: m_fbxList)
+	{
+		for (int iObj = 0; iObj < fbx->m_pDrawObjList.size(); iObj++)
+		{
+			KBaseObject* pObj = fbx->m_pDrawObjList[iObj];
+			wstring szLoad = szDefaultDir + pObj->m_szTextureName;
+			pObj->Create(m_pd3dDevice.Get(), m_pImmediateContext.Get(),
+				shaderfilename, szLoad);
+		}
+	}
 	m_pMainCamera = new KCameraDebug;
 	m_pMainCamera->CreateViewMatrix(KVector(50, 6, -50), KVector(0, 6, 0), KVector(0, 1, 0));
 	m_pMainCamera->CreateProjMatrix(1.0f, 1000.0f, T_PI * 0.25f,
@@ -23,7 +36,11 @@ bool	Sample::Init()
 }
 bool	Sample::Frame()
 {
-	m_FBXLoader.Frame();
+	m_pMainCamera->Frame();
+	for (auto fbx : m_fbxList)
+	{
+		fbx->Frame();
+	}
 	return true;
 }
 bool	Sample::Render()
@@ -32,19 +49,27 @@ bool	Sample::Render()
 	{
 		m_pImmediateContext->RSSetState(KDxState::g_pDefaultRSWireFrame);
 	}
-	for (int iObj = 0; iObj < m_FBXLoader.m_pDrawObjList.size(); iObj++)
+	for(int iModel=0;iModel<m_fbxList.size();iModel++)
 	{
-		m_FBXLoader.m_pDrawObjList[iObj]->SetMatrix(nullptr,
-			&m_pMainCamera->m_matView,
-			&m_pMainCamera->m_matProj);
-		m_FBXLoader.m_pDrawObjList[iObj]->Render();
+		for (int iObj = 0; iObj < m_fbxList[iModel]->m_pDrawObjList.size(); iObj++)
+		{
+			KMatrix matWorld;
+			matWorld._41 = 100 * iModel;
+			m_fbxList[iModel]->m_pDrawObjList[iObj]->SetMatrix(&matWorld,
+				&m_pMainCamera->m_matView,
+				&m_pMainCamera->m_matProj);
+			m_fbxList[iModel]->m_pDrawObjList[iObj]->Render();
+		}
 	}
 	m_pImmediateContext->RSSetState(KDxState::g_pDefaultRSSolid);
 	return true;
 }
 bool	Sample::Release()
 {
-	m_FBXLoader.Release();
+	for (auto fbx : m_fbxList)
+	{
+		fbx->Release();
+	}
 	return true;
 }
 GAME_RUN(TFBXLoader, 800, 600)

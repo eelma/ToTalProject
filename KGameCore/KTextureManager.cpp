@@ -47,6 +47,33 @@ KTexture* KTextureManager::Find(wstring name)
     return nullptr;
 
 }
+W_STR KTextureManager::GetSplitName(wstring fullpath)
+{
+    W_STR name;
+    TCHAR dirve[MAX_PATH] = { 0, };
+    TCHAR dir[MAX_PATH] = { 0, };
+    TCHAR filename[MAX_PATH] = { 0, };
+    TCHAR ext[MAX_PATH] = { 0, };
+    _tsplitpath_s(fullpath.c_str(),
+        dirve, dir, filename, ext);
+    name = filename;
+    name += ext;
+    return name;
+}
+W_STR KTextureManager::GetSplitName(string fullpath)
+{
+    W_STR szUnicode = to_mw(fullpath);
+    W_STR name;
+    TCHAR dirve[MAX_PATH] = { 0, };
+    TCHAR dir[MAX_PATH] = { 0, };
+    TCHAR filename[MAX_PATH] = { 0, };
+    TCHAR ext[MAX_PATH] = { 0, };
+    _tsplitpath_s(szUnicode.c_str(),
+        dirve, dir, filename, ext);
+    name = filename;
+    name += ext;
+    return name;
+}
 KTextureManager::KTextureManager()
 {
 

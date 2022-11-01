@@ -4,7 +4,8 @@
 #include"KFbxLoader.h"
 class Sample:public KGameCore
 {
-	KFbxLoader m_FBXLoader;
+	//KFbxLoader m_FBXLoader;
+	vector<KFbxLoader*> m_fbxList;
 	KCameraDebug* m_pMainCamera;
 	KBaseObject m_BG2;
 public:
