@@ -25,43 +25,81 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 	KFbxObject* pObject = new KFbxObject;
 
 	// Layer °³³ä
-	FbxLayerElementUV* pUVSet = nullptr;
+	FbxLayerElementUV* VertexUVSet = nullptr;
+	FbxLayerElementVertexColor* VertexColorSet = nullptr;
+	FbxLayerElementNormal* VertexNormalSet = nullptr;
+	FbxLayerElementMaterial* MaterialSet = nullptr;
 	FbxLayer* pFbxLayer = pFbxMesh->GetLayer(0);
 	if (pFbxLayer->GetUVs() != nullptr)
 	{
-		pUVSet = pFbxLayer->GetUVs();
+		VertexUVSet = pFbxLayer->GetUVs();
+	}
+	if (pFbxLayer->GetUVs() != nullptr)
+	{
+		VertexColorSet = pFbxLayer->GetVertexColors();
+	}
+	if (pFbxLayer->GetNormals() != nullptr)
+	{
+		VertexNormalSet = pFbxLayer->GetNormals();
+	}
+	if (pFbxLayer->GetMaterials() != nullptr)
+	{
+		MaterialSet = pFbxLayer->GetMaterials();
 	}
 	string szFileName;
+	int iNumMtrl = pNode->GetMaterialCount();
+	vector<C_STR> texList;
+	texList.resize(iNumMtrl);
+
+	for (int iMtrl = 0; iMtrl < iNumMtrl; iMtrl++)
 	{
-		FbxSurfaceMaterial* pSurface = pNode->GetMaterial(0);
+		FbxSurfaceMaterial* pSurface = pNode->GetMaterial(iMtrl);
 		if (pSurface)
 		{
 			auto property = pSurface->FindProperty(FbxSurfaceMaterial::sDiffuse);
 			if (property.IsValid())
 			{
 				const FbxFileTexture* tex = property.GetSrcObject<FbxFileTexture>(0);
-				if (property.IsValid())
-				{
-					const FbxFileTexture* tex = property.GetSrcObject<FbxFileTexture>(0);
-					szFileName = tex->GetFileName();
-				}
+				szFileName = tex->GetFileName();
+				texList[iMtrl] = szFileName;
 			}
 		}
-	}pObject->m_szTextureName = I_Tex.GetSplitName(szFileName);
+	}
+		if (iNumMtrl == 1)
+		{
+			pObject->m_szTextureName = I_Tex.GetSplitName(szFileName);
+		}
+		if (iNumMtrl > 1)
+		{
+			pObject->vbDataList.resize(iNumMtrl);
+			pObject->vbTexList.resize(iNumMtrl);
+			for (int iTex = 0; iTex < iNumMtrl; iTex++)
+			{
+				pObject->vbTexList[iTex] = I_Tex.GetSplitName(texList[iTex]);
+			}
+		}
+	
 
 	int iNumPolyCount = pFbxMesh->GetPolygonCount();
 	// 3 Á¤Á¡ -> 1Æú¸®°ï( »ï°¢Çü)
 	// 4 Á¤Á¡ -> 1Æú¸®°ï( Äõµå )
 	int iNumFace = 0;
-
+	int iBasePolyIndex = 0;
+	int iSubMtrl = 0;
 	// Á¦¾îÁ¡
 	FbxVector4* pVertexPositions = pFbxMesh->GetControlPoints();
 	for (int iPoly = 0; iPoly < iNumPolyCount; iPoly++)
 	{
 		int iPolySize = pFbxMesh->GetPolygonSize(iPoly);
 		iNumFace = iPolySize - 2;
+		if (MaterialSet)
+		{
+			iSubMtrl = GetSubMaterialIndex(iPoly, MaterialSet);
+		}
 		for (int iFace = 0; iFace < iNumFace; iFace++)
 		{
+			//Á¤Á¡ ÄÃ·¯ ÀÎµ¦½º
+			int VertexColor[3] = { 0,iFace + 2,iFace + 1 };
 			//Á¤Á¡ ÀÎµ¦½º
 			int iCornerIndex[3];
 			iCornerIndex[0] = pFbxMesh->GetPolygonVertex(iPoly, 0);
@@ -70,32 +108,64 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 
 			int iUvIndex[3];
 			iUvIndex[0] = pFbxMesh->GetTextureUVIndex(iPoly, 0);
-			iUvIndex[1] = pFbxMesh->GetTextureUVIndex(iPoly, iFace+2);
-			iUvIndex[2] = pFbxMesh->GetTextureUVIndex(iPoly, iFace+1);
+			iUvIndex[1] = pFbxMesh->GetTextureUVIndex(iPoly, iFace + 2);
+			iUvIndex[2] = pFbxMesh->GetTextureUVIndex(iPoly, iFace + 1);
 
 			for (int iIndex = 0; iIndex < 3; iIndex++)
 			{
 				int vertexID = iCornerIndex[iIndex];
 				FbxVector4 v = pVertexPositions[vertexID];
-				SimpleVertex tVertex;
-				tVertex.p.x = v.mData[0];
-				tVertex.p.y = v.mData[2];
-				tVertex.p.z = v.mData[1];
-				tVertex.c = { 1,1,1,1 };
-				FbxVector2 t = ReadTextureCoord(pFbxMesh, pUVSet,
-								iCornerIndex[iIndex],
-								iUvIndex[iIndex]);
-				tVertex.t.x = t.mData[0];
-				tVertex.t.y = 1.0f - t.mData[1];
-
-				pObject->m_VertexList.push_back(tVertex);
+				PNCT_VERTEX kVertex;
+				kVertex.p.x = v.mData[0];
+				kVertex.p.y = v.mData[2];
+				kVertex.p.z = v.mData[1];
+				kVertex.c = { 1,1,1,1 };
+				if (VertexColorSet)
+				{
+					FbxColor c = ReadColor(
+						pFbxMesh,
+						VertexColorSet,
+						iCornerIndex[iIndex],
+						iBasePolyIndex + VertexColor[iIndex]);
+					kVertex.c.x = c.mRed;
+					kVertex.c.y = c.mGreen;
+					kVertex.c.z = c.mBlue;
+					kVertex.c.w = 1.0f;
+				}
+				if (VertexUVSet)
+				{
+					FbxVector2 t = ReadTextureCoord(pFbxMesh, VertexUVSet,
+						iCornerIndex[iIndex],
+						iUvIndex[iIndex]);
+					kVertex.t.x = t.mData[0];
+					kVertex.t.y = 1.0f - t.mData[1];
+				}
+				if (VertexNormalSet)
+				{
+					FbxVector4 n = ReadNormal(
+						pFbxMesh,
+						VertexNormalSet,
+						iCornerIndex[iIndex],
+						iBasePolyIndex + VertexColor[iIndex]);
+					kVertex.n.x = n.mData[0];
+					kVertex.n.y = n.mData[2];
+					kVertex.n.z = n.mData[1];
+				}
+				if (iNumMtrl <= 1)
+				{
+					pObject->m_VertexList.push_back(kVertex);
+				}
+				else
+				{
+					pObject->vbDataList[iSubMtrl].push_back(kVertex);
+				}
 			}
-		}
+		}iBasePolyIndex += iPolySize;
 	}
 
 	m_pDrawObjList.push_back(pObject);
 }
-FbxVector2 KFbxLoader::ReadTextureCoord(FbxMesh* pFbxMesh, FbxLayerElementUV* pUVSet,int vertexIndex,int uvIndex)
+FbxVector2 KFbxLoader::ReadTextureCoord(FbxMesh* pFbxMesh, FbxLayerElementUV* VertexUVSet,int vertexIndex,int uvIndex)
 {
 	/*
 	enum EMappingMode
@@ -118,32 +188,32 @@ FbxVector2 KFbxLoader::ReadTextureCoord(FbxMesh* pFbxMesh, FbxLayerElementUV* pU
 	ÅØ½ºÃ³ ¸ÅÇÎ ¹æ½ÄÀÌ ¹¹³Ä
 	*/
 	FbxVector2 t;
-	FbxLayerElement::EMappingMode mode = pUVSet->GetMappingMode();
+	FbxLayerElement::EMappingMode mode = VertexUVSet->GetMappingMode();
 	switch (mode)
 	{
 	case FbxLayerElementUV::eByControlPoint:
 	{
-		switch (pUVSet->GetReferenceMode())
+		switch (VertexUVSet->GetReferenceMode())
 		{
 		case FbxLayerElementUV::eDirect:
 		{
-			t = pUVSet->GetDirectArray().GetAt(vertexIndex);
+			t = VertexUVSet->GetDirectArray().GetAt(vertexIndex);
 		}break;
 		case FbxLayerElementUV::eIndexToDirect:
 		{
-			int index = pUVSet->GetIndexArray().GetAt(vertexIndex);
-			t = pUVSet->GetDirectArray().GetAt(index);
+			int index = VertexUVSet->GetIndexArray().GetAt(vertexIndex);
+			t = VertexUVSet->GetDirectArray().GetAt(index);
 		}break;
 		}break;
 	}break;
 	case FbxLayerElementUV::eByPolygonVertex:
 	{
-		switch (pUVSet->GetReferenceMode())
+		switch (VertexUVSet->GetReferenceMode())
 		{
 		case FbxLayerElementUV::eDirect:
 		case FbxLayerElement::eIndexToDirect:
 		{
-			t = pUVSet->GetDirectArray().GetAt(uvIndex);
+			t = VertexUVSet->GetDirectArray().GetAt(uvIndex);
 		}break;
 		}break;
 	}break;
@@ -151,6 +221,7 @@ FbxVector2 KFbxLoader::ReadTextureCoord(FbxMesh* pFbxMesh, FbxLayerElementUV* pU
 
 	return t;
 }
+
 void KFbxLoader::PreProcess(FbxNode* pFbxNode)
 {
 	if (pFbxNode == nullptr) return;
@@ -206,4 +277,113 @@ bool KFbxLoader::Release()
 		m_pFbxManager = nullptr;
 	}
 	return true;
+}
+FbxColor KFbxLoader::ReadColor(FbxMesh* pFbxMesh, FbxLayerElementVertexColor* VertexColorSet, int posIndex, int colorIndex)
+{
+	FbxColor color(1, 1, 1, 1);
+	FbxLayerElement::EMappingMode mode = VertexColorSet->GetMappingMode();
+	switch (mode)
+	{
+	case FbxLayerElementUV::eByControlPoint:
+	{
+		switch (VertexColorSet->GetReferenceMode())
+		{
+		case FbxLayerElementUV::eDirect:
+		{
+			color = VertexColorSet->GetDirectArray().GetAt(posIndex);
+		}break;
+		case FbxLayerElementUV::eIndexToDirect:
+		{
+			int index = VertexColorSet->GetIndexArray().GetAt(posIndex);
+			color = VertexColorSet->GetDirectArray().GetAt(index);
+		}break;
+		}break;
+	}break;
+	case FbxLayerElementUV::eByPolygonVertex:
+	{
+		switch (VertexColorSet->GetReferenceMode())
+		{
+		case FbxLayerElementUV::eDirect:
+		{
+			color = VertexColorSet->GetDirectArray().GetAt(colorIndex);
+		}break;
+		case FbxLayerElementUV::eIndexToDirect:
+		{
+			int index = VertexColorSet->GetIndexArray().GetAt(colorIndex);
+			color = VertexColorSet->GetDirectArray().GetAt(index);
+		}break;
+		}break;
+	}break;
+	}
+	return color;
+}
+int KFbxLoader::GetSubMaterialIndex(int iPoly, FbxLayerElementMaterial* pMaterialSetList)
+{
+	int iSubMtrl = 0;
+	if (pMaterialSetList != nullptr)
+	{
+		switch (pMaterialSetList->GetMappingMode())
+		{
+		case FbxLayerElement::eByPolygon:
+		{
+
+			switch (pMaterialSetList->GetReferenceMode())
+			{
+			case FbxLayerElement::eIndex:
+			{
+				iSubMtrl = iPoly;
+			}break;
+			case FbxLayerElement::eIndexToDirect:
+			{
+				iSubMtrl = pMaterialSetList->GetIndexArray().GetAt(iPoly);
+			}break;
+			}
+		}
+		default:
+		{
+			break;
+		}
+		}
+	}
+	return iSubMtrl;
+}
+
+FbxVector4 KFbxLoader::ReadNormal(FbxMesh* pFbxMesh, FbxLayerElementNormal* VertexNormalSet, int posIndex, int colorIndex)
+{
+	FbxVector4 normal(1, 1, 1, 1);
+	FbxLayerElement::EMappingMode mode = VertexNormalSet->GetMappingMode();
+	switch(mode)
+	{
+	case FbxLayerElementUV::eByControlPoint:
+	{
+		switch (VertexNormalSet->GetReferenceMode())
+		{
+		case FbxLayerElementUV::eDirect:
+		{
+			normal = VertexNormalSet->GetDirectArray().GetAt(posIndex);
+		}break;
+		case FbxLayerElementUV::eIndexToDirect:
+		{
+			int index = VertexNormalSet->GetIndexArray().GetAt(posIndex);
+			normal = VertexNormalSet->GetDirectArray().GetAt(index);
+		}break;
+		}break;
+	}break;
+	case FbxLayerElementUV::eByPolygonVertex:
+	{
+		switch (VertexNormalSet->GetReferenceMode())
+		{
+		case FbxLayerElementUV::eDirect:
+		{
+			normal = VertexNormalSet->GetDirectArray().GetAt(colorIndex);
+		}break;
+		case FbxLayerElementUV::eIndexToDirect:
+		{
+			int index = VertexNormalSet->GetIndexArray().GetAt(colorIndex);
+			normal = VertexNormalSet->GetDirectArray().GetAt(index);
+		}break;
+		}break;
+	}break;
+	}
+	return normal;
 }

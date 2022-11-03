@@ -1,5 +1,32 @@
 #include "KBaseObject.h"
+namespace TDX
+{
+    ID3D11Buffer* CreateVertexBuffer(ID3D11Device* pd3dDevice,
+        void* pDataAddress,
+        UINT iNumVertex,
+        UINT iVertexSize)
+    {
+        HRESULT hr;
+        ID3D11Buffer* pVB = nullptr;
+        D3D11_BUFFER_DESC bd;
+        ZeroMemory(&bd, sizeof(bd));
+        bd.ByteWidth = iVertexSize * iNumVertex;//바이트 용량
+        //GPU 메모리에 할당
+        bd.Usage = D3D11_USAGE_DEFAULT;//버퍼의 할당 장소 내지는 버퍼용도
+        bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
+        D3D11_SUBRESOURCE_DATA sd;
+        ZeroMemory(&sd, sizeof(sd));
+        sd.pSysMem = pDataAddress;
+        hr = pd3dDevice->CreateBuffer(
+            &bd,
+            &sd,
+            &pVB
+        );
+        return pVB;
+
+    }
+}
 void		KBaseObject::CreateConstantData()
 {
     m_cbData.matWorld.Identity();
@@ -75,7 +102,7 @@ HRESULT KBaseObject::CreateVertexBuffer()
 
     D3D11_BUFFER_DESC       bd;
     ZeroMemory(&bd, sizeof(bd));
-    bd.ByteWidth = sizeof(SimpleVertex) * m_VertexList.size(); // 바이트 용량
+    bd.ByteWidth = sizeof(PNCT_VERTEX) * m_VertexList.size(); // 바이트 용량
     // GPU 메모리에 할당
     bd.Usage = D3D11_USAGE_DEFAULT; // 버퍼의 할당 장소 내지는 버퍼용도
     bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
@@ -213,8 +240,9 @@ HRESULT KBaseObject::CreateVertexLayout()
     D3D11_INPUT_ELEMENT_DESC ied[] =
     {
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,0,D3D11_INPUT_PER_VERTEX_DATA, 0},
-         { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0,12,D3D11_INPUT_PER_VERTEX_DATA, 0},
-        { "TEXTURE", 0, DXGI_FORMAT_R32G32_FLOAT, 0,28,D3D11_INPUT_PER_VERTEX_DATA, 0},
+        {"NORMAL",0,DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0},
+         { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0,24,D3D11_INPUT_PER_VERTEX_DATA, 0},
+        { "TEXTURE", 0, DXGI_FORMAT_R32G32_FLOAT, 0,40,D3D11_INPUT_PER_VERTEX_DATA, 0},
     };
     UINT NumElements = sizeof(ied) / sizeof(ied[0]);
     hr = m_pd3dDevice->CreateInputLayout(
@@ -331,7 +359,7 @@ bool KBaseObject::PreRender()
     m_pImmediateContext->IASetInputLayout(m_pVertexLayout);
     m_pImmediateContext->VSSetShader(m_pVS, NULL, 0);
     m_pImmediateContext->PSSetShader(m_pPS, NULL, 0);
-    UINT stride = sizeof(SimpleVertex); // 정점1개의 바이트용량
+    UINT stride = sizeof(PNCT_VERTEX); // 정점1개의 바이트용량
     UINT offset = 0; // 정점버퍼에서 출발지점(바이트)
     m_pImmediateContext->IASetVertexBuffers(0, 1,
         &m_pVertexBuffer, &stride, &offset);

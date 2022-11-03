@@ -1,7 +1,13 @@
 #include "Sample.h"
 bool	Sample::Init()
 {
-	KFbxLoader* pFbxLoaderA = new KFbxLoader;
+	KFbxLoader* pFbxLoaderC = new KFbxLoader;
+	if (pFbxLoaderC->Init())
+	{
+		pFbxLoaderC->Load("../../data/fbx/MultiCameras.fbx");
+	}
+	m_fbxList.push_back(pFbxLoaderC);
+	/*KFbxLoader* pFbxLoaderA = new KFbxLoader;
 	if (pFbxLoaderA->Init())
 	{
 		pFbxLoaderA->Load("../../data/fbx/box.fbx");
@@ -13,7 +19,7 @@ bool	Sample::Init()
 	{
 		pFbxLoaderB->Load("../../data/fbx/SM_Rock.fbx");
 	}
-	m_fbxList.push_back(pFbxLoaderB);
+	m_fbxList.push_back(pFbxLoaderB);*/
 
 	W_STR szDefaultDir = L"../../data/fbx/";
 	wstring shaderfilename = L"../../data/shader/DefaultObject.txt";
@@ -21,11 +27,11 @@ bool	Sample::Init()
 	{
 		for (int iObj = 0; iObj < fbx->m_pDrawObjList.size(); iObj++)
 		{
-			KBaseObject* pObj = fbx->m_pDrawObjList[iObj];
+			KFbxObject* pObj = fbx->m_pDrawObjList[iObj];
 			wstring szLoad = szDefaultDir + pObj->m_szTextureName;
-			pObj->Create(m_pd3dDevice.Get(), m_pImmediateContext.Get(),
-				shaderfilename, szLoad);
+			pObj->Create(m_pd3dDevice.Get(), m_pImmediateContext.Get(), shaderfilename, szLoad);
 		}
+			
 	}
 	m_pMainCamera = new KCameraDebug;
 	m_pMainCamera->CreateViewMatrix(KVector(50, 6, -50), KVector(0, 6, 0), KVector(0, 1, 0));
@@ -53,12 +59,12 @@ bool	Sample::Render()
 	{
 		for (int iObj = 0; iObj < m_fbxList[iModel]->m_pDrawObjList.size(); iObj++)
 		{
-			KMatrix matWorld;
-			matWorld._41 = 100 * iModel;
-			m_fbxList[iModel]->m_pDrawObjList[iObj]->SetMatrix(&matWorld,
-				&m_pMainCamera->m_matView,
-				&m_pMainCamera->m_matProj);
-			m_fbxList[iModel]->m_pDrawObjList[iObj]->Render();
+			KFbxObject* pObj = m_fbxList[iModel]->m_pDrawObjList[iObj];
+			
+				KMatrix matWorld;
+				matWorld._41 = 100 * iModel;
+				pObj->SetMatrix(&matWorld, &m_pMainCamera->m_matView, &m_pMainCamera->m_matProj);
+				pObj->Render();
 		}
 	}
 	m_pImmediateContext->RSSetState(KDxState::g_pDefaultRSSolid);
