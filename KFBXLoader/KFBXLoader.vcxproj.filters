@@ -34,4 +34,7 @@
     <Text Include="..\..\data\shader\DefaultObject.txt" />
     <Text Include="..\..\data\shader\DefaultShape.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
 </Project>
