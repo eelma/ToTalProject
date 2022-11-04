@@ -1,4 +1,19 @@
 #include "Sample.h"
+void Sample::ClearD3D11DeviceContext(ID3D11DeviceContext* pd3dDeviceContext)
+{
+	//Unbind all objects from the immediate context
+	if (pd3dDeviceContext == NULL)return;
+
+	ID3D11ShaderResourceView* pSRVs[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	ID3D11RenderTargetView* pRTVs[16]= { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	ID3D11DepthStencilView* pDSV = NULL;
+	ID3D11Buffer* pBufers[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	ID3D11SamplerState* pSamplers[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };;
+	UINT StrideOffset[16]= { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	pd3dDeviceContext->VSSetShaderResources(0,16,pSRVs);
+	pd3dDeviceContext->PSSetShaderResources(0,16,pSRVs);
+}
+
 bool	Sample::Init()
 {
 	KFbxLoader* pFbxLoaderC = new KFbxLoader;
@@ -7,12 +22,13 @@ bool	Sample::Init()
 		pFbxLoaderC->Load("../../data/fbx/MultiCameras.fbx");
 	}
 	m_fbxList.push_back(pFbxLoaderC);
-	KFbxLoader* pFbxLoaderA = new KFbxLoader;
+
+	/*KFbxLoader* pFbxLoaderA = new KFbxLoader;
 	if (pFbxLoaderA->Init())
 	{
 		pFbxLoaderA->Load("../../data/fbx/box.fbx");
 	}
-	m_fbxList.push_back(pFbxLoaderA);
+	m_fbxList.push_back(pFbxLoaderA);*/
 
 	KFbxLoader* pFbxLoaderB = new KFbxLoader;
 	if (pFbxLoaderB->Init())
@@ -42,6 +58,7 @@ bool	Sample::Init()
 }
 bool	Sample::Frame()
 {
+	ClearD3D11DeviceContext(m_pImmediateContext.Get());
 	m_pMainCamera->Frame();
 	for (auto fbx : m_fbxList)
 	{
