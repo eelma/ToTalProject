@@ -71,7 +71,7 @@ HRESULT KShader::Load(ID3D11Device* pd3dDevice,
         NULL,
         "PS",
         "ps_5_0",
-        0,
+        dwShaderFlags,
         0,
         &m_pPSCode,
         &pErrorCode);

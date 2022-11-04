@@ -4,12 +4,19 @@ bool KFbxLoader::Init()
 	m_pFbxManager = FbxManager::Create();
 	m_pFbxImporter = FbxImporter::Create(m_pFbxManager, "");
 	m_pFbxScene = FbxScene::Create(m_pFbxManager, "");
+	// 단위
+	FbxSystemUnit::cm.ConvertScene(m_pFbxScene);
+	// 기저(행렬)
+	FbxAxisSystem::MayaZUp.ConvertScene(m_pFbxScene);
 	return true;
 }
 bool KFbxLoader::Load(C_STR filename)
 {
 	m_pFbxImporter->Initialize(filename.c_str());
 	m_pFbxImporter->Import(m_pFbxScene);
+	//FbxGeometryConverter converter(m_pFbxManager);
+	//converter.Triangulate(m_pFbxScene, true);
+
 	m_pRootNode = m_pFbxScene->GetRootNode();
 	PreProcess(m_pRootNode);
 
@@ -23,6 +30,35 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 {
 	FbxNode* pNode = pFbxMesh->GetNode();
 	KFbxObject* pObject = new KFbxObject;
+	FbxAMatrix geom; // 기하(로칼)행렬(초기 정점 위치를 변환할 때 사용한다.)
+	FbxVector4 trans = pNode->GetGeometricTranslation(FbxNode::eSourcePivot);
+	FbxVector4 rot = pNode->GetGeometricRotation(FbxNode::eSourcePivot);
+	FbxVector4 scale = pNode->GetGeometricScaling(FbxNode::eSourcePivot);
+	geom.SetT(trans);
+	geom.SetR(rot);
+	geom.SetS(scale);
+
+	FbxAMatrix normalLocalMatrix = geom;
+	normalLocalMatrix = normalLocalMatrix.Inverse();
+	normalLocalMatrix = normalLocalMatrix.Transpose();
+
+	// 월드행렬
+	FbxVector4 Translation;
+	if (pNode->LclTranslation.IsValid())
+		Translation = pNode->LclTranslation.Get();
+
+	FbxVector4 Rotation;
+	if (pNode->LclRotation.IsValid())
+		Rotation = pNode->LclRotation.Get();
+
+	FbxVector4 Scale;
+	if (pNode->LclScaling.IsValid())
+		Scale = pNode->LclScaling.Get();
+
+	FbxAMatrix matWorldTransform(Translation, Rotation, Scale);
+	FbxAMatrix normalWorldMatrix = matWorldTransform;
+	normalWorldMatrix = normalWorldMatrix.Inverse();
+	normalWorldMatrix = normalWorldMatrix.Transpose();
 
 	// Layer 개념
 	FbxLayerElementUV* VertexUVSet = nullptr;
@@ -114,8 +150,10 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 			for (int iIndex = 0; iIndex < 3; iIndex++)
 			{
 				int vertexID = iCornerIndex[iIndex];
-				FbxVector4 v = pVertexPositions[vertexID];
+				FbxVector4 v2 = pVertexPositions[vertexID];
 				PNCT_VERTEX kVertex;
+				FbxVector4 v = geom.MultT(v2);
+				v = matWorldTransform.MultT(v);
 				kVertex.p.x = v.mData[0];
 				kVertex.p.y = v.mData[2];
 				kVertex.p.z = v.mData[1];
@@ -147,6 +185,8 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 						VertexNormalSet,
 						iCornerIndex[iIndex],
 						iBasePolyIndex + VertexColor[iIndex]);
+					n = normalLocalMatrix.MultT(n);
+					n = normalWorldMatrix.MultT(n);
 					kVertex.n.x = n.mData[0];
 					kVertex.n.y = n.mData[2];
 					kVertex.n.z = n.mData[1];

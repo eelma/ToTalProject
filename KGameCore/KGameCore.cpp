@@ -16,7 +16,7 @@ bool		KGameCore::KCoreInit()
 
 	wstring shaderfilename = L"../../data/shader/DefaultRT.hlsl";
 	m_BG.Create(m_pd3dDevice.Get(),
-		m_pImmediateContext.Get(), shaderfilename, L"../../data/_RAINBOW.bmp");
+		m_pImmediateContext.Get(), shaderfilename, L"../../data/whitemask.bmp");
 	m_RT.Create(m_pd3dDevice.Get(), m_pImmediateContext.Get(), 2048, 2048);
     return Init();
 }

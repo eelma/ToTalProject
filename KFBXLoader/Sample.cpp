@@ -7,7 +7,7 @@ bool	Sample::Init()
 		pFbxLoaderC->Load("../../data/fbx/MultiCameras.fbx");
 	}
 	m_fbxList.push_back(pFbxLoaderC);
-	/*KFbxLoader* pFbxLoaderA = new KFbxLoader;
+	KFbxLoader* pFbxLoaderA = new KFbxLoader;
 	if (pFbxLoaderA->Init())
 	{
 		pFbxLoaderA->Load("../../data/fbx/box.fbx");
@@ -19,7 +19,7 @@ bool	Sample::Init()
 	{
 		pFbxLoaderB->Load("../../data/fbx/SM_Rock.fbx");
 	}
-	m_fbxList.push_back(pFbxLoaderB);*/
+	m_fbxList.push_back(pFbxLoaderB);
 
 	W_STR szDefaultDir = L"../../data/fbx/";
 	wstring shaderfilename = L"../../data/shader/DefaultObject.txt";
@@ -55,6 +55,12 @@ bool	Sample::Render()
 	{
 		m_pImmediateContext->RSSetState(KDxState::g_pDefaultRSWireFrame);
 	}
+	KVector vLight(0, 0, 1);
+	KMatrix matRotation;
+	matRotation.RotationY(g_fGameTimer);
+	vLight = vLight * matRotation;
+	vLight.Normalized();
+
 	for(int iModel=0;iModel<m_fbxList.size();iModel++)
 	{
 		for (int iObj = 0; iObj < m_fbxList[iModel]->m_pDrawObjList.size(); iObj++)
@@ -63,6 +69,10 @@ bool	Sample::Render()
 			
 				KMatrix matWorld;
 				matWorld._41 = 100 * iModel;
+
+				pObj->m_cbData.x = vLight.x;
+				pObj->m_cbData.y = vLight.y;
+				pObj->m_cbData.z = vLight.z;
 				pObj->SetMatrix(&matWorld, &m_pMainCamera->m_matView, &m_pMainCamera->m_matProj);
 				pObj->Render();
 		}

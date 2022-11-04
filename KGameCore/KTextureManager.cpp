@@ -21,9 +21,11 @@ KTexture* KTextureManager::Load(wstring name)
         if (SUCCEEDED(hr))
         {
             m_List.insert(make_pair(name,pNewData));
+            return pNewData;
         }
     }
-    return pNewData;
+    delete pNewData;
+    return nullptr;
 }
 bool KTextureManager::Release()
 {

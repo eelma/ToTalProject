@@ -3,6 +3,19 @@
 #include"KTextureManager.h"
 #include"KShaderManager.h"
 #include"KCollision.h"
+struct SimpleVertex
+{
+	KVector    p;
+	KVector4  c;
+	KVector2  t;
+	SimpleVertex() {}
+	SimpleVertex(KVector vp,KVector4 vc, KVector2 vt)
+	{
+		p = vp;
+		c = vc;
+		t = vt;
+	}
+};
 struct PNCT_VERTEX
 {
 	KVector   p;
@@ -26,7 +39,7 @@ struct VS_CONSTANT_BUFFER
 
 	float    x;
 	float    y;
-	float z;
+	float	 z;
 	float    fTimer;
 };
 
