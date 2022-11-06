@@ -127,12 +127,12 @@ KMatrix KMatrix::operator*(KMatrix& matrix)
 	return mat;
 }
 
-KMatrix KMatrix::ViewLookAt(KVector& vPosition, KVector& vTarget, KVector& vUp)
+KMatrix KMatrix::ViewLookAt(TVector3& vPosition, TVector3& vTarget, TVector3& vUp)
 {
 	KMatrix matrix;
-	KVector vDirection = (vTarget - vPosition).Normal();
-	KVector vRightVector = (vUp ^ vDirection).Normal();
-	KVector vUpVector = (vDirection ^ vRightVector).Normal();
+	TVector3 vDirection = (vTarget - vPosition).Normal();
+	TVector3 vRightVector = (vUp ^ vDirection).Normal();
+	TVector3 vUpVector = (vDirection ^ vRightVector).Normal();
 
 	_11 = vRightVector.x; _12 = vUpVector.x; _13 = vDirection.x;
 	_21 = vRightVector.y; _22 = vUpVector.y; _23 = vDirection.y;

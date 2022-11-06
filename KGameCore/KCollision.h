@@ -1,5 +1,5 @@
 #pragma once
-#include "KVector.h"
+#include"KVector.h"
 #include"KMatrix.h"
 #include <vector>
 #include <queue>
@@ -73,23 +73,23 @@ struct KRect : Rect
 
 struct KSphere
 {
-    KVector vCenter;
+    TVector3 vCenter;
     float fRadius;
     KSphere() {};
-    KSphere(KVector vC,  float r) {
+    KSphere(TVector3 vC,  float r) {
         vCenter = vC;
         fRadius = r;
     };
 };
 struct Box
 {
-    KVector vMin;
-    KVector vSize;
+    TVector3 vMin;
+    TVector3 vSize;
 };
 struct KBox : Box
 {
-    KVector vMax;
-    KVector vCenter;
+    TVector3 vMax;
+    TVector3 vCenter;
     bool   operator == (KBox& dest)
     {
         if ( vMin == dest.vMin)
@@ -102,11 +102,11 @@ struct KBox : Box
         return false;
     }
     KBox(){}
-    KBox(KVector vPos,KVector vSize) 
+    KBox(TVector3 vPos,TVector3 vSize) 
     {
         Set(vPos, vSize);
     }
-    void  Set(KVector vPos,KVector vSize)
+    void  Set(TVector3 vPos,TVector3 vSize)
     {
         vMin = vPos;
         this->vSize = vSize;
@@ -116,24 +116,24 @@ struct KBox : Box
 };
 class K_AABB
 {
-    KVector vMin;
-    KVector vMax;
+    TVector3 vMin;
+    TVector3 vMax;
 };
 class K_OBB
 {
-    KVector vCenter;
-    KVector vAxis[3];
+    TVector3 vCenter;
+    TVector3 vAxis[3];
     float fDistance[3];
 };
 struct K_BOX
 {
-    KVector vPos[8];
+    TVector3 vPos[8];
     //aabb
-    KVector vMin;
-    KVector vMax;
+    TVector3 vMin;
+    TVector3 vMax;
     //obb
-    KVector vCenter;
-    KVector vAxis[3];
+    TVector3 vCenter;
+    TVector3 vAxis[3];
     float fExtent[3];
 };
 

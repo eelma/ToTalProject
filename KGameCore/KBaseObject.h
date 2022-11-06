@@ -1,15 +1,16 @@
 #pragma once
+#include"TMath.h"
 #include "KDevice.h"
 #include"KTextureManager.h"
 #include"KShaderManager.h"
 #include"KCollision.h"
 struct SimpleVertex
 {
-	KVector    p;
+	TVector3    p;
 	KVector4  c;
 	KVector2  t;
 	SimpleVertex() {}
-	SimpleVertex(KVector vp,KVector4 vc, KVector2 vt)
+	SimpleVertex(TVector3 vp,KVector4 vc, KVector2 vt)
 	{
 		p = vp;
 		c = vc;
@@ -18,12 +19,12 @@ struct SimpleVertex
 };
 struct PNCT_VERTEX
 {
-	KVector   p;
-	KVector	  n;
+	TVector3   p;
+	TVector3	  n;
 	KVector4  c;
 	KVector2  t;
 	PNCT_VERTEX() {}
-	PNCT_VERTEX(KVector vp, KVector vn, KVector4 vc, KVector2 vt)
+	PNCT_VERTEX(TVector3 vp, TVector3 vn, KVector4 vc, KVector2 vt)
 	{
 		p = vp;
 		n = vn;

@@ -26,27 +26,27 @@ void KFrustum::CreateFrustum(KMatrix* matView, KMatrix*matProj)
 	//->   <-
 	//1    2
 	//0    3
-	m_Plane[0].Create(*((KVector*)&m_vFrustum[1]),
-					  *((KVector*)&m_vFrustum[5]), 
-					  *((KVector*)&m_vFrustum[0]));//left
-	m_Plane[1].Create(*((KVector*)&m_vFrustum[3]),
-					  *((KVector*)&m_vFrustum[6]),
-					  *((KVector*)&m_vFrustum[2]));//right
-	m_Plane[2].Create(*((KVector*)&m_vFrustum[5]),
-					  *((KVector*)&m_vFrustum[2]),
-					  *((KVector*)&m_vFrustum[6]));//top
-	m_Plane[3].Create(*((KVector*)&m_vFrustum[0]),
-					  *((KVector*)&m_vFrustum[7]),
-					  *((KVector*)&m_vFrustum[3]));//bottom
-	m_Plane[4].Create(*((KVector*)&m_vFrustum[2]),
-					  *((KVector*)&m_vFrustum[1]),
-					  *((KVector*)&m_vFrustum[0]));//near
-	m_Plane[5].Create(*((KVector*)&m_vFrustum[5]),
-					  *((KVector*)&m_vFrustum[6]),
-					  *((KVector*)&m_vFrustum[4]));//far
+	m_Plane[0].Create(*((TVector3*)&m_vFrustum[1]),
+					  *((TVector3*)&m_vFrustum[5]), 
+					  *((TVector3*)&m_vFrustum[0]));//left
+	m_Plane[1].Create(*((TVector3*)&m_vFrustum[3]),
+					  *((TVector3*)&m_vFrustum[6]),
+					  *((TVector3*)&m_vFrustum[2]));//right
+	m_Plane[2].Create(*((TVector3*)&m_vFrustum[5]),
+					  *((TVector3*)&m_vFrustum[2]),
+					  *((TVector3*)&m_vFrustum[6]));//top
+	m_Plane[3].Create(*((TVector3*)&m_vFrustum[0]),
+					  *((TVector3*)&m_vFrustum[7]),
+					  *((TVector3*)&m_vFrustum[3]));//bottom
+	m_Plane[4].Create(*((TVector3*)&m_vFrustum[2]),
+					  *((TVector3*)&m_vFrustum[1]),
+					  *((TVector3*)&m_vFrustum[0]));//near
+	m_Plane[5].Create(*((TVector3*)&m_vFrustum[5]),
+					  *((TVector3*)&m_vFrustum[6]),
+					  *((TVector3*)&m_vFrustum[4]));//far
 
 }
-K_POSITION KFrustum::ClassifyPoint(KVector v)
+K_POSITION KFrustum::ClassifyPoint(TVector3 v)
 {
 	for (int i = 0; i < 6; i++)
 	{
@@ -83,7 +83,7 @@ K_POSITION KFrustum::ClassifyKBOX(K_BOX box)
 {
 	float fPlaneToCenter = 0.0;
 	float fDistance = 0.0f;
-	KVector vDir;
+	TVector3 vDir;
 	K_POSITION k_Position;
 	k_Position = P_FRONT;
 

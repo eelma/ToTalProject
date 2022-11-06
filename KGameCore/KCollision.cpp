@@ -95,7 +95,7 @@ KCollisionType   KCollision::BoxToBox(KBox& a, KBox& b)
             if ((a.vSize.z + b.vSize.z) >= (fMaxZ - fMinZ))
             {
                 // 교차한다. 교집합
-                KVector vMin, vMax;
+                TVector3 vMin, vMax;
                 KBox Intersect;
                 vMin.x = a.vMin.x > b.vMin.x ? a.vMin.x : b.vMin.x;
                 vMin.y = a.vMin.y > b.vMin.y ? a.vMin.y : b.vMin.y;
@@ -131,7 +131,7 @@ bool   KCollision::BoxToInBox(KBox& a, KBox& b)
 bool             KCollision::SphereToSphere(KSphere& a, KSphere& b)
 {
     float fSumRadius = a.fRadius + b.fRadius;
-    KVector vDir = a.vCenter - b.vCenter;    
+    TVector3 vDir = a.vCenter - b.vCenter;    
     float fDistance = vDir.Length();
     if (fDistance <= fSumRadius)
     {

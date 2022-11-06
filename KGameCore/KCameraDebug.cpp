@@ -1,7 +1,7 @@
 #include "KCameraDebug.h"
 #include"KInput.h"
 #include"TMath.h"
-void KCameraDebug::CreateViewMatrix(KVector vEye, KVector vAt, KVector vUp)
+void KCameraDebug::CreateViewMatrix(TVector3 vEye, TVector3 vAt, TVector3 vUp)
 {
     m_vPos = vEye;
     m_vTarget = vAt;
@@ -40,32 +40,32 @@ bool KCameraDebug::Frame()
     m_fSpeed = min(100.0f, m_fSpeed);
     if (I_Input.GetKey('W') == KEY_HOLD)
     {
-        KVector v = m_vLook * m_fSpeed * g_fSecondPerFrame;
+        TVector3 v = m_vLook * m_fSpeed * g_fSecondPerFrame;
         m_vPos += v;
     }
     if (I_Input.GetKey('S') == KEY_HOLD)
     {
-        KVector v = m_vLook * -m_fSpeed * g_fSecondPerFrame;
+        TVector3 v = m_vLook * -m_fSpeed * g_fSecondPerFrame;
         m_vPos += v;
     }
     if (I_Input.GetKey('A') == KEY_HOLD)
     {
-        KVector v = m_vRight * -m_fSpeed * g_fSecondPerFrame;
+        TVector3 v = m_vRight * -m_fSpeed * g_fSecondPerFrame;
         m_vPos += v;
     }
     if (I_Input.GetKey('D') == KEY_HOLD)
     {
-        KVector v = m_vRight * m_fSpeed * g_fSecondPerFrame;
+        TVector3 v = m_vRight * m_fSpeed * g_fSecondPerFrame;
         m_vPos += v;
     }
     if (I_Input.GetKey('Q') == KEY_HOLD)
     {
-        KVector v = m_vUp * m_fSpeed * g_fSecondPerFrame;
+        TVector3 v = m_vUp * m_fSpeed * g_fSecondPerFrame;
         m_vPos += v;
     }
     if (I_Input.GetKey('E') == KEY_HOLD)
     {
-        KVector v = m_vUp * -m_fSpeed * g_fSecondPerFrame;
+        TVector3 v = m_vUp * -m_fSpeed * g_fSecondPerFrame;
         m_vPos += v;
     }
 
