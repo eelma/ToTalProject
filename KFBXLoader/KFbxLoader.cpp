@@ -1,6 +1,7 @@
 #include "KFbxLoader.h"
 //https://dlemrcnd.tistory.com/85?category=525778
 //pnct= position, normal, color, texture
+//uv 매핑 - 3d 모델링에 외형을 입혀주는 과정 점서면으로 만들어진 오브젝트에 외형을 입혀주는 과정
 bool KFbxLoader::Init()
 {
 	//매니저 임포터 씬 생성 해제는 그 반대 순서
@@ -38,6 +39,7 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 
 	FbxNode* pNode = pFbxMesh->GetNode();
 	KFbxObject* pObject = new KFbxObject;
+	//기하행렬(FBX 위치 버텍스에서 ->초기 정점 로컬 위치로 변환)
 	FbxAMatrix geom; // 기하(로칼)행렬(초기 정점 위치를 변환할 때 사용한다.)
 	FbxVector4 trans = pNode->GetGeometricTranslation(FbxNode::eSourcePivot);//Geometric transform은 단위행렬 이걸 얻기위한 함수 3개
 	FbxVector4 rot = pNode->GetGeometricRotation(FbxNode::eSourcePivot);
@@ -46,6 +48,8 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 	geom.SetR(rot);//오일러 회전
 	geom.SetS(scale);//메트릭스 스케일 세팅
 
+	//노말 행려르 기하행렬의 역행렬의 전치
+	//노말 매트릭스
 	FbxAMatrix normalLocalMatrix = geom;
 	normalLocalMatrix = normalLocalMatrix.Inverse();//역행렬
 	normalLocalMatrix = normalLocalMatrix.Transpose();//전치
@@ -72,8 +76,9 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 	// Layer 개념
 	FbxLayerElementUV* VertexUVSet = nullptr;//UV를 지오메트리에 매핑하기 위한 레이어 요소
 	FbxLayerElementVertexColor* VertexColorSet = nullptr;//정점 색상을 형상에 매핑하기 위한 레이어 요소
+	FbxLayerElementMaterial* MaterialSet = nullptr;//재질(FbxSurfaceMaterial)을 지오메트리에 매핑하기 위한 레이어 요소 메터리얼
+
 	FbxLayerElementNormal* VertexNormalSet = nullptr;//지오메트리를 노말 매핑하기 위한 레이어 요소
-	FbxLayerElementMaterial* MaterialSet = nullptr;//재질(FbxSurfaceMaterial)을 지오메트리에 매핑하기 위한 레이어 요소
 	FbxLayer* pFbxLayer = pFbxMesh->GetLayer(0);//FbxLayer 클래스는 계층화 메커니즘의 기반을 제공합니다.
 	if (pFbxLayer->GetUVs() != nullptr)//Returns this layer's UV description.이 레이어의 UV 서술을 반환합니다.
 	{
@@ -92,6 +97,7 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 		MaterialSet = pFbxLayer->GetMaterials();
 	}
 	string szFileName;
+	//매터리얼 개수 만큼 돌면서 읽어옴
 	int iNumMtrl = pNode->GetMaterialCount();
 	vector<C_STR> texList;
 	texList.resize(iNumMtrl);
@@ -125,22 +131,23 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 		}
 	
 
-	int iNumPolyCount = pFbxMesh->GetPolygonCount();
+	int iNumPolyCount = pFbxMesh->GetPolygonCount();//폴리곤 수
 	// 3 정점 -> 1폴리곤( 삼각형)
 	// 4 정점 -> 1폴리곤( 쿼드 )
 	int iNumFace = 0;
 	int iBasePolyIndex = 0;
 	int iSubMtrl = 0;
 	// 제어점
-	FbxVector4* pVertexPositions = pFbxMesh->GetControlPoints();
+	FbxVector4* pVertexPositions = pFbxMesh->GetControlPoints();//정점 위치
 	for (int iPoly = 0; iPoly < iNumPolyCount; iPoly++)
 	{
-		int iPolySize = pFbxMesh->GetPolygonSize(iPoly);
-		iNumFace = iPolySize - 2;
+		int iPolySize = pFbxMesh->GetPolygonSize(iPoly);//4 또는 3 삼각형이냐 사각형이냐
+		iNumFace = iPolySize - 2;//한면 구하는 계산
 		if (MaterialSet)
 		{
 			iSubMtrl = GetSubMaterialIndex(iPoly, MaterialSet);
 		}
+		//면 4-2는 2개의 트라이앵글
 		for (int iFace = 0; iFace < iNumFace; iFace++)
 		{
 			//정점 컬러 인덱스
@@ -161,12 +168,13 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 				int vertexID = iCornerIndex[iIndex];
 				FbxVector4 v2 = pVertexPositions[vertexID];
 				PNCT_VERTEX kVertex;
-				FbxVector4 v = geom.MultT(v2);
+				FbxVector4 v = geom.MultT(v2);//로컬 좌표로 행렬 곱
 				v = matWorldTransform.MultT(v);
 				kVertex.p.x = v.mData[0];
 				kVertex.p.y = v.mData[2];
 				kVertex.p.z = v.mData[1];
 				kVertex.c = { 1,1,1,1 };
+				//만약 버텍스 칼라 값이 있다면
 				if (VertexColorSet)
 				{
 					FbxColor c = ReadColor(
@@ -177,8 +185,9 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 					kVertex.c.x = c.mRed;
 					kVertex.c.y = c.mGreen;
 					kVertex.c.z = c.mBlue;
-					kVertex.c.w = 1.0f;
+					kVertex.c.w = 1.0f;//버텍스 컬러값에 저장
 				}
+				//uv 리스트에 값이 있다면
 				if (VertexUVSet)
 				{
 					FbxVector2 t = ReadTextureCoord(pFbxMesh, VertexUVSet,
@@ -187,6 +196,7 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 					kVertex.t.x = t.mData[0];
 					kVertex.t.y = 1.0f - t.mData[1];
 				}
+				//노멀값이 있다면
 				if (VertexNormalSet)
 				{
 					FbxVector4 n = ReadNormal(
@@ -271,7 +281,7 @@ FbxVector2 KFbxLoader::ReadTextureCoord(FbxMesh* pFbxMesh, FbxLayerElementUV* Ve
 	return t;
 }
 
-void KFbxLoader::PreProcess(FbxNode* pFbxNode)
+void KFbxLoader::PreProcess(FbxNode* pFbxNode)//전처리보정
 {
 	if (pFbxNode == nullptr) return;
 	FbxMesh* pFbxMesh = pFbxNode->GetMesh();//노드의 매쉬를 만듬, 버텍스 pnct를 채워줘야함
