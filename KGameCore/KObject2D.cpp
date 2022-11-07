@@ -44,7 +44,7 @@ void KObject2D::SetRect(KRect rt)
 // 화면 좌표 -> NDC 좌표 
 void  KObject2D::ScreenToNDC()
 {
-    KVector2	vDrawSize;
+    TVector2	vDrawSize;
     vDrawSize.x = m_rtInit.w / 2.0f;
     vDrawSize.y = m_rtInit.h / 2.0f;
     m_rtCollision.Set(
@@ -60,11 +60,11 @@ void  KObject2D::ScreenToNDC()
 }
 
 //월드 좌표(화면 좌표계)->뷰 좌표->NDC좌표
-void  KObject2D::ScreenToCamera(KVector2 vCameraPos, KVector2 vViewPort)
+void  KObject2D::ScreenToCamera(TVector2 vCameraPos, TVector2 vViewPort)
 {
-    KVector2 vPos = m_vPos;//센터값
+    TVector2 vPos = m_vPos;//센터값
 
-    KVector2	vDrawSize;
+    TVector2	vDrawSize;
     vDrawSize.x = m_rtInit.w / 2.0f;
     vDrawSize.y = m_rtInit.h / 2.0f;
     m_rtCollision.Set(
@@ -86,7 +86,7 @@ void  KObject2D::ScreenToCamera(KVector2 vCameraPos, KVector2 vViewPort)
 
 }
 
-void KObject2D::SetPosition(KVector2 vPos)
+void KObject2D::SetPosition(TVector2 vPos)
 {
     m_vBeforePos = m_vPos;
     m_vPos = vPos;//앞으로 렉트의 정중앙이다
@@ -98,7 +98,7 @@ void KObject2D::SetPosition(KVector2 vPos)
 //vPos(화면 좌표)를 ndc 좌표로 변경(컨버팅)해야한다
 //화면 좌표로 세팅하고 내부적으로 ndc로 랜더링을한다
 //ndc좌표를 만들어주는 기능이 필요하다
-void KObject2D::SetPosition(KVector2 vPos, KVector2 vCamera)
+void KObject2D::SetPosition(TVector2 vPos, TVector2 vCamera)
 {
     m_vPos = vPos;
     ScreenToCamera(vCamera, m_vViewSize);

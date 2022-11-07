@@ -69,9 +69,6 @@
     <ClInclude Include="KDxState.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="KMatrix.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="KCamera.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -94,6 +91,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="KVector.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="KMatrix.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -146,9 +146,6 @@
     <ClCompile Include="KDxState.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="KMatrix.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="KCamera.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -171,6 +168,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="KVector.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="KMatrix.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

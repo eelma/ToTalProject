@@ -6,7 +6,8 @@ void KCameraDebug::CreateViewMatrix(TVector3 vEye, TVector3 vAt, TVector3 vUp)
     m_vPos = vEye;
     m_vTarget = vAt;
     m_vUp = vUp;
-    m_matView.ViewLookAt(vEye, vAt, vUp);
+    D3DXMatrixLookAtLH(&m_matView, &vEye, &vAt, &vUp);
+    //m_matView.ViewLookAt(vEye, vAt, vUp);
 }
 
 void KCameraDebug::CreateProjMatrix(float fNear, float fFar, float fFovY, float fAspectRatio)
@@ -15,7 +16,8 @@ void KCameraDebug::CreateProjMatrix(float fNear, float fFar, float fFovY, float 
     m_fFar = fFar;
     m_fFovY = fFovY;
     m_fAspectRatio = fAspectRatio;
-    PerspectiveFovLH(m_matProj, m_fNear, m_fFar, m_fFovY, m_fAspectRatio);
+    D3DXMatrixPerspectiveFovLH(&m_matProj, fFovY, fAspectRatio, fNear, fFar);
+    //PerspectiveFovLH(m_matProj, m_fNear, m_fFar, m_fFovY, m_fAspectRatio);
     //m_matProj.OrthoLH(800, 600, 0.0f, 100.0f);
     //OrthoOffCenterLH(m_matProj, -400, 400, -300, 300, 0.0f, 100.f);
 
@@ -82,7 +84,7 @@ bool KCameraDebug::Frame()
     TBASIS_EX::D3DXQuaternionRotationYawPitchRoll(&m_qRotation, m_fYaw, m_fPitch, m_fRoll);
     TBASIS_EX::D3DXMatrixAffineTransformation(&matWorld, 1.0f, NULL, &m_qRotation, &vPos);
     TBASIS_EX::D3DXMatrixInverse(&matView, NULL, &matWorld);
-    m_matView = *((KMatrix*)&matView);
+    m_matView = *((TMatrix*)&matView);
     Update();
 
     return true;
@@ -103,9 +105,9 @@ void KCameraDebug::Update()
     m_vLook.y = m_matView._23;
     m_vLook.z = m_matView._33;
 
-    m_vRight.Normalized();
-    m_vUp.Normalized();
-    m_vLook.Normalized();
+    D3DXVec3Normalize(&m_vRight, &m_vRight);
+    D3DXVec3Normalize(&m_vUp, &m_vUp);
+    D3DXVec3Normalize(&m_vLook, &m_vLook);
 
     m_vFrustum.CreateFrustum(&m_matView ,&m_matProj);
 }

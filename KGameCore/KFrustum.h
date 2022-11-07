@@ -37,13 +37,13 @@ public:
 };
 class KFrustum
 {
-	KMatrix* m_matView;
-	KMatrix* m_matProj;
+	TMatrix* m_matView;
+	TMatrix* m_matProj;
 public:
 	TBASIS_EX::TVector3 m_vFrustum[8];
 	KPlane m_Plane[6];
 public:
-	void CreateFrustum(KMatrix* , KMatrix* );
+	void CreateFrustum(TMatrix* , TMatrix* );
 	K_POSITION ClassifyPoint(TVector3 v);
 	K_POSITION ClassifySphere(KSphere v);
 	K_POSITION ClassifyAABB(K_AABB v);

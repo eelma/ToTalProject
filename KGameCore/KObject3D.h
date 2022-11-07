@@ -24,7 +24,7 @@ public:
 	bool Frame()override;
 	bool Render()override;
 	bool Release()override;
-	virtual void SetMatrix(KMatrix* matWorld, KMatrix* matView, KMatrix* MatProj);
+	virtual void SetMatrix(TMatrix* matWorld, TMatrix* matView, TMatrix* MatProj);
 public:
 	virtual void CreateVertexData()override;
 	virtual void CreateIndexData()override;

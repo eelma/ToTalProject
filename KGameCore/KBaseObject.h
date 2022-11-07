@@ -7,10 +7,10 @@
 struct SimpleVertex
 {
 	TVector3    p;
-	KVector4  c;
-	KVector2  t;
+	TVector4  c;
+	TVector2  t;
 	SimpleVertex() {}
-	SimpleVertex(TVector3 vp,KVector4 vc, KVector2 vt)
+	SimpleVertex(TVector3 vp,TVector4 vc, TVector2 vt)
 	{
 		p = vp;
 		c = vc;
@@ -21,10 +21,10 @@ struct PNCT_VERTEX
 {
 	TVector3   p;
 	TVector3	  n;
-	KVector4  c;
-	KVector2  t;
+	TVector4  c;
+	TVector2  t;
 	PNCT_VERTEX() {}
-	PNCT_VERTEX(TVector3 vp, TVector3 vn, KVector4 vc, KVector2 vt)
+	PNCT_VERTEX(TVector3 vp, TVector3 vn, TVector4 vc, TVector2 vt)
 	{
 		p = vp;
 		n = vn;
@@ -34,9 +34,9 @@ struct PNCT_VERTEX
 };
 struct VS_CONSTANT_BUFFER
 {
-	KMatrix  matWorld;
-	KMatrix  matView;
-	KMatrix  matProj;
+	TMatrix  matWorld;
+	TMatrix  matView;
+	TMatrix  matProj;
 
 	float    x;
 	float    y;
@@ -57,9 +57,9 @@ namespace TDX
 
 		bool		m_IsNullable = true;
 	public:
-		KMatrix		m_matWorld;
-		KMatrix		m_matView;
-		KMatrix		m_matProj;
+		TMatrix		m_matWorld;
+		TMatrix		m_matView;
+		TMatrix		m_matProj;
 		DWORD m_dwFace;
 	public:
 		ID3D11Device* m_pd3dDevice = nullptr;// 디바이스 객체
@@ -104,7 +104,7 @@ namespace TDX
 		virtual void		CreateConstantData();
 		virtual HRESULT		CreateConstantBuffer();
 		virtual void		UpdateConstantBuffer();
-		virtual void		SetMatrix(KMatrix* matWorld, KMatrix* matView, KMatrix* matProj);
+		virtual void		SetMatrix(TMatrix* matWorld, TMatrix* matView, TMatrix* matProj);
 		virtual bool		LoadTexture(W_STR texturename);
 
 	public:

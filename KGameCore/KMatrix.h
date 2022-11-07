@@ -1,5 +1,7 @@
 #pragma once
+#include"TMath.h"
 #include"KVector.h"
+namespace T_TEST{
 struct float3x3
 {
 	union
@@ -52,7 +54,7 @@ public:
 	void RotationZ(float fRadian);
 	void Scale(float x, float y,float z);
 	void Translation(float x, float y, float z);
-	KMatrix ViewLookAt(TVector3& vPosition, TVector3& vTarget, TVector3& vUp);
+	KMatrix ViewLookAt(KVector& vPosition, KVector& vTarget, KVector& vUp);
 	KMatrix PerspectiveFovLH(float fNearPlane, float fFarPlane, float fovy, float Aspect);
 	KMatrix OrthoLH(float w, float h, float n, float f);
 	KMatrix OrthoOffCenterLH(float l, float r, float b, float t, float n, float f);
@@ -116,4 +118,5 @@ namespace KMath
 	}
 
 
+};
 };

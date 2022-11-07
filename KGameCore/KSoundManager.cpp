@@ -106,7 +106,7 @@ bool KSoundManager::Release()
     }
     m_pSystem->close();
     m_pSystem->release();
-    m_List.clear();
+    if(!m_List.empty())m_List.clear();
     return true;
 }
 KSoundManager::~KSoundManager()

@@ -1,5 +1,5 @@
 #include "KFrustum.h"
-void KFrustum::CreateFrustum(KMatrix* matView, KMatrix*matProj)
+void KFrustum::CreateFrustum(TMatrix* matView, TMatrix*matProj)
 {
 
 	TBASIS_EX::TMatrix view = *(TBASIS_EX::TMatrix*)matView;

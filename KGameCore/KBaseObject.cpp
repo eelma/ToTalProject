@@ -30,9 +30,9 @@ namespace TDX
 }
 void		KBaseObject::CreateConstantData()
 {
-    m_cbData.matWorld.Identity();
-    m_cbData.matView.Identity();
-    m_cbData.matProj.Identity();
+    D3DXMatrixIdentity(&m_cbData.matWorld);
+    D3DXMatrixIdentity(&m_cbData.matView);
+    D3DXMatrixIdentity(&m_cbData.matProj);
     m_cbData.fTimer = 0.0f;
     m_cbData.matWorld.Transpose();
     m_cbData.matView.Transpose();
@@ -329,7 +329,7 @@ void   KBaseObject::UpdateConstantBuffer()
         &m_cbData, 0, 0);
 }
 
-void	KBaseObject::SetMatrix(KMatrix* matWorld, KMatrix* matView, KMatrix* matProj)
+void	KBaseObject::SetMatrix(TMatrix* matWorld, TMatrix* matView, TMatrix* matProj)
 {
     if (matWorld != nullptr)
     {

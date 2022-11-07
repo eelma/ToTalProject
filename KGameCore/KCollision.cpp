@@ -119,9 +119,13 @@ KCollisionType   KCollision::BoxToBox(KBox& a, KBox& b)
 bool   KCollision::BoxToInBox(KBox& a, KBox& b)
 {
     //  |             |
-    if (a.vMin <= b.vMin)
+    if (a.vMin.x <= b.vMin.x &&
+        a.vMin.y <= b.vMin.y &&
+        a.vMin.z <= b.vMin.z)
     {
-        if ( a.vMax >= b.vMax)
+        if (a.vMax.x >= b.vMax.x &&
+            a.vMax.y >= b.vMax.y &&
+            a.vMax.z >= b.vMax.z)
         {
             return true;
         }

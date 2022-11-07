@@ -4,37 +4,37 @@
 void KShapeBox::CreateVertexData()
 {
 	m_VertexList.resize(24);
-	m_VertexList[0] = PNCT_VERTEX(TVector3(-1.0f, 1.0f, -1.0f), TVector3(0.0f, 0.0f, -1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[1] = PNCT_VERTEX(TVector3(1.0f, 1.0f, -1.0f), TVector3(0.0f, 0.0f, -1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 0.0f));
-	m_VertexList[2] = PNCT_VERTEX(TVector3(1.0f, -1.0f, -1.0f), TVector3(0.0f, 0.0f, -1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 1.0f));
-	m_VertexList[3] = PNCT_VERTEX(TVector3(-1.0f, -1.0f, -1.0f), TVector3(0.0f, 0.0f, -1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 1.0f));
+	m_VertexList[0] = PNCT_VERTEX(TVector3(-1.0f, 1.0f, -1.0f), TVector3(0.0f, 0.0f, -1.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(0.0f, 0.0f));
+	m_VertexList[1] = PNCT_VERTEX(TVector3(1.0f, 1.0f, -1.0f), TVector3(0.0f, 0.0f, -1.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(1.0f, 0.0f));
+	m_VertexList[2] = PNCT_VERTEX(TVector3(1.0f, -1.0f, -1.0f), TVector3(0.0f, 0.0f, -1.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(1.0f, 1.0f));
+	m_VertexList[3] = PNCT_VERTEX(TVector3(-1.0f, -1.0f, -1.0f), TVector3(0.0f, 0.0f, -1.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(0.0f, 1.0f));
 	// 뒷면														 				
-	m_VertexList[4] = PNCT_VERTEX(TVector3(1.0f, 1.0f, 1.0f), TVector3(0.0f, 0.0f, 1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[5] = PNCT_VERTEX(TVector3(-1.0f, 1.0f, 1.0f), TVector3(0.0f, 0.0f, 1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 0.0f));
-	m_VertexList[6] = PNCT_VERTEX(TVector3(-1.0f, -1.0f, 1.0f), TVector3(0.0f, 0.0f, 1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 1.0f));
-	m_VertexList[7] = PNCT_VERTEX(TVector3(1.0f, -1.0f, 1.0f), TVector3(0.0f, 0.0f, 1.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 1.0f));
+	m_VertexList[4] = PNCT_VERTEX(TVector3(1.0f, 1.0f, 1.0f), TVector3(0.0f, 0.0f, 1.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(0.0f, 0.0f));
+	m_VertexList[5] = PNCT_VERTEX(TVector3(-1.0f, 1.0f, 1.0f), TVector3(0.0f, 0.0f, 1.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(1.0f, 0.0f));
+	m_VertexList[6] = PNCT_VERTEX(TVector3(-1.0f, -1.0f, 1.0f), TVector3(0.0f, 0.0f, 1.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(1.0f, 1.0f));
+	m_VertexList[7] = PNCT_VERTEX(TVector3(1.0f, -1.0f, 1.0f), TVector3(0.0f, 0.0f, 1.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(0.0f, 1.0f));
 
 	// 오른쪽													 		  		  
-	m_VertexList[8] = PNCT_VERTEX(TVector3(1.0f, 1.0f, -1.0f), TVector3(1.0f, 0.0f, 0.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[9] = PNCT_VERTEX(TVector3(1.0f, 1.0f, 1.0f), TVector3(1.0f, 0.0f, 0.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 0.0f));
-	m_VertexList[10] = PNCT_VERTEX(TVector3(1.0f, -1.0f, 1.0f), TVector3(1.0f, 0.0f, 0.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 1.0f));
-	m_VertexList[11] = PNCT_VERTEX(TVector3(1.0f, -1.0f, -1.0f), TVector3(1.0f, 0.0f, 0.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 1.0f));
+	m_VertexList[8] = PNCT_VERTEX(TVector3(1.0f, 1.0f, -1.0f), TVector3(1.0f, 0.0f, 0.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(0.0f, 0.0f));
+	m_VertexList[9] = PNCT_VERTEX(TVector3(1.0f, 1.0f, 1.0f), TVector3(1.0f, 0.0f, 0.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(1.0f, 0.0f));
+	m_VertexList[10] = PNCT_VERTEX(TVector3(1.0f, -1.0f, 1.0f), TVector3(1.0f, 0.0f, 0.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(1.0f, 1.0f));
+	m_VertexList[11] = PNCT_VERTEX(TVector3(1.0f, -1.0f, -1.0f), TVector3(1.0f, 0.0f, 0.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(0.0f, 1.0f));
 
 	// 왼쪽																		
-	m_VertexList[12] = PNCT_VERTEX(TVector3(-1.0f, 1.0f, 1.0f), TVector3(-1.0f, 0.0f, 0.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[13] = PNCT_VERTEX(TVector3(-1.0f, 1.0f, -1.0f), TVector3(-1.0f, 0.0f, 0.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 0.0f));
-	m_VertexList[14] = PNCT_VERTEX(TVector3(-1.0f, -1.0f, -1.0f), TVector3(-1.0f, 0.0f, 0.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 1.0f));
-	m_VertexList[15] = PNCT_VERTEX(TVector3(-1.0f, -1.0f, 1.0f), TVector3(-1.0f, 0.0f, 0.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 1.0f));
+	m_VertexList[12] = PNCT_VERTEX(TVector3(-1.0f, 1.0f, 1.0f), TVector3(-1.0f, 0.0f, 0.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(0.0f, 0.0f));
+	m_VertexList[13] = PNCT_VERTEX(TVector3(-1.0f, 1.0f, -1.0f), TVector3(-1.0f, 0.0f, 0.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(1.0f, 0.0f));
+	m_VertexList[14] = PNCT_VERTEX(TVector3(-1.0f, -1.0f, -1.0f), TVector3(-1.0f, 0.0f, 0.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(1.0f, 1.0f));
+	m_VertexList[15] = PNCT_VERTEX(TVector3(-1.0f, -1.0f, 1.0f), TVector3(-1.0f, 0.0f, 0.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(0.0f, 1.0f));
 	//위																				
-	m_VertexList[16] = PNCT_VERTEX(TVector3(-1.0f, 1.0f, 1.0f), TVector3(0.0f, 1.0f, 0.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[17] = PNCT_VERTEX(TVector3(1.0f, 1.0f, 1.0f), TVector3(0.0f, 1.0f, 0.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 0.0f));
-	m_VertexList[18] = PNCT_VERTEX(TVector3(1.0f, 1.0f, -1.0f), TVector3(0.0f, 1.0f, 0.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 1.0f));
-	m_VertexList[19] = PNCT_VERTEX(TVector3(-1.0f, 1.0f, -1.0f), TVector3(0.0f, 1.0f, 0.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 1.0f));
+	m_VertexList[16] = PNCT_VERTEX(TVector3(-1.0f, 1.0f, 1.0f), TVector3(0.0f, 1.0f, 0.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(0.0f, 0.0f));
+	m_VertexList[17] = PNCT_VERTEX(TVector3(1.0f, 1.0f, 1.0f), TVector3(0.0f, 1.0f, 0.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(1.0f, 0.0f));
+	m_VertexList[18] = PNCT_VERTEX(TVector3(1.0f, 1.0f, -1.0f), TVector3(0.0f, 1.0f, 0.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(1.0f, 1.0f));
+	m_VertexList[19] = PNCT_VERTEX(TVector3(-1.0f, 1.0f, -1.0f), TVector3(0.0f, 1.0f, 0.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(0.0f, 1.0f));
 	//아래																		
-	m_VertexList[20] = PNCT_VERTEX(TVector3(-1.0f, -1.0f, -1.0f), TVector3(0.0f, -1.0f, 0.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[21] = PNCT_VERTEX(TVector3(1.0f, -1.0f, -1.0f), TVector3(0.0f, -1.0f, 0.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 0.0f));
-	m_VertexList[22] = PNCT_VERTEX(TVector3(1.0f, -1.0f, 1.0f), TVector3(0.0f, -1.0f, 0.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(1.0f, 1.0f));
-	m_VertexList[23] = PNCT_VERTEX(TVector3(-1.0f, -1.0f, 1.0f), TVector3(0.0f, -1.0f, 0.0f), KVector4(1.0f, 1.0f, 1.0f, 1.0f), KVector2(0.0f, 1.0f));
+	m_VertexList[20] = PNCT_VERTEX(TVector3(-1.0f, -1.0f, -1.0f), TVector3(0.0f, -1.0f, 0.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(0.0f, 0.0f));
+	m_VertexList[21] = PNCT_VERTEX(TVector3(1.0f, -1.0f, -1.0f), TVector3(0.0f, -1.0f, 0.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(1.0f, 0.0f));
+	m_VertexList[22] = PNCT_VERTEX(TVector3(1.0f, -1.0f, 1.0f), TVector3(0.0f, -1.0f, 0.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(1.0f, 1.0f));
+	m_VertexList[23] = PNCT_VERTEX(TVector3(-1.0f, -1.0f, 1.0f), TVector3(0.0f, -1.0f, 0.0f), TVector4(1.0f, 1.0f, 1.0f, 1.0f), TVector2(0.0f, 1.0f));
 
 
 
@@ -58,7 +58,7 @@ void KShapeBox::CreateIndexData()
 bool KShapeBox::Frame()
 {
 
-	//KMatrix m, s, t, c;
+	//TMatrix m, s, t, c;
 	//float fScale = cos(g_fGameTimer) * 0.5f + 0.5f;
 	//s = KMath::Scale(400, 300, 10);
 	//m = KMath::RotationZ(g_fGameTimer);
@@ -88,8 +88,8 @@ void KShapeLine::CreateVertexData()
 	//0  3
 	//앞면
 	m_VertexList.resize(2);
-	m_VertexList[0] = PNCT_VERTEX(TVector3(0.0f, 0.0f, 0.0f),    TVector3(0.0f,0.0f,-1.0f),KVector4(1.0, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[1] = PNCT_VERTEX(TVector3(0.0f, 0.0f, 1000.0f), TVector3(0.0f,0.0f,-1.0f),KVector4(1.0, 0.0f, 0.0f, 1.0f), KVector2(1.0f, 0.0f));
+	m_VertexList[0] = PNCT_VERTEX(TVector3(0.0f, 0.0f, 0.0f),    TVector3(0.0f,0.0f,-1.0f),TVector4(1.0, 0.0f, 0.0f, 1.0f), TVector2(0.0f, 0.0f));
+	m_VertexList[1] = PNCT_VERTEX(TVector3(0.0f, 0.0f, 1000.0f), TVector3(0.0f,0.0f,-1.0f),TVector4(1.0, 0.0f, 0.0f, 1.0f), TVector2(1.0f, 0.0f));
 	m_InitVertexList = m_VertexList;
 }
 void KShapeLine::CreateIndexData()
@@ -122,12 +122,12 @@ void KShapeDirectionLine::CreateVertexData()
 	// 0  3
 	// 앞면
 	m_VertexList.resize(6);
-	m_VertexList[0] = PNCT_VERTEX(TVector3(0.0f, 0.0f, 0.0f),TVector3(0.0f,0.0f,-1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[1] = PNCT_VERTEX(TVector3(1.0f, 0.0f, 0.0f),TVector3(0.0f,0.0f,-1.0f), KVector4(1.0f, 0.0f, 0.0f, 1.0f), KVector2(1.0f, 0.0f));
-	m_VertexList[2] = PNCT_VERTEX(TVector3(0.0f, 0.0f, 0.0f),TVector3(0.0f,0.0f,-1.0f), KVector4(0.0f, 1.0f, 0.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[3] = PNCT_VERTEX(TVector3(0.0f, 1.0f, 0.0f),TVector3(0.0f,0.0f,-1.0f), KVector4(0.0f, 1.0f, 0.0f, 1.0f), KVector2(1.0f, 0.0f));
-	m_VertexList[4] = PNCT_VERTEX(TVector3(0.0f, 0.0f, 0.0f),TVector3(0.0f,0.0f,-1.0f), KVector4(0.0f, 0.0f, 1.0f, 1.0f), KVector2(0.0f, 0.0f));
-	m_VertexList[5] = PNCT_VERTEX(TVector3(0.0f, 0.0f, 1.0f),TVector3(0.0f,0.0f,-1.0f), KVector4(0.0f, 0.0f, 1.0f, 1.0f), KVector2(1.0f, 0.0f));
+	m_VertexList[0] = PNCT_VERTEX(TVector3(0.0f, 0.0f, 0.0f),TVector3(0.0f,0.0f,-1.0f), TVector4(1.0f, 0.0f, 0.0f, 1.0f), TVector2(0.0f, 0.0f));
+	m_VertexList[1] = PNCT_VERTEX(TVector3(1.0f, 0.0f, 0.0f),TVector3(0.0f,0.0f,-1.0f), TVector4(1.0f, 0.0f, 0.0f, 1.0f), TVector2(1.0f, 0.0f));
+	m_VertexList[2] = PNCT_VERTEX(TVector3(0.0f, 0.0f, 0.0f),TVector3(0.0f,0.0f,-1.0f), TVector4(0.0f, 1.0f, 0.0f, 1.0f), TVector2(0.0f, 0.0f));
+	m_VertexList[3] = PNCT_VERTEX(TVector3(0.0f, 1.0f, 0.0f),TVector3(0.0f,0.0f,-1.0f), TVector4(0.0f, 1.0f, 0.0f, 1.0f), TVector2(1.0f, 0.0f));
+	m_VertexList[4] = PNCT_VERTEX(TVector3(0.0f, 0.0f, 0.0f),TVector3(0.0f,0.0f,-1.0f), TVector4(0.0f, 0.0f, 1.0f, 1.0f), TVector2(0.0f, 0.0f));
+	m_VertexList[5] = PNCT_VERTEX(TVector3(0.0f, 0.0f, 1.0f),TVector3(0.0f,0.0f,-1.0f), TVector4(0.0f, 0.0f, 1.0f, 1.0f), TVector2(1.0f, 0.0f));
 	m_InitVertexList = m_VertexList;
 }
 void KShapeDirectionLine::CreateIndexData()
@@ -144,7 +144,7 @@ void KShapeDirectionLine::CreateIndexData()
 
 
 
-//KMatrix matView;
+//TMatrix matView;
 //static TVector3 vPos = { 0,0,-10 };
 //static TVector3 vTarget = { 0,0,10 };
 //if (I_Input.GetKey('W') == KEY_HOLD)
@@ -181,13 +181,13 @@ void KShapeDirectionLine::CreateIndexData()
 ////https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/lookat-function
 //matView.ViewLookAt(vPos, vTarget, vUp);
 
-//KMatrix matProj;
+//TMatrix matProj;
 ////원근 투영 행렬
 //matProj.PerspectiveFovLH(1.0f, 100.0f, 3.141592f * 0.5f, 800.0f / 600.0f);
 ////matProj.OrthoLH(800, 600, 0.0f, 100.0f);
 ////matProj.OrthoOffCenterLH(-400, 400, -300, 300, 0.0f, 100.0f);
 
-//KMatrix m, s, t, c;
+//TMatrix m, s, t, c;
 //float fScale = cos(g_fGameTimer) * 0.5f + 0.5f;
 ////s = KMath::Scale(400,300,10);
 ////s = s.Scale(10, 10, 10);

@@ -1,5 +1,6 @@
 #pragma once
 #include"KVector.h"
+#include"TMath.h"
 #include"KMatrix.h"
 #include <vector>
 #include <queue>
@@ -111,7 +112,8 @@ struct KBox : Box
         vMin = vPos;
         this->vSize = vSize;
         vMax = vMin + vSize;
-        vCenter = (vMin + vMax) / 2.0f;
+        vCenter = (vMin + vMax);
+        vCenter /= 2.0f;
     }
 };
 class K_AABB

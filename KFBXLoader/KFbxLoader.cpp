@@ -1,6 +1,9 @@
 #include "KFbxLoader.h"
+//https://dlemrcnd.tistory.com/85?category=525778
+//pnct= position, normal, color, texture
 bool KFbxLoader::Init()
 {
+	//매니저 임포터 씬 생성 해제는 그 반대 순서
 	m_pFbxManager = FbxManager::Create();
 	m_pFbxImporter = FbxImporter::Create(m_pFbxManager, "");
 	m_pFbxScene = FbxScene::Create(m_pFbxManager, "");
@@ -12,40 +15,46 @@ bool KFbxLoader::Init()
 }
 bool KFbxLoader::Load(C_STR filename)
 {
-	m_pFbxImporter->Initialize(filename.c_str());
-	m_pFbxImporter->Import(m_pFbxScene);
+	//
+	m_pFbxImporter->Initialize(filename.c_str());//파일명 넘기기
+	m_pFbxImporter->Import(m_pFbxScene);//임포트하고 그걸 씬으로 넘기기
 	//FbxGeometryConverter converter(m_pFbxManager);
 	//converter.Triangulate(m_pFbxScene, true);
 
+	//fbx는 트리 구조로 되어있음
+	//재귀 호출로 전 순회 가능, n 트리여서 자식 수를 알아야함
+	//n트리: 자식 개수가 n개임
 	m_pRootNode = m_pFbxScene->GetRootNode();
-	PreProcess(m_pRootNode);
+	PreProcess(m_pRootNode);//오브젝트를 찾아옴
 
 	for (auto mesh : m_pFbxMeshList)
 	{
-		ParseMesh(mesh);
+		ParseMesh(mesh);//오브젝트를 해석함
 	}
 	return true;
 }
 void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 {
+
 	FbxNode* pNode = pFbxMesh->GetNode();
 	KFbxObject* pObject = new KFbxObject;
 	FbxAMatrix geom; // 기하(로칼)행렬(초기 정점 위치를 변환할 때 사용한다.)
-	FbxVector4 trans = pNode->GetGeometricTranslation(FbxNode::eSourcePivot);
+	FbxVector4 trans = pNode->GetGeometricTranslation(FbxNode::eSourcePivot);//Geometric transform은 단위행렬 이걸 얻기위한 함수 3개
 	FbxVector4 rot = pNode->GetGeometricRotation(FbxNode::eSourcePivot);
 	FbxVector4 scale = pNode->GetGeometricScaling(FbxNode::eSourcePivot);
-	geom.SetT(trans);
-	geom.SetR(rot);
-	geom.SetS(scale);
+	geom.SetT(trans);//메트릭스 번역
+	geom.SetR(rot);//오일러 회전
+	geom.SetS(scale);//메트릭스 스케일 세팅
 
 	FbxAMatrix normalLocalMatrix = geom;
-	normalLocalMatrix = normalLocalMatrix.Inverse();
-	normalLocalMatrix = normalLocalMatrix.Transpose();
+	normalLocalMatrix = normalLocalMatrix.Inverse();//역행렬
+	normalLocalMatrix = normalLocalMatrix.Transpose();//전치
 
 	// 월드행렬
+	//노드 의 기본 변환, 회전 및 크기 조정( 기본 TRS 속성 )은 FbxNode::LclTranslation , FbxNode::LclRotation 및 FbxNode::LclScaling 속성을 사용하여 액세스합니다.
 	FbxVector4 Translation;
-	if (pNode->LclTranslation.IsValid())
-		Translation = pNode->LclTranslation.Get();
+	if (pNode->LclTranslation.IsValid())//이 속성에는 노드의 번역 정보가 포함됩니다.isvalid=유효함
+		Translation = pNode->LclTranslation.Get();//https://help.autodesk.com/view/FBX/2017/ENU/?guid=__files_GUID_C35D98CB_5148_4B46_82D1_51077D8970EE_htm
 
 	FbxVector4 Rotation;
 	if (pNode->LclRotation.IsValid())
@@ -57,16 +66,16 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 
 	FbxAMatrix matWorldTransform(Translation, Rotation, Scale);
 	FbxAMatrix normalWorldMatrix = matWorldTransform;
-	normalWorldMatrix = normalWorldMatrix.Inverse();
-	normalWorldMatrix = normalWorldMatrix.Transpose();
+	normalWorldMatrix = normalWorldMatrix.Inverse();//역행렬
+	normalWorldMatrix = normalWorldMatrix.Transpose();//전치
 
 	// Layer 개념
-	FbxLayerElementUV* VertexUVSet = nullptr;
-	FbxLayerElementVertexColor* VertexColorSet = nullptr;
-	FbxLayerElementNormal* VertexNormalSet = nullptr;
-	FbxLayerElementMaterial* MaterialSet = nullptr;
-	FbxLayer* pFbxLayer = pFbxMesh->GetLayer(0);
-	if (pFbxLayer->GetUVs() != nullptr)
+	FbxLayerElementUV* VertexUVSet = nullptr;//UV를 지오메트리에 매핑하기 위한 레이어 요소
+	FbxLayerElementVertexColor* VertexColorSet = nullptr;//정점 색상을 형상에 매핑하기 위한 레이어 요소
+	FbxLayerElementNormal* VertexNormalSet = nullptr;//지오메트리를 노말 매핑하기 위한 레이어 요소
+	FbxLayerElementMaterial* MaterialSet = nullptr;//재질(FbxSurfaceMaterial)을 지오메트리에 매핑하기 위한 레이어 요소
+	FbxLayer* pFbxLayer = pFbxMesh->GetLayer(0);//FbxLayer 클래스는 계층화 메커니즘의 기반을 제공합니다.
+	if (pFbxLayer->GetUVs() != nullptr)//Returns this layer's UV description.이 레이어의 UV 서술을 반환합니다.
 	{
 		VertexUVSet = pFbxLayer->GetUVs();
 	}
@@ -74,11 +83,11 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 	{
 		VertexColorSet = pFbxLayer->GetVertexColors();
 	}
-	if (pFbxLayer->GetNormals() != nullptr)
+	if (pFbxLayer->GetNormals() != nullptr)//Returns this layer's Normals description .이 레이어의 노말에 대한 서술을 반환합니다
 	{
 		VertexNormalSet = pFbxLayer->GetNormals();
 	}
-	if (pFbxLayer->GetMaterials() != nullptr)
+	if (pFbxLayer->GetMaterials() != nullptr)//이 레이어의 재료 서술을 반환
 	{
 		MaterialSet = pFbxLayer->GetMaterials();
 	}
@@ -89,13 +98,13 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 
 	for (int iMtrl = 0; iMtrl < iNumMtrl; iMtrl++)
 	{
-		FbxSurfaceMaterial* pSurface = pNode->GetMaterial(iMtrl);
+		FbxSurfaceMaterial* pSurface = pNode->GetMaterial(iMtrl); //이 클래스에는 재료 설정이 포함되어 있습니다.
 		if (pSurface)
 		{
 			auto property = pSurface->FindProperty(FbxSurfaceMaterial::sDiffuse);
 			if (property.IsValid())
 			{
-				const FbxFileTexture* tex = property.GetSrcObject<FbxFileTexture>(0);
+				const FbxFileTexture* tex = property.GetSrcObject<FbxFileTexture>(0);//이 클래스는 지오메트리 위에 이미지 매핑을 기술합니다.
 				szFileName = tex->GetFileName();
 				texList[iMtrl] = szFileName;
 			}
@@ -228,32 +237,32 @@ FbxVector2 KFbxLoader::ReadTextureCoord(FbxMesh* pFbxMesh, FbxLayerElementUV* Ve
 	텍스처 매핑 방식이 뭐냐
 	*/
 	FbxVector2 t;
-	FbxLayerElement::EMappingMode mode = VertexUVSet->GetMappingMode();
+	FbxLayerElement::EMappingMode mode = VertexUVSet->GetMappingMode();//매핑모드를 반환
 	switch (mode)
 	{
-	case FbxLayerElementUV::eByControlPoint:
+	case FbxLayerElementUV::eByControlPoint://1
 	{
 		switch (VertexUVSet->GetReferenceMode())
 		{
-		case FbxLayerElementUV::eDirect:
+		case FbxLayerElementUV::eDirect://0
 		{
-			t = VertexUVSet->GetDirectArray().GetAt(vertexIndex);
+			t = VertexUVSet->GetDirectArray().GetAt(vertexIndex);//레이어 요소의 직접 배열을 반환합니다. 지정된 항목의 값을 반환(vertexIndex)
 		}break;
-		case FbxLayerElementUV::eIndexToDirect:
+		case FbxLayerElementUV::eIndexToDirect://2
 		{
 			int index = VertexUVSet->GetIndexArray().GetAt(vertexIndex);
 			t = VertexUVSet->GetDirectArray().GetAt(index);
 		}break;
 		}break;
 	}break;
-	case FbxLayerElementUV::eByPolygonVertex:
+	case FbxLayerElementUV::eByPolygonVertex://2
 	{
 		switch (VertexUVSet->GetReferenceMode())
 		{
-		case FbxLayerElementUV::eDirect:
-		case FbxLayerElement::eIndexToDirect:
+		case FbxLayerElementUV::eDirect://0
+		case FbxLayerElement::eIndexToDirect://2
 		{
-			t = VertexUVSet->GetDirectArray().GetAt(uvIndex);
+			t = VertexUVSet->GetDirectArray().GetAt(uvIndex);//
 		}break;
 		}break;
 	}break;
@@ -265,7 +274,7 @@ FbxVector2 KFbxLoader::ReadTextureCoord(FbxMesh* pFbxMesh, FbxLayerElementUV* Ve
 void KFbxLoader::PreProcess(FbxNode* pFbxNode)
 {
 	if (pFbxNode == nullptr) return;
-	FbxMesh* pFbxMesh = pFbxNode->GetMesh();
+	FbxMesh* pFbxMesh = pFbxNode->GetMesh();//노드의 매쉬를 만듬, 버텍스 pnct를 채워줘야함
 	if (pFbxMesh)
 	{
 		m_pFbxMeshList.push_back(pFbxMesh);
