@@ -28,17 +28,27 @@ bool KFbxLoader::Load(C_STR filename)
 	m_pRootNode = m_pFbxScene->GetRootNode();
 	PreProcess(m_pRootNode);//오브젝트를 찾아옴
 
-	for (auto mesh : m_pFbxMeshList)
+	for (auto tObj : m_pObjectList)
 	{
-		ParseMesh(mesh);//오브젝트를 해석함
+		if (tObj->m_pFbxParentNode != nullptr)
+		{
+			auto data = m_pObjectMap.find(tObj->m_pFbxParentNode);
+			tObj->SetParent(data->second);
+		}
+		LoadAnimation(tObj);
+		FbxMesh* pFbxMesh = tObj->m_pFbxNode->GetMesh();
+		if (pFbxMesh)
+		{
+			m_pFbxMeshList.push_back(pFbxMesh);
+			ParseMesh(pFbxMesh, tObj);
+		}
 	}
 	return true;
 }
-void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
+void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh, KFbxObject* pObject)
 {
 
 	FbxNode* pNode = pFbxMesh->GetNode();
-	KFbxObject* pObject = new KFbxObject;
 	//기하행렬(FBX 위치 버텍스에서 ->초기 정점 로컬 위치로 변환)
 	FbxAMatrix geom; // 기하(로칼)행렬(초기 정점 위치를 변환할 때 사용한다.)
 	FbxVector4 trans = pNode->GetGeometricTranslation(FbxNode::eSourcePivot);//Geometric transform은 단위행렬 이걸 얻기위한 함수 3개
@@ -54,24 +64,36 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 	normalLocalMatrix = normalLocalMatrix.Inverse();//역행렬
 	normalLocalMatrix = normalLocalMatrix.Transpose();//전치
 
+	FbxAMatrix matWorldTransform = pObject->m_fbxLocalMatrix;
+	//최종월드행렬=자기(애니메이션)행렬*부모((애니메이션))행렬
+	//if(pObject->m_pParent)
+	//{
+	//matWorldTransform=
+	//pObject->m_pParent->m_fbxLocalMatrix*
+	//pObject->m_fbxLocalMatrix;
+	//}
+	//FbxAMatrixNomalWolrdMatrix=matWorldTransform;
+	//normalWorldMatrix=normalWorldMatrix.Inverse();
+	//normalWorldMatrix=normalWorldMatrix.Transpose();
+
 	// 월드행렬
 	//노드 의 기본 변환, 회전 및 크기 조정( 기본 TRS 속성 )은 FbxNode::LclTranslation , FbxNode::LclRotation 및 FbxNode::LclScaling 속성을 사용하여 액세스합니다.
-	FbxVector4 Translation;
-	if (pNode->LclTranslation.IsValid())//이 속성에는 노드의 번역 정보가 포함됩니다.isvalid=유효함
-		Translation = pNode->LclTranslation.Get();//https://help.autodesk.com/view/FBX/2017/ENU/?guid=__files_GUID_C35D98CB_5148_4B46_82D1_51077D8970EE_htm
+	//FbxVector4 Translation;
+	//if (pNode->LclTranslation.IsValid())//이 속성에는 노드의 번역 정보가 포함됩니다.isvalid=유효함
+	//	Translation = pNode->LclTranslation.Get();//https://help.autodesk.com/view/FBX/2017/ENU/?guid=__files_GUID_C35D98CB_5148_4B46_82D1_51077D8970EE_htm
 
-	FbxVector4 Rotation;
-	if (pNode->LclRotation.IsValid())
-		Rotation = pNode->LclRotation.Get();
+	//FbxVector4 Rotation;
+	//if (pNode->LclRotation.IsValid())
+	//	Rotation = pNode->LclRotation.Get();
 
-	FbxVector4 Scale;
-	if (pNode->LclScaling.IsValid())
-		Scale = pNode->LclScaling.Get();
+	//FbxVector4 Scale;
+	//if (pNode->LclScaling.IsValid())
+	//	Scale = pNode->LclScaling.Get();
 
-	FbxAMatrix matWorldTransform(Translation, Rotation, Scale);
-	FbxAMatrix normalWorldMatrix = matWorldTransform;
-	normalWorldMatrix = normalWorldMatrix.Inverse();//역행렬
-	normalWorldMatrix = normalWorldMatrix.Transpose();//전치
+	//FbxAMatrix matWorldTransform(Translation, Rotation, Scale);
+	//FbxAMatrix normalWorldMatrix = matWorldTransform;
+	//normalWorldMatrix = normalWorldMatrix.Inverse();//역행렬
+	//normalWorldMatrix = normalWorldMatrix.Transpose();//전치
 
 	// Layer 개념
 	FbxLayerElementUV* VertexUVSet = nullptr;//UV를 지오메트리에 매핑하기 위한 레이어 요소
@@ -84,7 +106,7 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 	{
 		VertexUVSet = pFbxLayer->GetUVs();
 	}
-	if (pFbxLayer->GetUVs() != nullptr)
+	if (pFbxLayer->GetVertexColors() != nullptr)
 	{
 		VertexColorSet = pFbxLayer->GetVertexColors();
 	}
@@ -99,8 +121,8 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 	string szFileName;
 	//매터리얼 개수 만큼 돌면서 읽어옴
 	int iNumMtrl = pNode->GetMaterialCount();
-	vector<C_STR> texList;
-	texList.resize(iNumMtrl);
+	vector<C_STR> texFullNameList;
+	texFullNameList.resize(iNumMtrl);
 
 	for (int iMtrl = 0; iMtrl < iNumMtrl; iMtrl++)
 	{
@@ -111,8 +133,11 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 			if (property.IsValid())
 			{
 				const FbxFileTexture* tex = property.GetSrcObject<FbxFileTexture>(0);//이 클래스는 지오메트리 위에 이미지 매핑을 기술합니다.
+				if(tex)
+				{
 				szFileName = tex->GetFileName();
-				texList[iMtrl] = szFileName;
+				texFullNameList[iMtrl] = szFileName;
+				}
 			}
 		}
 	}
@@ -126,7 +151,7 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 			pObject->vbTexList.resize(iNumMtrl);
 			for (int iTex = 0; iTex < iNumMtrl; iTex++)
 			{
-				pObject->vbTexList[iTex] = I_Tex.GetSplitName(texList[iTex]);
+				pObject->vbTexList[iTex] = I_Tex.GetSplitName(texFullNameList[iTex]);
 			}
 		}
 	
@@ -169,7 +194,7 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 				FbxVector4 v2 = pVertexPositions[vertexID];
 				PNCT_VERTEX kVertex;
 				FbxVector4 v = geom.MultT(v2);//로컬 좌표로 행렬 곱
-				v = matWorldTransform.MultT(v);
+				//v = pObject->m_AnimTracks[30].fbxMatrix.MulT(v);
 				kVertex.p.x = v.mData[0];
 				kVertex.p.y = v.mData[2];
 				kVertex.p.z = v.mData[1];
@@ -205,7 +230,7 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh)
 						iCornerIndex[iIndex],
 						iBasePolyIndex + VertexColor[iIndex]);
 					n = normalLocalMatrix.MultT(n);
-					n = normalWorldMatrix.MultT(n);
+					
 					kVertex.n.x = n.mData[0];
 					kVertex.n.y = n.mData[2];
 					kVertex.n.z = n.mData[1];
@@ -283,17 +308,32 @@ FbxVector2 KFbxLoader::ReadTextureCoord(FbxMesh* pFbxMesh, FbxLayerElementUV* Ve
 
 void KFbxLoader::PreProcess(FbxNode* pFbxNode)//전처리보정
 {
-	if (pFbxNode == nullptr) return;
-	FbxMesh* pFbxMesh = pFbxNode->GetMesh();//노드의 매쉬를 만듬, 버텍스 pnct를 채워줘야함
-	if (pFbxMesh)
+	if (pFbxNode && (pFbxNode->GetCamera() || pFbxNode->GetLight()))
 	{
-		m_pFbxMeshList.push_back(pFbxMesh);
+		return;
 	}
+	KFbxObject* pObject = new KFbxObject;
+	string name = pFbxNode->GetName();
+	pObject->m_csName = to_mw(name);
+	pObject->m_pFbxNode = pFbxNode;
+	pObject->m_pFbxParentNode = pFbxNode->GetParent();
+
+	m_pObjectList.push_back(pObject);
+	m_pObjectMap.insert(make_pair(pFbxNode, pObject));
+
+
 	int iNumChild = pFbxNode->GetChildCount();
 	for (int iChild = 0; iChild < iNumChild; iChild++)
 	{
 		FbxNode* pChild = pFbxNode->GetChild(iChild);
-		PreProcess(pChild);
+		//헬퍼오브젝트+지오메트리 오브젝트
+		FbxNodeAttribute::EType type = pChild->GetNodeAttribute()->GetAttributeType();
+		if (type == FbxNodeAttribute::eMesh ||
+			type == FbxNodeAttribute::eSkeleton ||
+			type == FbxNodeAttribute::eNull)
+		{
+			PreProcess(pChild);
+		};
 	}
 }
 bool KFbxLoader::Frame()
@@ -445,4 +485,59 @@ FbxVector4 KFbxLoader::ReadNormal(FbxMesh* pFbxMesh, FbxLayerElementNormal* Vert
 	}break;
 	}
 	return normal;
+}
+void KFbxLoader::LoadAnimation(KFbxObject* pObj)
+{
+	FbxNode* pNode = pObj->m_pFbxNode;
+	FbxAnimStack* stackAnim = m_pFbxScene->GetSrcObject<FbxAnimStack>(0);
+	FbxLongLong s = 0;
+	FbxLongLong n = 0;
+	FbxTime::EMode TimeMode;
+	if (stackAnim)
+	{
+		FbxString takeName = stackAnim->GetName();
+		FbxTakeInfo* take = m_pFbxScene->GetTakeInfo(takeName);
+		FbxTime::SetGlobalTimeMode(FbxTime::eFrames30);
+		TimeMode = FbxTime::GetGlobalTimeMode();
+		FbxTimeSpan localTimeSpan = take->mLocalTimeSpan;
+		FbxTime start = localTimeSpan.GetStart();
+		FbxTime end = localTimeSpan.GetStop();
+		FbxTime Dration = localTimeSpan.GetDirection();
+		s = start.GetFrameCount(TimeMode);
+		n = end.GetFrameCount(TimeMode);
+	}
+	FbxTime time;
+	for (FbxLongLong t = s; t <= n; t++)
+	{
+		time.SetFrame(t, TimeMode);
+		KAnimTrack track;
+		track.iFrame = t;
+		FbxAMatrix fbxMatrix = pNode->EvaluateGlobalTransform(time);
+		//track.fbxMatrix=fbxMatrix;
+		track.matAnim = DxConvertMatrix(fbxMatrix);
+		pObj->m_AnimTracks.push_back(track);
+	}
+}
+TMatrix KFbxLoader::ConvertMatrix(FbxAMatrix& fbxMatrix)
+{
+	TMatrix mat;
+	float* kArray = (float*)(&mat);
+	double* fbxArray = (double*)(&fbxMatrix);
+	for (int i = 0; i < 16; i++)
+	{
+		kArray[i] = fbxArray[i];
+	}
+	return mat;
+}
+TMatrix KFbxLoader::DxConvertMatrix(FbxAMatrix& fbxMatrix)
+{
+	TMatrix m = ConvertMatrix(fbxMatrix);
+	TMatrix mat;
+	mat._11 = m._11; mat._12 = m._13; mat._13 = m._12;
+	mat._21 = m._31; mat._22 = m._33; mat._23 = m._32;
+	mat._31 = m._21; mat._32 = m._23; mat._33 = m._22;
+	mat._41 = m._41; mat._42 = m._43; mat._43 = m._42;
+	mat._14 = mat._24 = mat._34 = 0.0f;
+	mat._44 = 1.0f;
+	return mat;
 }

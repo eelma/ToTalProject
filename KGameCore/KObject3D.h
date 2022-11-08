@@ -2,7 +2,8 @@
 #include"KShape.h"
 class KObject3D : public KBaseObject
 {
-
+public:
+	W_STR     m_csName;
 public:
 	TVector3 m_vPos;
 	TVector3 m_vLook;

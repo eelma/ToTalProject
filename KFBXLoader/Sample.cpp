@@ -16,26 +16,26 @@ void Sample::ClearD3D11DeviceContext(ID3D11DeviceContext* pd3dDeviceContext)
 
 bool	Sample::Init()
 {
-	KFbxLoader* pFbxLoaderC = new KFbxLoader;
+	/*KFbxLoader* pFbxLoaderC = new KFbxLoader;
 	if (pFbxLoaderC->Init())
 	{
 		pFbxLoaderC->Load("../../data/fbx/MultiCameras.fbx");
 	}
-	m_fbxList.push_back(pFbxLoaderC);
+	m_fbxList.push_back(pFbxLoaderC);*/
 
-	/*KFbxLoader* pFbxLoaderA = new KFbxLoader;
+	KFbxLoader* pFbxLoaderA = new KFbxLoader;
 	if (pFbxLoaderA->Init())
 	{
-		pFbxLoaderA->Load("../../data/fbx/box.fbx");
+		pFbxLoaderA->Load("../../data/fbx/Turret_Deploy1/Turret_Deploy1.fbx");
 	}
-	m_fbxList.push_back(pFbxLoaderA);*/
+	m_fbxList.push_back(pFbxLoaderA);
 
-	KFbxLoader* pFbxLoaderB = new KFbxLoader;
+	/*KFbxLoader* pFbxLoaderB = new KFbxLoader;
 	if (pFbxLoaderB->Init())
 	{
 		pFbxLoaderB->Load("../../data/fbx/SM_Rock.fbx");
 	}
-	m_fbxList.push_back(pFbxLoaderB);
+	m_fbxList.push_back(pFbxLoaderB);*/
 
 	W_STR szDefaultDir = L"../../data/fbx/";
 	wstring shaderfilename = L"../../data/shader/DefaultObject.txt";
@@ -83,9 +83,15 @@ bool	Sample::Render()
 		{
 			KFbxObject* pObj = m_fbxList[iModel]->m_pDrawObjList[iObj];
 			
-				TMatrix matWorld;
-				matWorld._41 = 100 * iModel;
+			pObj->m_fAnimFrame = pObj->m_fAnimFrame + g_fSecondPerFrame * pObj->m_fAnimSpeed * 30.0f * pObj->m_fAnimInverse;
+			if (pObj->m_fAnimFrame > 50 || pObj->m_fAnimFrame < 0)
+			{
+				pObj->m_fAnimFrame = min(pObj->m_fAnimFrame, 50);
+				pObj->m_fAnimFrame = max(pObj->m_fAnimFrame, 0);
+				pObj->m_fAnimInverse *= -1.0f;
+			}
 
+			TMatrix matWorld = pObj->m_AnimTracks[pObj->m_fAnimFrame].matAnim;
 				pObj->m_cbData.x = vLight.x;
 				pObj->m_cbData.y = vLight.y;
 				pObj->m_cbData.z = vLight.z;

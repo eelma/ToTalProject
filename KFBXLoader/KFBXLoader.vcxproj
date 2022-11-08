@@ -145,10 +145,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="KFbxLoader.h" />
+    <ClInclude Include="KFbxObject.h" />
     <ClInclude Include="Sample.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFbxLoader.cpp" />
+    <ClCompile Include="KFbxObject.cpp" />
     <ClCompile Include="Sample.cpp" />
   </ItemGroup>
   <ItemGroup>
