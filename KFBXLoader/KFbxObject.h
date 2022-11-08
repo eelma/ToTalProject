@@ -8,8 +8,16 @@ struct KAnimTrack
 	UINT iFrame;
 	TMatrix matAnim;
 };
+struct KAnimScene
+{
+	UINT iStartFarame;
+	UINT iEndFrame;
+	float fTickPerFrame;//160
+	float fFrameSpeed;//30
+};
 class KFbxObject : public KObject3D
 {
+public:KAnimScene m_AnimScene;
 public:
 	float m_fAnimFrame = 0;
 	float m_fAnimInverse = 1.0f;
