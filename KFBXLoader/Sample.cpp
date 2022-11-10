@@ -50,8 +50,8 @@ bool	Sample::Init()
 			
 	}
 	m_pMainCamera = new KCameraDebug;
-	m_pMainCamera->CreateViewMatrix(TVector3(50, 6, -50), TVector3(0, 6, 0), TVector3(0, 1, 0));
-	m_pMainCamera->CreateProjMatrix(1.0f, 1000.0f, T_PI * 0.25f,
+	m_pMainCamera->CreateViewMatrix(TVector3(0, 6, -50), TVector3(0, 0, 0), TVector3(0, 1, 0));
+	m_pMainCamera->CreateProjMatrix(1.0f, 10000.0f, T_PI * 0.25f,
 		(float)g_rtClient.right / (float)g_rtClient.bottom);
 		
 	return true;
@@ -75,27 +75,35 @@ bool	Sample::Render()
 	TVector3 vLight(0, 0, 1);
 	TMatrix matRotation;
 	D3DXMatrixRotationY(&matRotation, g_fGameTimer);
+	D3DXVec3TransformCoord(&vLight, &vLight, &matRotation);
 	D3DXVec3Normalize(&vLight,&vLight);
 
 	for(int iModel=0;iModel<m_fbxList.size();iModel++)
 	{
+		TMatrix matWorld;
+		D3DXMatrixRotationY(&matWorld, g_fGameTimer);
 		for (int iObj = 0; iObj < m_fbxList[iModel]->m_pDrawObjList.size(); iObj++)
 		{
 			KFbxObject* pObj = m_fbxList[iModel]->m_pDrawObjList[iObj];
 			
-			pObj->m_fAnimFrame = pObj->m_fAnimFrame + g_fSecondPerFrame * pObj->m_fAnimSpeed * 30.0f * pObj->m_fAnimInverse;
-			if (pObj->m_fAnimFrame > 50 || pObj->m_fAnimFrame < 0)
+			pObj->m_fAnimFrame = pObj->m_fAnimFrame + 
+				g_fSecondPerFrame * pObj->m_fAnimSpeed * 
+				pObj->m_AnimScene.fFrameSpeed * pObj->m_fAnimInverse;
+			if (pObj->m_fAnimFrame > pObj->m_AnimScene.iEndFrame ||
+				pObj->m_fAnimFrame < pObj->m_AnimScene.iStartFarame)
 			{
-				pObj->m_fAnimFrame = min(pObj->m_fAnimFrame, 50);
-				pObj->m_fAnimFrame = max(pObj->m_fAnimFrame, 0);
+				pObj->m_fAnimFrame = min(pObj->m_fAnimFrame, pObj->m_AnimScene.iEndFrame);
+				pObj->m_fAnimFrame = max(pObj->m_fAnimFrame, pObj->m_AnimScene.iStartFarame);
 				pObj->m_fAnimInverse *= -1.0f;
 			}
 
-			TMatrix matWorld = pObj->m_AnimTracks[pObj->m_fAnimFrame].matAnim;
+			//TMatrix matWorld = pObj->m_AnimTracks[pObj->m_fAnimFrame].matAnim;
+			pObj->m_matAnim = pObj->Interplate(pObj->m_fAnimFrame);
+			pObj->m_matWorld = pObj->m_matAnim * matWorld;
 				pObj->m_cbData.x = vLight.x;
 				pObj->m_cbData.y = vLight.y;
 				pObj->m_cbData.z = vLight.z;
-				pObj->SetMatrix(&matWorld, &m_pMainCamera->m_matView, &m_pMainCamera->m_matProj);
+				pObj->SetMatrix(&pObj->m_matWorld, &m_pMainCamera->m_matView, &m_pMainCamera->m_matProj);
 				pObj->Render();
 		}
 	}

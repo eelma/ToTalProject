@@ -19,6 +19,10 @@ bool KFbxLoader::Load(C_STR filename)
 	//
 	m_pFbxImporter->Initialize(filename.c_str());//파일명 넘기기
 	m_pFbxImporter->Import(m_pFbxScene);//임포트하고 그걸 씬으로 넘기기
+	//단위
+	FbxSystemUnit::m.ConvertScene(m_pFbxScene);
+	//기저(행렬)
+	FbxAxisSystem::MayaZUp.ConvertScene(m_pFbxScene);
 	//FbxGeometryConverter converter(m_pFbxManager);
 	//converter.Triangulate(m_pFbxScene, true);
 
@@ -314,7 +318,7 @@ void KFbxLoader::PreProcess(FbxNode* pFbxNode)//전처리보정
 	}
 	KFbxObject* pObject = new KFbxObject;
 	string name = pFbxNode->GetName();
-	pObject->m_csName = to_mw(name);
+	pObject->m_szName = to_mw(name);
 	pObject->m_pFbxNode = pFbxNode;
 	pObject->m_pFbxParentNode = pFbxNode->GetParent();
 
@@ -506,6 +510,10 @@ void KFbxLoader::LoadAnimation(KFbxObject* pObj)
 		s = start.GetFrameCount(TimeMode);
 		n = end.GetFrameCount(TimeMode);
 	}
+	pObj->m_AnimScene.iStartFarame = s;
+	pObj->m_AnimScene.iEndFrame = n;
+	pObj->m_AnimScene.fFrameSpeed = 30.0f;
+	pObj->m_AnimScene.fTickPerFrame = 160;
 	FbxTime time;
 	for (FbxLongLong t = s; t <= n; t++)
 	{
@@ -515,6 +523,7 @@ void KFbxLoader::LoadAnimation(KFbxObject* pObj)
 		FbxAMatrix fbxMatrix = pNode->EvaluateGlobalTransform(time);
 		//track.fbxMatrix=fbxMatrix;
 		track.matAnim = DxConvertMatrix(fbxMatrix);
+		D3DXMatrixDecompose(&track.s, &track.r, &track.t, &track.matAnim);
 		pObj->m_AnimTracks.push_back(track);
 	}
 }

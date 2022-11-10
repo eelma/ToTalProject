@@ -3,7 +3,7 @@
 class KObject3D : public KBaseObject
 {
 public:
-	W_STR     m_csName;
+	W_STR     m_szName;
 public:
 	TVector3 m_vPos;
 	TVector3 m_vLook;

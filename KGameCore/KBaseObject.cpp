@@ -34,9 +34,10 @@ void		KBaseObject::CreateConstantData()
     D3DXMatrixIdentity(&m_cbData.matView);
     D3DXMatrixIdentity(&m_cbData.matProj);
     m_cbData.fTimer = 0.0f;
-    m_cbData.matWorld.Transpose();
-    m_cbData.matView.Transpose();
-    m_cbData.matProj.Transpose();
+    D3DXMatrixTranspose(&m_cbData.matWorld, &m_cbData.matWorld);
+    D3DXMatrixTranspose(&m_cbData.matView, &m_cbData.matView);
+    D3DXMatrixTranspose(&m_cbData.matProj, &m_cbData.matProj);
+    
 }
 HRESULT		KBaseObject::CreateConstantBuffer()
 {
@@ -385,8 +386,8 @@ bool KBaseObject::Release()
 {
     if (m_pVertexBuffer) m_pVertexBuffer->Release();
     if (m_pIndexBuffer) m_pIndexBuffer->Release();
-    if (m_pVertexLayout) m_pVertexLayout->Release();
     if (m_pConstantBuffer) m_pConstantBuffer->Release();
+    if (m_pVertexLayout) m_pVertexLayout->Release();
     /* if (m_pVS) m_pVS->Release();
      if (m_pPS) m_pPS->Release();
      if (m_pVSCode) m_pVSCode->Release();

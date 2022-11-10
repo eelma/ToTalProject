@@ -85,6 +85,22 @@ bool KCameraDebug::Frame()
     TBASIS_EX::D3DXMatrixAffineTransformation(&matWorld, 1.0f, NULL, &m_qRotation, &vPos);
     TBASIS_EX::D3DXMatrixInverse(&matView, NULL, &matWorld);
     m_matView = *((TMatrix*)&matView);
+
+    //////////////////////////// Model View////////////////////////////
+    /*TVector3 vLocalUp = { 0.0f, 1.0f, 0.0f };
+    TVector3 vLocalLook = { 0.0f, 0.0f, 1.0f };
+
+    TBASIS_EX::TMatrix matRotation;
+    TBASIS_EX::D3DXMatrixRotationYawPitchRoll(
+        &matRotation, m_fYaw, 0, m_fRoll);
+    TMatrix* matR = (TMatrix*)&matRotation;
+
+    TVector3 vWorldLook = vLocalLook * (*matR);
+    TVector3 vWorldUp = vLocalUp * (*matR);
+    TVector3 vWorld = vWorldLook * 10.0f;
+    m_vPos = m_vTarget - vWorld;
+    m_matView.ViewLookAt(m_vPos, m_vTarget, m_vUp);*/
+
     Update();
 
     return true;
