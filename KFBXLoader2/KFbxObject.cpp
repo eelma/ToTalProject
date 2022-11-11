@@ -92,25 +92,23 @@ bool KFbxObject::Release()
 		if (m_pSubVB[iSubObj])
 		{
 			m_pSubVB[iSubObj]->Release();
-			m_pSubVB[iSubObj] = nullptr;
 		}
 	}
-	m_pSubVB.clear();
 	return true;
 }
-TMatrix KFbxObject::Interplate(float fFrame)
+TMatrix KFbxObject::Interplate(float fFrame, KAnimScene kScene)
 {
 	//10               20
 	//a=0-------------b=20
 	//t=0 ~ t=0.5  t=1
 	KAnimTrack A, B;
-	A = m_AnimTracks[max(m_AnimScene.iStartFarame, fFrame + 0)];
-	B = m_AnimTracks[min(m_AnimScene.iEndFrame, fFrame + 1)];
+	A = m_AnimTracks[max(kScene.iStartFrame, fFrame + 0)];
+	B = m_AnimTracks[min(kScene.iEndFrame, fFrame + 1)];
 	if (A.iFrame == B.iFrame)
 	{
 		return m_AnimTracks[fFrame].matAnim;
 	}
-	float t = (fFrame - A.iFrame)*(B.iFrame-A.iFrame);
+	float t = (fFrame - A.iFrame)/(B.iFrame-A.iFrame);
 	TVector3 pos;
 	D3DXVec3Lerp(&pos, &A.t, &B.t, t);
 	TVector3 scale;

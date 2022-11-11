@@ -144,11 +144,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="KFbxLoader.h" />
+    <ClInclude Include="KFbxFile.h" />
     <ClInclude Include="KFbxObject.h" />
     <ClInclude Include="Sample.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="KFbxAnimation.cpp" />
+    <ClCompile Include="KFbxFile.cpp" />
     <ClCompile Include="KFbxLoader.cpp" />
     <ClCompile Include="KFbxObject.cpp" />
     <ClCompile Include="Sample.cpp" />

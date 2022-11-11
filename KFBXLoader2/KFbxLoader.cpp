@@ -1,8 +1,8 @@
-#include "KFbxLoader.h"
+#include "KFbxFile.h"
 //https://dlemrcnd.tistory.com/85?category=525778
 //pnct= position, normal, color, texture
 //uv 매핑 - 3d 모델링에 외형을 입혀주는 과정 점서면으로 만들어진 오브젝트에 외형을 입혀주는 과정
-bool KFbxLoader::Init()
+bool KFbxFile::Init()
 {
 	//매니저 임포터 씬 생성 해제는 그 반대 순서
 	m_pFbxManager = FbxManager::Create();
@@ -11,11 +11,12 @@ bool KFbxLoader::Init()
 
 	return true;
 }
-bool KFbxLoader::Load(C_STR filename)
+bool KFbxFile::Load(C_STR filename)
 {
 	//
 	m_pFbxImporter->Initialize(filename.c_str());//파일명 넘기기
 	m_pFbxImporter->Import(m_pFbxScene);//임포트하고 그걸 씬으로 넘기기
+
 	//단위
 	FbxSystemUnit::m.ConvertScene(m_pFbxScene);
 	//기저(행렬)
@@ -26,6 +27,8 @@ bool KFbxLoader::Load(C_STR filename)
 	//fbx는 트리 구조로 되어있음
 	//재귀 호출로 전 순회 가능, n 트리여서 자식 수를 알아야함
 	//n트리: 자식 개수가 n개임
+	InitAnimation();
+
 	m_pRootNode = m_pFbxScene->GetRootNode();
 	PreProcess(m_pRootNode);//오브젝트를 찾아옴
 
@@ -46,7 +49,7 @@ bool KFbxLoader::Load(C_STR filename)
 	}
 	return true;
 }
-void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh, KFbxObjectSkinning* pObject)
+void KFbxFile::ParseMesh(FbxMesh* pFbxMesh, KFbxObjectSkinning* pObject)
 {
 
 	FbxNode* pNode = pFbxMesh->GetNode();
@@ -65,7 +68,7 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh, KFbxObjectSkinning* pObject)
 	normalLocalMatrix = normalLocalMatrix.Inverse();//역행렬
 	normalLocalMatrix = normalLocalMatrix.Transpose();//전치
 
-	FbxAMatrix matWorldTransform = pObject->m_fbxLocalMatrix;
+	//FbxAMatrix matWorldTransform = pObject->m_fbxLocalMatrix;
 	//최종월드행렬=자기(애니메이션)행렬*부모((애니메이션))행렬
 	//if(pObject->m_pParent)
 	//{
@@ -267,7 +270,7 @@ void KFbxLoader::ParseMesh(FbxMesh* pFbxMesh, KFbxObjectSkinning* pObject)
 
 	m_pDrawObjList.push_back(pObject);
 }
-FbxVector2 KFbxLoader::ReadTextureCoord(FbxMesh* pFbxMesh, FbxLayerElementUV* VertexUVSet,int vertexIndex,int uvIndex)
+FbxVector2 KFbxFile::ReadTextureCoord(FbxMesh* pFbxMesh, FbxLayerElementUV* VertexUVSet,int vertexIndex,int uvIndex)
 {
 	/*
 	enum EMappingMode
@@ -324,7 +327,7 @@ FbxVector2 KFbxLoader::ReadTextureCoord(FbxMesh* pFbxMesh, FbxLayerElementUV* Ve
 	return t;
 }
 
-void KFbxLoader::PreProcess(FbxNode* pFbxNode)//전처리보정
+void KFbxFile::PreProcess(FbxNode* pFbxNode)//전처리보정
 {
 	if (pFbxNode && (pFbxNode->GetCamera() || pFbxNode->GetLight()))
 	{
@@ -335,10 +338,11 @@ void KFbxLoader::PreProcess(FbxNode* pFbxNode)//전처리보정
 	pObject->m_szName = to_mw(name);
 	pObject->m_pFbxNode = pFbxNode;
 	pObject->m_pFbxParentNode = pFbxNode->GetParent();
+	pObject->m_iObjectBone = m_pObjectList.size();
 
 	m_pObjectList.push_back(pObject);
 	m_pObjectMap.insert(make_pair(pFbxNode, pObject));
-	m_pObjectIDMap.insert(make_pair(pFbxNode, m_pObjectList.size()-1));
+	m_pObjectIDMap.insert(make_pair(pFbxNode, pObject->m_iObjectBone));
 
 	int iNumChild = pFbxNode->GetChildCount();
 	for (int iChild = 0; iChild < iNumChild; iChild++)
@@ -354,33 +358,16 @@ void KFbxLoader::PreProcess(FbxNode* pFbxNode)//전처리보정
 		};
 	}
 }
-bool KFbxLoader::Frame()
-{
-	for (auto obj : m_pDrawObjList)
-	{
-		obj->Frame();
-	}
-	return true;
-}
-bool KFbxLoader::Render()
-{
-	for (auto obj : m_pDrawObjList)
-	{
-		obj->Render();
-	}
-	return true;
-}
 
-bool KFbxLoader::Release()
+bool KFbxFile::Release()
 {
-	for (auto obj : m_pDrawObjList)
+	if (m_pConstantBufferBone)m_pConstantBufferBone->Release();
+	for (auto obj : m_pObjectList)
 	{
 		obj->Release();
 		delete obj;
 	}
-
-	
-		m_pFbxScene->Destroy();
+	m_pFbxScene->Destroy();
 		
 	if (m_pFbxImporter != nullptr)
 	{
@@ -394,7 +381,7 @@ bool KFbxLoader::Release()
 	}
 	return true;
 }
-FbxColor KFbxLoader::ReadColor(FbxMesh* pFbxMesh, FbxLayerElementVertexColor* VertexColorSet, int posIndex, int colorIndex)
+FbxColor KFbxFile::ReadColor(FbxMesh* pFbxMesh, FbxLayerElementVertexColor* VertexColorSet, int posIndex, int colorIndex)
 {
 	FbxColor color(1, 1, 1, 1);
 	FbxLayerElement::EMappingMode mode = VertexColorSet->GetMappingMode();
@@ -433,7 +420,7 @@ FbxColor KFbxLoader::ReadColor(FbxMesh* pFbxMesh, FbxLayerElementVertexColor* Ve
 	}
 	return color;
 }
-int KFbxLoader::GetSubMaterialIndex(int iPoly, FbxLayerElementMaterial* pMaterialSetList)
+int KFbxFile::GetSubMaterialIndex(int iPoly, FbxLayerElementMaterial* pMaterialSetList)
 {
 	// 매핑방식
 	//eNone,
@@ -470,7 +457,7 @@ int KFbxLoader::GetSubMaterialIndex(int iPoly, FbxLayerElementMaterial* pMateria
 	return iSubMtrl;
 }
 
-FbxVector4 KFbxLoader::ReadNormal(FbxMesh* pFbxMesh, FbxLayerElementNormal* VertexNormalSet, int posIndex, int colorIndex)
+FbxVector4 KFbxFile::ReadNormal(FbxMesh* pFbxMesh, FbxLayerElementNormal* VertexNormalSet, int posIndex, int colorIndex)
 {
 	FbxVector4 normal(1, 1, 1, 1);
 	FbxLayerElement::EMappingMode mode = VertexNormalSet->GetMappingMode();
@@ -508,64 +495,4 @@ FbxVector4 KFbxLoader::ReadNormal(FbxMesh* pFbxMesh, FbxLayerElementNormal* Vert
 	}break;
 	}
 	return normal;
-}
-void KFbxLoader::LoadAnimation(KFbxObjectSkinning* pObj)
-{
-	FbxNode* pNode = pObj->m_pFbxNode;
-	FbxAnimStack* stackAnim = m_pFbxScene->GetSrcObject<FbxAnimStack>(0);
-	FbxLongLong s = 0;
-	FbxLongLong n = 0;
-	FbxTime::EMode TimeMode;
-	if (stackAnim)
-	{
-		FbxString takeName = stackAnim->GetName();
-		FbxTakeInfo* take = m_pFbxScene->GetTakeInfo(takeName);
-		FbxTime::SetGlobalTimeMode(FbxTime::eFrames30);
-		TimeMode = FbxTime::GetGlobalTimeMode();
-		FbxTimeSpan localTimeSpan = take->mLocalTimeSpan;
-		FbxTime start = localTimeSpan.GetStart();
-		FbxTime end = localTimeSpan.GetStop();
-		FbxTime Dration = localTimeSpan.GetDirection();
-		s = start.GetFrameCount(TimeMode);
-		n = end.GetFrameCount(TimeMode);
-	}
-	pObj->m_AnimScene.iStartFarame = s;
-	pObj->m_AnimScene.iEndFrame = n;
-	pObj->m_AnimScene.fFrameSpeed = 30.0f;
-	pObj->m_AnimScene.fTickPerFrame = 160;
-	FbxTime time;
-	for (FbxLongLong t = s; t <= n; t++)
-	{
-		time.SetFrame(t, TimeMode);
-		KAnimTrack track;
-		track.iFrame = t;
-		FbxAMatrix fbxMatrix = pNode->EvaluateGlobalTransform(time);
-		//track.fbxMatrix=fbxMatrix;
-		track.matAnim = DxConvertMatrix(fbxMatrix);
-		D3DXMatrixDecompose(&track.s, &track.r, &track.t, &track.matAnim);
-		pObj->m_AnimTracks.push_back(track);
-	}
-}
-TMatrix KFbxLoader::ConvertMatrix(FbxAMatrix& fbxMatrix)
-{
-	TMatrix mat;
-	float* kArray = (float*)(&mat);
-	double* fbxArray = (double*)(&fbxMatrix);
-	for (int i = 0; i < 16; i++)
-	{
-		kArray[i] = fbxArray[i];
-	}
-	return mat;
-}
-TMatrix KFbxLoader::DxConvertMatrix(FbxAMatrix& fbxMatrix)
-{
-	TMatrix m = ConvertMatrix(fbxMatrix);
-	TMatrix mat;
-	mat._11 = m._11; mat._12 = m._13; mat._13 = m._12;
-	mat._21 = m._31; mat._22 = m._33; mat._23 = m._32;
-	mat._31 = m._21; mat._32 = m._23; mat._33 = m._22;
-	mat._41 = m._41; mat._42 = m._43; mat._43 = m._42;
-	mat._14 = mat._24 = mat._34 = 0.0f;
-	mat._44 = 1.0f;
-	return mat;
 }

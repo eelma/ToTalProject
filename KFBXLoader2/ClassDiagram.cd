@@ -4,14 +4,14 @@
     <Position X="8.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAEAIAAAAAAAAQAABAAAAAIAAABAAAAAQAAABAGAAA=</HashCode>
-      <FileName>KFbxLoader.h</FileName>
+      <FileName>KFbxFile.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="KFbxLoader">
+  <Class Name="KFbxFile">
     <Position X="4.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAEBA5CAAAAAAAIAAAQABAAAAAABACCBAAgAE=</HashCode>
-      <FileName>KFbxLoader.h</FileName>
+      <FileName>KFbxFile.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Sample">

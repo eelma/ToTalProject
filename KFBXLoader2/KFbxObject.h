@@ -12,7 +12,8 @@ struct KAnimTrack
 };
 struct KAnimScene
 {
-	UINT iStartFarame;
+	FbxTime::EMode TimeMode;
+	UINT iStartFrame;
 	UINT iEndFrame;
 	float fTickPerFrame;//160
 	float fFrameSpeed;//30
@@ -20,13 +21,11 @@ struct KAnimScene
 class KFbxObject : public KObject3D
 {
 public:
+	UINT m_iObjectBone;
 	TMatrix m_matAnim;
 	TMatrix m_matControl;
-	KAnimScene m_AnimScene;
 public:
-	float m_fAnimFrame = 0;
-	float m_fAnimInverse = 1.0f;
-	float m_fAnimSpeed = 1.0f;
+	
 	FbxAMatrix m_fbxLocalMatrix;
 	FbxNode* m_pFbxNode = nullptr;
 	FbxNode* m_pFbxParentNode = nullptr;
@@ -38,7 +37,7 @@ public:
 		pParentNode->m_pFbxChilds.push_back(this);
 		m_pParent = pParentNode;
 	}
-	TMatrix Interplate(float fTime);
+	TMatrix Interplate(float fTime, KAnimScene kScene);
 public:
 	vector<ID3D11Buffer*> m_pSubVB;
 	vector<vector<PNCT_VERTEX>> vbDataList;
@@ -62,8 +61,6 @@ public:
 	vector<IW_VERTEX> m_VertexListIW;
 	ID3D11Buffer* m_pVertexBufferIW;
 
-	VS_CONSTANT_BONE_BUFFER m_cbDataBone;
-	ID3D11Buffer* m_pConstantBufferBone;
 
 	HRESULT CreateVertexLayout()
 	{
@@ -126,33 +123,6 @@ public:
 		return hr;
 	}
 
-	HRESULT CreateConstantBuffer()
-	{
-		HRESULT hr;
-		KObject3D::CreateConstantBuffer();
-		for (int iBone = 0; iBone < 255; iBone++)
-		{
-			D3DXMatrixIdentity(&m_cbDataBone.matBone[iBone]);
-		}
-
-		D3D11_BUFFER_DESC bd;
-		ZeroMemory(&bd, sizeof(bd));
-		bd.ByteWidth = sizeof(VS_CONSTANT_BONE_BUFFER) * 1;//바이트 용량
-		//GPU 메모리에 할당
-		bd.Usage = D3D11_USAGE_DEFAULT;//버퍼의 할당 장소 내지는 버퍼용도
-		bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-
-		D3D11_SUBRESOURCE_DATA sd;
-		ZeroMemory(&sd, sizeof(sd));
-		sd.pSysMem = &m_cbDataBone;
-		hr = m_pd3dDevice->CreateBuffer(
-		&bd,//버퍼 할당
-			&sd,//초기 할당된 버퍼를 채우는 CPU메모리 주소
-			&m_pConstantBufferBone
-		);
-
-		return hr;
-	}
 	bool PostRender()
 	{
 		if (m_pIndexBuffer == nullptr)
@@ -167,9 +137,8 @@ public:
 					//SLOT(레지스터리)
 					ID3D11Buffer* buffer[2] = { m_pSubVB[iSubObj],m_pSubVB_IW[iSubObj] };
 					m_pImmediateContext->IASetVertexBuffers(0, 2, buffer, stride, offset);
-					m_pImmediateContext->VSSetConstantBuffers(1, 1, &m_pConstantBufferBone);
 
-					if (m_pSubTexture[iSubObj] != nullptr)
+					if (m_pSubTexture.size()>0 && m_pSubTexture[iSubObj]!=nullptr)
 					{
 						m_pImmediateContext->PSSetShaderResources(0, 1, &m_pSubTexture[iSubObj]->m_pTextureSRV);
 					}
@@ -191,7 +160,6 @@ public:
 	{
 		KObject3D::Release();
 		if (m_pVertexBufferIW)m_pVertexBufferIW->Release();
-		if (m_pConstantBufferBone)m_pConstantBufferBone->Release();
 		for (int iSubObj = 0; iSubObj < m_pSubVB.size(); iSubObj++)
 		{
 			if (m_pSubVB[iSubObj])

@@ -10,9 +10,15 @@
     <ClCompile Include="Sample.cpp">
       <Filter>소스</Filter>
     </ClCompile>
+    <ClCompile Include="KFbxFile.cpp">
+      <Filter>소스</Filter>
+    </ClCompile>
+    <ClCompile Include="KFbxAnimation.cpp">
+      <Filter>소스</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFbxLoader.h">
+    <ClInclude Include="KFbxFile.h">
       <Filter>헤더</Filter>
     </ClInclude>
     <ClInclude Include="KFbxObject.h">
