@@ -151,6 +151,20 @@
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KCharacter.h" />
+    <ClInclude Include="KFbxFile.h" />
+    <ClInclude Include="KFbxObject.h" />
+    <ClInclude Include="Sample.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="KCharacter.cpp" />
+    <ClCompile Include="KFbxAnimation.cpp" />
+    <ClCompile Include="KFbxFile.cpp" />
+    <ClCompile Include="KFbxLoader.cpp" />
+    <ClCompile Include="KFbxObject.cpp" />
+    <ClCompile Include="Sample.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
