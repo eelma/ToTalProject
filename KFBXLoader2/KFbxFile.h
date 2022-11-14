@@ -24,13 +24,17 @@ public:
 	vector<KFbxObjectSkinning*>m_pObjectList;
 
 
-	std::vector< FbxMesh* > m_pFbxMeshList;
-	std::vector< KFbxObjectSkinning* > m_pDrawObjList;
+	vector< FbxMesh* > m_pFbxMeshList;
+	vector< KFbxObjectSkinning* > m_pDrawObjList;
 	ID3D11DeviceContext* m_pContext = nullptr;
 
 	VS_CONSTANT_BONE_BUFFER m_cbDataBone;
-	ID3D11Buffer* m_pConstantBufferBone;
+	ID3D11Buffer* m_pSkinBoneCB;
 	HRESULT CreateConstantBuffer(ID3D11Device* pDevice);
+
+	// 뼈대 공간으로 변환하는 행렬이 저장된다.
+	//map<FbxNode*, TMatrix > m_dxMatrixBindPseMap;
+	//map<wstring, TMatrix > m_dxMatrixBindPseMap;
 
 	//ID3D11Device 인터페이스는 기능 지원 점검과 자원 할당에 쓰인다.
 	//ID3D11DeviceContext 인터페이스는 렌더 대상을 설정하고, 자원을 그래픽 파이프 라인에 묶고,
@@ -57,7 +61,8 @@ public:
 		int posIndex,
 		int colorIndex);
 	void InitAnimation();
-	void LoadAnimation(KFbxObjectSkinning* pObj);
+	void LoadAnimation(FbxLongLong t, FbxTime time);
 	TMatrix ConvertMatrix(FbxAMatrix& fbxMatrix);
 	TMatrix DxConvertMatrix(FbxAMatrix& fbxMatrix);
+	bool ParseMeshSkinning(FbxMesh* pFbxMesh, KFbxObjectSkinning* pObject);
 };

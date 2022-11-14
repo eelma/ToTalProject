@@ -104,6 +104,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFBXLoader", "..\KFBXLoader
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFBXLoader2", "..\KFBXLoader2\KFBXLoader2.vcxproj", "{15F55C28-39D4-40F8-817E-DC9FA2ABD353}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFBXLoader3", "..\KFBXLoader3\KFBXLoader3.vcxproj", "{7EC9C632-57CC-4946-9214-79AF670227DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -746,6 +748,18 @@ Global
 		{15F55C28-39D4-40F8-817E-DC9FA2ABD353}.Release|x64.Build.0 = Release|x64
 		{15F55C28-39D4-40F8-817E-DC9FA2ABD353}.Release|x86.ActiveCfg = Release|Win32
 		{15F55C28-39D4-40F8-817E-DC9FA2ABD353}.Release|x86.Build.0 = Release|Win32
+		{7EC9C632-57CC-4946-9214-79AF670227DD}.Debug|ARM.ActiveCfg = Debug|Win32
+		{7EC9C632-57CC-4946-9214-79AF670227DD}.Debug|ARM64.ActiveCfg = Debug|Win32
+		{7EC9C632-57CC-4946-9214-79AF670227DD}.Debug|x64.ActiveCfg = Debug|x64
+		{7EC9C632-57CC-4946-9214-79AF670227DD}.Debug|x64.Build.0 = Debug|x64
+		{7EC9C632-57CC-4946-9214-79AF670227DD}.Debug|x86.ActiveCfg = Debug|Win32
+		{7EC9C632-57CC-4946-9214-79AF670227DD}.Debug|x86.Build.0 = Debug|Win32
+		{7EC9C632-57CC-4946-9214-79AF670227DD}.Release|ARM.ActiveCfg = Release|Win32
+		{7EC9C632-57CC-4946-9214-79AF670227DD}.Release|ARM64.ActiveCfg = Release|Win32
+		{7EC9C632-57CC-4946-9214-79AF670227DD}.Release|x64.ActiveCfg = Release|x64
+		{7EC9C632-57CC-4946-9214-79AF670227DD}.Release|x64.Build.0 = Release|x64
+		{7EC9C632-57CC-4946-9214-79AF670227DD}.Release|x86.ActiveCfg = Release|Win32
+		{7EC9C632-57CC-4946-9214-79AF670227DD}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

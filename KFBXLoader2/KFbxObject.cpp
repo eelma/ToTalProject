@@ -92,12 +92,19 @@ bool KFbxObject::Release()
 		if (m_pSubVB[iSubObj])
 		{
 			m_pSubVB[iSubObj]->Release();
+			m_pSubVB[iSubObj] = nullptr;
 		}
 	}
+	m_pSubVB.clear();
+
+	KObject3D::Release();
 	return true;
 }
 TMatrix KFbxObject::Interplate(float fFrame, KAnimScene kScene)
 {
+	TMatrix matIndentity;
+	D3DXMatrixIdentity(&matIndentity);
+	if (m_AnimTracks.size() == 0)return matIndentity;
 	//10               20
 	//a=0-------------b=20
 	//t=0 ~ t=0.5  t=1
@@ -117,10 +124,11 @@ TMatrix KFbxObject::Interplate(float fFrame, KAnimScene kScene)
 	D3DXQuaternionSlerp(&qRotation, &A.r, &B.r, t);
 
 	TMatrix matScale;
+	D3DXMatrixScaling(&matScale, scale.x, scale.y, scale.z);
 	TMatrix matRotation;
 	D3DXMatrixRotationQuaternion(&matRotation, &qRotation);
 
-	TMatrix matCurrent = matRotation;
+	TMatrix matCurrent = matScale*matRotation;
 	matCurrent._41 = pos.x;
 	matCurrent._42 = pos.y;
 	matCurrent._43 = pos.z;

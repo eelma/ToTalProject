@@ -26,18 +26,18 @@ void KFbxFile::InitAnimation()
 	m_AnimScene.fTickPerFrame = 160;
 	m_AnimScene.TimeMode = TimeMode;
 }
-void KFbxFile::LoadAnimation(KFbxObjectSkinning* pObj)
+void KFbxFile::LoadAnimation(FbxLongLong t, FbxTime time)
 {
-	FbxNode* pNode = pObj->m_pFbxNode;
-	FbxTime time;
-	for (FbxLongLong t = m_AnimScene.iStartFrame; t <= m_AnimScene.iEndFrame; t++)
+	
+	for(auto tObj:m_pObjectList)
 	{
-		time.SetFrame(t, m_AnimScene.TimeMode);
+		FbxNode* pNode = tObj->m_pFbxNode;
 		KAnimTrack track;
 		track.iFrame = t;
 		FbxAMatrix fbxMatrix = pNode->EvaluateGlobalTransform(time);
 		track.matAnim = DxConvertMatrix(fbxMatrix);
 		D3DXMatrixDecompose(&track.s, &track.r, &track.t, &track.matAnim);
+		tObj->m_AnimTracks.push_back(track);
 	}
 }
 TMatrix KFbxFile::ConvertMatrix(FbxAMatrix& fbxMatrix)
@@ -63,4 +63,52 @@ TMatrix KFbxFile::DxConvertMatrix(FbxAMatrix& fbxMatrix)
 	mat._14 = mat._41; mat._42 = m._43; mat._43 = m._42;
 	mat._44 = 1.0f;
 	return mat;
+}
+
+bool KFbxFile::ParseMeshSkinning(FbxMesh* pFbxMesh, KFbxObjectSkinning* pObject)
+{
+	//리깅 도구(뼈대에 스킨을 붙이는 작업 도구)
+	int iDeformerCount = pFbxMesh->GetDeformerCount(FbxDeformer::eSkin);
+	if (iDeformerCount == 0)return false;
+
+	//iNumVertex == 메쉬의 정점 개수와 동일해야한다
+	int iNumVertex = pFbxMesh->GetControlPointsCount();
+	pObject->m_WeightList.resize(iNumVertex);
+
+	for (int iDeformer = 0; iDeformer < iDeformerCount; iDeformer++)
+	{
+		FbxDeformer* deformer = pFbxMesh->GetDeformer(iDeformer, FbxDeformer::eSkin);
+		FbxSkin* pSkin = (FbxSkin*)deformer;
+		//뼈대가 영향을 미치는 정점 덩어리
+		int iNumClusterCount = pSkin->GetClusterCount();
+		for (int iCluster = 0; iCluster < iNumClusterCount; iCluster++)
+		{
+			FbxCluster* pCluster = pSkin->GetCluster(iCluster);
+			FbxNode* pFbxNode = pCluster->GetLink();
+			int iBoneIndex = m_pObjectIDMap.find(pFbxNode)->second;
+
+			//뼈대공간으로 변환하는 행렬이 필요하다
+			FbxAMatrix matXBindPose;
+			FbxAMatrix matReferenceGlobalInitPostion;
+			pCluster->SetTransformLinkMatrix(matXBindPose);
+			pCluster->GetTransformMatrix(matReferenceGlobalInitPostion);
+			FbxAMatrix matBindPos = matReferenceGlobalInitPostion.Inverse() * matXBindPose;
+
+			TMatrix matInvBindPos = DxConvertMatrix(matBindPos);
+			matInvBindPos = matInvBindPos.Invert();
+			pObject->m_dxMatrixBindPseMap.insert(make_pair(iBoneIndex, matInvBindPos));
+
+			//임의의 1개 정점에 영향을 미치는 뼈대의 개수
+			int iNumWeightCounter = pCluster->GetControlPointIndicesCount();
+			int* pIndicss = pCluster->GetControlPointIndices();
+			double* pWeights = pCluster->GetControlPointWeights();
+			for (int iVertex = 0; iVertex < iNumWeightCounter; iVertex++)
+			{
+				int iVertexIndex = pIndicss[iVertex];
+				float fWeight = pWeights[iVertex];
+				pObject->m_WeightList[iVertexIndex].insert(iBoneIndex, fWeight);
+			}
+		}
+	}
+	return true;
 }

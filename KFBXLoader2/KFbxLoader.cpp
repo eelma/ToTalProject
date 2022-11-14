@@ -39,7 +39,6 @@ bool KFbxFile::Load(C_STR filename)
 			auto data = m_pObjectMap.find(tObj->m_pFbxParentNode);
 			tObj->SetParent(data->second);
 		}
-		LoadAnimation(tObj);
 		FbxMesh* pFbxMesh = tObj->m_pFbxNode->GetMesh();
 		if (pFbxMesh)
 		{
@@ -47,10 +46,23 @@ bool KFbxFile::Load(C_STR filename)
 			ParseMesh(pFbxMesh, tObj);
 		}
 	}
+	//애니메이션
+	FbxTime time;
+	for (FbxLongLong t = m_AnimScene.iStartFrame; t <= m_AnimScene.iEndFrame; t++)
+	{
+		time.SetFrame(t, m_AnimScene.TimeMode);
+		for (auto tObj : m_pObjectList)
+		{
+			LoadAnimation(t, time);
+		}
+	}
 	return true;
 }
 void KFbxFile::ParseMesh(FbxMesh* pFbxMesh, KFbxObjectSkinning* pObject)
 {
+
+	// 스키닝 정보 확인
+	pObject->m_bSkinned = ParseMeshSkinning(pFbxMesh, pObject);
 
 	FbxNode* pNode = pFbxMesh->GetNode();
 	//기하행렬(FBX 위치 버텍스에서 ->초기 정점 로컬 위치로 변환)
@@ -243,6 +255,10 @@ void KFbxFile::ParseMesh(FbxMesh* pFbxMesh, KFbxObjectSkinning* pObject)
 					kVertex.n.y = n.mData[2];
 					kVertex.n.z = n.mData[1];
 				}
+				if (pObject->m_bSkinned == false)
+				{
+
+				
 				IWVertex.i.x = m_pObjectIDMap.find(pNode)->second;
 				IWVertex.i.y = 0;
 				IWVertex.i.z = 0;
@@ -252,7 +268,22 @@ void KFbxFile::ParseMesh(FbxMesh* pFbxMesh, KFbxObjectSkinning* pObject)
 				IWVertex.w.y = 0.0f;
 				IWVertex.w.z = 0.0f;
 				IWVertex.w.w = 0.0f;
+				}
+				else
+				{
 
+					KWeight* pWeight = &pObject->m_WeightList[vertexID];
+					IWVertex.i.x = pWeight->Index[0];
+					IWVertex.i.y = pWeight->Index[1];
+					IWVertex.i.z = pWeight->Index[2];
+					IWVertex.i.w = pWeight->Index[3];
+					IWVertex.w.x = pWeight->weight[0];
+					IWVertex.w.y = pWeight->weight[1];
+					IWVertex.w.z = pWeight->weight[2];
+					IWVertex.w.w = pWeight->weight[3];
+
+
+				}
 
 				if (iNumMtrl <= 1)
 				{
@@ -361,12 +392,13 @@ void KFbxFile::PreProcess(FbxNode* pFbxNode)//전처리보정
 
 bool KFbxFile::Release()
 {
-	if (m_pConstantBufferBone)m_pConstantBufferBone->Release();
+	if (m_pSkinBoneCB)m_pSkinBoneCB->Release();
 	for (auto obj : m_pObjectList)
 	{
 		obj->Release();
 		delete obj;
 	}
+	m_pObjectList.clear();
 	m_pFbxScene->Destroy();
 		
 	if (m_pFbxImporter != nullptr)

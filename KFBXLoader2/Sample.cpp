@@ -23,7 +23,7 @@ bool	Sample::Init()
 	}
 	m_fbxList.push_back(pFbxLoaderC);*/
 
-	KFbxFile* pFbxLoaderA = new KFbxFile;
+	/*KFbxFile* pFbxLoaderA = new KFbxFile;
 	if (pFbxLoaderA->Init())
 	{
 		if (pFbxLoaderA->Load("../../data/fbx/Turret_Deploy1/Turret_Deploy1.fbx"))
@@ -33,7 +33,7 @@ bool	Sample::Init()
 
 		}
 	}
-	m_fbxList.push_back(pFbxLoaderA);
+	m_fbxList.push_back(pFbxLoaderA);*/
 
 	/*KFbxFile* pFbxLoaderB = new KFbxFile;
 	if (pFbxLoaderB->Init())
@@ -41,6 +41,15 @@ bool	Sample::Init()
 		pFbxLoaderB->Load("../../data/fbx/SM_Rock.fbx");
 	}
 	m_fbxList.push_back(pFbxLoaderB);*/
+	KFbxFile* pFbxLoaderD = new KFbxFile;
+	if (pFbxLoaderD->Init())
+	{
+		if (pFbxLoaderD->Load("../../data/fbx/Man.fbx"))
+		{
+			pFbxLoaderD->CreateConstantBuffer(m_pd3dDevice.Get());
+		}
+	}
+	m_fbxList.push_back(pFbxLoaderD);
 
 	W_STR szDefaultDir = L"../../data/fbx/";
 	wstring shaderfilename = L"SKinning.txt";
@@ -55,7 +64,7 @@ bool	Sample::Init()
 			
 	}
 	m_pMainCamera = new KCameraDebug;
-	m_pMainCamera->CreateViewMatrix(TVector3(0, 6, -50), TVector3(0, 0, 0), TVector3(0, 1, 0));
+	m_pMainCamera->CreateViewMatrix(TVector3(0, 0, -10), TVector3(0, 0, 1), TVector3(0, 1, 0));
 	m_pMainCamera->CreateProjMatrix(1.0f, 10000.0f, T_PI * 0.25f,
 		(float)g_rtClient.right / (float)g_rtClient.bottom);
 		
@@ -86,12 +95,12 @@ bool	Sample::Render()
 
 	for(int iFbxFile=0;iFbxFile<m_fbxList.size();iFbxFile++)
 	{
-		m_pImmediateContext->VSSetConstantBuffers(1, 1, &m_fbxList[iFbxFile]->m_pConstantBufferBone);
+		m_pImmediateContext->VSSetConstantBuffers(1, 1, &m_fbxList[iFbxFile]->m_pSkinBoneCB);
 		for(int iObj=0;iObj<m_fbxList[iFbxFile]->m_pDrawObjList.size();iObj++)
 		{
-			KFbxObject* pObj = m_fbxList[iFbxFile]->m_pDrawObjList[iObj];
+			KFbxObjectSkinning* pObj = m_fbxList[iFbxFile]->m_pDrawObjList[iObj];
 			TMatrix matControlWorld;
-			D3DXMatrixRotationY(&matControlWorld, g_fGameTimer);
+			//D3DXMatrixRotationY(&matControlWorld, g_fGameTimer);
 				pObj->m_cbData.x = vLight.x;
 				pObj->m_cbData.y = vLight.y;
 				pObj->m_cbData.z = vLight.z;
@@ -104,9 +113,11 @@ bool	Sample::Render()
 }
 bool	Sample::Release()
 {
+	delete m_pMainCamera;
 	for (auto fbx : m_fbxList)
 	{
 		fbx->Release();
+		delete fbx;
 	}
 	return true;
 }
