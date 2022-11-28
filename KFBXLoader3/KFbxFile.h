@@ -32,9 +32,12 @@ public:
 	ID3D11Buffer* m_pAnimBoneCB;
 	HRESULT CreateConstantBuffer(ID3D11Device* pDevice);
 	void SetMatrix(TMatrix* matWorld, TMatrix* matView, TMatrix* matProj);
-
-	void UpdateFrameA(ID3D11DeviceContext* pContext, float fTime, VS_CONSTANT_BONE_BUFFER& cbInputData,
-		vector<VS_CONSTANT_BONE_BUFFER>& cbOutputData);
+	void UpdateFrameA(ID3D11DeviceContext* pContext,
+		float fTime,
+		VS_CONSTANT_BONE_BUFFER& cbData);
+	void UpdateFrameB(ID3D11DeviceContext* pContext,
+		VS_CONSTANT_BONE_BUFFER& cbInputData,
+		vector< VS_CONSTANT_BONE_BUFFER>& cbOutputData);
 public:
 	bool Init();
 	bool UpdateFrame(ID3D11DeviceContext* pContext);

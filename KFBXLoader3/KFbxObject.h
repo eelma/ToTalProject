@@ -54,7 +54,7 @@ public:
 
 	FbxAMatrix m_fbxLocalMatrix;
 	FbxNode* m_pFbxNode = nullptr;
-	FbxNode* m_pFbxParentNOde = nullptr;
+	FbxNode* m_pFbxParentNode = nullptr;
 	KFbxObject* m_pParent = nullptr;
 	vector<KFbxObject*> m_pFbxChilds;
 	vector<KAnimTrack>m_AnimTracks;
