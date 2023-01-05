@@ -2,7 +2,7 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include<WinSock2.h>
 #include<iostream>
-//#define SERVER_CODE
+#define SERVER_CODE
 #ifndef SERVER_CODE
 
 
