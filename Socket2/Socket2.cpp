@@ -16,7 +16,7 @@ int main()
 	SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
 
 	SOCKADDR_IN sa;
-	sa.sin_addr.s_addr = inet_addr("192.168.0.1");
+	sa.sin_addr.s_addr = inet_addr("192.168.0.86");
 	sa.sin_port = htons(10000);
 	sa.sin_family = AF_INET;
 

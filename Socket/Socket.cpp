@@ -79,7 +79,7 @@ int main()
 	{
 		return 1;
 	}
-	iRet = listen(sock3, SOMAXCONN);
+	iRet = listen(sock3, SOMAXCONN);//listen 함수는 하나 이상의 연결을 처리해야 하는 서버에서 사용한다. 만약 연결 대기열이 모두 차버린 상태에서 클라이언트가 연결하려하면, 클라이언트는 WSAECONNREFUSED 에러를 받고 연결에 실패한다.
 	if (iRet == SOCKET_ERROR)
 	{
 		return 1;
