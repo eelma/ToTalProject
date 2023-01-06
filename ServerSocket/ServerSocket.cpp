@@ -2,7 +2,7 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include<WinSock2.h>
 #include<iostream>
-
+#include"ServProtocol.h"
 DWORD WINAPI ServerThread(LPVOID IpThreadParameter)
 {
 

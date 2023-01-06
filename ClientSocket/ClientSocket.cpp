@@ -2,7 +2,7 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include<WinSock2.h>
 #include<iostream>
-
+#include"CliProtocol.h"
 DWORD WINAPI SendThread(LPVOID IpThreadParameter)
 {
 	SOCKET sock = (SOCKET)IpThreadParameter;
