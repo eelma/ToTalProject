@@ -11,7 +11,7 @@ DWORD WINAPI SendThread(LPVOID IpThreadParameter)
 	{
 
 		char szSendMsg[256] = { 0, };
-		printf("%s", "send----->");
+		printf("%s", "send:");
 		fgets(szSendMsg, 256,stdin);
 		int iSendBytes = send(sock, szSendMsg, strlen(szSendMsg), 0);
 		if (iSendBytes == SOCKET_ERROR)

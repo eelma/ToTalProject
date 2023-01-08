@@ -5,43 +5,50 @@
 #include"ServProtocol.h"
 DWORD WINAPI ServerThread(LPVOID IpThreadParameter)
 {
-
-	SOCKET sock = (SOCKET)IpThreadParameter;
+	
 	while (1)
 	{
-		char szRecvMsg[256] = { 0, };
-		sizeof(szRecvMsg);
-		int iRecvBytes = recv(sock, szRecvMsg, 256, 0);
-		if (iRecvBytes == 0)
+		for (auto iterRecv = userlist.begin(); userlist.end() != iterRecv;)
 		{
-			closesocket(sock);
-			break;
-
-		}
-		if (iRecvBytes == SOCKET_ERROR)
-		{
-
-			if (WSAGetLastError() != WSAEWOULDBLOCK)
+			char szRecvMsg[256] = { 0, };
+			int iRecvBytes = recv(iterRecv->sock, szRecvMsg, 256, 0);
+			if (iRecvBytes == 0)
 			{
-				closesocket(sock);
-				return 1;
+				printf("클라이언트 접속 종료 : IP:%s, PORT:%d\n", inet_ntoa(iterRecv->address.sin_addr), htons(iterRecv->address.sin_port));
+				closesocket(iterRecv->sock);
+				iterRecv = userlist.erase(iterRecv);
+				continue;
 			}
-		}
-		else
-		{
-			printf("%s\n", szRecvMsg);
-		}
-		if (iRecvBytes > 0)
-		{
-			int iSendBytes = send(sock, szRecvMsg, strlen(szRecvMsg), 0);
-			if (iSendBytes == SOCKET_ERROR)
+			if (iRecvBytes == SOCKET_ERROR)
 			{
 				if (WSAGetLastError() != WSAEWOULDBLOCK)
 				{
-					closesocket(sock);
-					break;
+					closesocket(iterRecv->sock);
+					iterRecv = userlist.erase(iterRecv);
+					continue;
 				}
 			}
+			if (iRecvBytes > 0)
+			{
+				printf("%s\n", szRecvMsg);
+				for (auto iterSend = userlist.begin();userlist.end() != iterSend;)
+				{
+
+					int iSendBytes = send(iterSend->sock, szRecvMsg, strlen(szRecvMsg), 0);
+					if (iSendBytes == SOCKET_ERROR)
+					{
+						if (WSAGetLastError() != WSAEWOULDBLOCK)
+						{
+							printf("클라이언트 비정상 종료 IP: %s, PROT: %d\n", inet_ntoa(iterSend->address.sin_addr), ntohs(iterSend->address.sin_port));
+							closesocket(iterSend->sock);
+							iterSend = userlist.erase(iterSend);
+							continue;
+						}
+					}
+					iterSend++;
+				}
+			}
+			iterRecv++;
 		}
 	}
 };
@@ -54,6 +61,7 @@ int main()
 		return 0;
 	}
 	SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
+
 	SOCKADDR_IN sa;
 	sa.sin_addr.s_addr = htonl(INADDR_ANY);
 	sa.sin_port = htons(10000);
@@ -68,6 +76,9 @@ int main()
 	{
 		return 1;
 	}
+
+	DWORD dwThread;
+	HANDLE hClient = CreateThread(0, 0, ServerThread, 0, 0, &dwThread);
 	
 	while (1)
 	{
@@ -83,11 +94,17 @@ int main()
 		}
 		printf("클라이언트 접속 : IP:%s PORT: %d\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
 
-		DWORD dwThread;
-		HANDLE hClient = CreateThread(0,0, ServerThread,(LPVOID)clientSock, 0,&dwThread);
-		
 		u_long iMode = TRUE;
 		ioctlsocket(clientSock, FIONBIO, &iMode);
+
+		User user;
+		user.sock = clientSock;
+		user.address = clientaddr;
+		userlist.push_back(user);
+
+		
+		
+		
 	}
 	closesocket(sock);
 
