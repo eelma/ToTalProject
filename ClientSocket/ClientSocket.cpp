@@ -95,9 +95,12 @@ int main()
 			char* msg = (char*)&packet;
 			int iNumRecvByte = 0;
 			do {
+				if (packet.ph.len == 4)
+				{
+					break;
+				}
 				int iRecvBytes = recv(sock, &packet.msg[iNumRecvByte], packet.ph.len-PACKET_HEADER_SIZE,0);
-			
-		
+					
 			if (iRecvBytes == SOCKET_ERROR)
 				{
 					if (WSAGetLastError() != WSAEWOULDBLOCK)
@@ -117,6 +120,25 @@ int main()
 			{
 				printf("Recv---->%s\n", packet.msg);
 			}break;
+		case PACKET_CHATNAME_REQ:
+		{
+			printf("이름을 입력하시오: ");
+			char szName[256] = { 0, };
+			fgets(szName, 256, stdin);
+			szName[strlen(szName) - 1] = 0;
+			SendMsg(sock, szName, PACKET_NAME_REQ);
+			ResumeThread(hClient);
+		}break;
+
+		case PACKET_JOIN_USER:
+		{
+			printf("%s %s\n", packet.msg, "님이 입장하셨습니다.");
+		}break;
+		case PACKET_NAME_ACK:
+		{
+			printf("대화명 사용 승인\n");
+		}break;
+
 		}
 		iTotalRecvBytes = 0;
 		}
