@@ -3,6 +3,36 @@
 #include<WinSock2.h>
 #include<iostream>
 #include"ServProtocol.h"
+int SendMsg(SOCKET sock, char* msg, short type)
+{
+	UPACKET packet;
+	ZeroMemory(&packet, sizeof(packet));
+
+	if (msg != nullptr)
+	{
+		packet.ph.len = strlen(msg) + PACKET_HEADER_SIZE;
+		memcpy(packet.msg,msg, strlen(msg));
+	}
+	else
+	{
+		packet.ph.len = PACKET_HEADER_SIZE;
+	}
+	packet.ph.type = type;
+
+	char* msgSend = (char*)&packet;
+	int iSendBytes = send(sock, msgSend, packet.ph.len, 0);
+	if (iSendBytes == SOCKET_ERROR)
+	{
+		if (WSAGetLastError() != WSAEWOULDBLOCK)
+		{
+			closesocket(sock);
+			return -1;
+		}
+	}
+
+	return 1;
+}
+
 DWORD WINAPI ServerThread(LPVOID IpThreadParameter)
 {
 	
@@ -10,8 +40,8 @@ DWORD WINAPI ServerThread(LPVOID IpThreadParameter)
 	{
 		for (auto iterRecv = userlist.begin(); userlist.end() != iterRecv;)
 		{
-			char szRecvMsg[256] = { 0, };
-			int iRecvBytes = recv(iterRecv->sock, szRecvMsg, 256, 0);
+			int iRecvPacketSize = PACKET_HEADER_SIZE;
+			int iRecvBytes = recv(iterRecv->sock, iterRecv->szRecvMsg, PACKET_HEADER_SIZE-iterRecv->iTotalRecvBytes, 0);
 			if (iRecvBytes == 0)
 			{
 				printf("클라이언트 접속 종료 : IP:%s, PORT:%d\n", inet_ntoa(iterRecv->address.sin_addr), htons(iterRecv->address.sin_port));
@@ -19,22 +49,78 @@ DWORD WINAPI ServerThread(LPVOID IpThreadParameter)
 				iterRecv = userlist.erase(iterRecv);
 				continue;
 			}
+			DWORD dwError = WSAGetLastError();
 			if (iRecvBytes == SOCKET_ERROR)
 			{
-				if (WSAGetLastError() != WSAEWOULDBLOCK)
+				if (dwError != WSAEWOULDBLOCK)
 				{
 					closesocket(iterRecv->sock);
 					iterRecv = userlist.erase(iterRecv);
-					continue;
 				}
+				else
+				{
+					iterRecv++;
+				}
+				continue;
 			}
+			UPACKET packet;
+			ZeroMemory(&packet, sizeof(packet));
+
+			iterRecv->iTotalRecvBytes += iRecvBytes;
+
+			if (iterRecv->iTotalRecvBytes == PACKET_HEADER_SIZE)
+			{
+				memcpy(&packet.ph, iterRecv->szRecvMsg, PACKET_HEADER_SIZE);
+
+				//char* msg = (char*)&packet;
+				int iNumRecvByte = 0;
+				do {
+
+					int iRecvBytes = recv(iterRecv->sock, &packet.msg[iNumRecvByte], packet.ph.len - PACKET_HEADER_SIZE - iNumRecvByte, 0);
+					if (iRecvBytes == 0)
+					{
+						printf("정상 종료\n");
+						break;
+					}
+					if (iRecvBytes == SOCKET_ERROR)
+					{
+						if (WSAGetLastError() != WSAEWOULDBLOCK)
+						{
+							closesocket(iterRecv->sock);
+							printf("비정상 종료");
+							return 1;
+						}
+						continue;
+					}
+					iNumRecvByte += iRecvBytes;
+				} while ((packet.ph.len - PACKET_HEADER_SIZE > iNumRecvByte));
+			}
+
 			if (iRecvBytes > 0)
 			{
-				printf("%s\n", szRecvMsg);
+				switch (packet.ph.type)
+				{
+				case PACKET_CHAR_MSG:
+				{
+					printf("Recv---->%s\n", packet.msg);
+				}break;
+				case PACKET_NAME_REQ:
+				{
+					memcpy(iterRecv->m_szName, packet.msg, strlen(packet.msg));
+					packet.ph.type = PACKET_JOIN_USER;
+					SendMsg(iterRecv->sock, nullptr, PACKET_NAME_ACK);
+				}break;
+				}
+				
 				for (auto iterSend = userlist.begin();userlist.end() != iterSend;)
 				{
+					if (iterSend == iterRecv)
+					{
+						iterSend++;
+						continue;
+					}
+					int iSendBytes = send(iterSend->sock, (char*)&packet, packet.ph.len, 0);
 
-					int iSendBytes = send(iterSend->sock, szRecvMsg, strlen(szRecvMsg), 0);
 					if (iSendBytes == SOCKET_ERROR)
 					{
 						if (WSAGetLastError() != WSAEWOULDBLOCK)
@@ -47,6 +133,8 @@ DWORD WINAPI ServerThread(LPVOID IpThreadParameter)
 					}
 					iterSend++;
 				}
+				ZeroMemory(&packet, sizeof(UPACKET));
+				iterRecv->iTotalRecvBytes=0;
 			}
 			iterRecv++;
 		}
@@ -102,8 +190,7 @@ int main()
 		user.address = clientaddr;
 		userlist.push_back(user);
 
-		
-		
+		SendMsg(clientSock, nullptr, PACKET_CHATNAME_REQ);
 		
 	}
 	closesocket(sock);
