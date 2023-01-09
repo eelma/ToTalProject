@@ -42,6 +42,7 @@ DWORD WINAPI SendThread(LPVOID IpThreadParameter)
 			break;
 		}
 	}
+	closesocket(sock);
 };
 
 int main()
@@ -54,7 +55,7 @@ int main()
 	SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
 
 	SOCKADDR_IN sa;
-	sa.sin_addr.s_addr = inet_addr("192.168.0.86");
+	sa.sin_addr.s_addr = inet_addr("192.168.0.10");
 	sa.sin_port = htons(10000);
 	sa.sin_family = AF_INET;
 
@@ -66,7 +67,7 @@ int main()
 		return 1;
 	}
 	DWORD dwThreadID;
-	HANDLE hClient = CreateThread(0,0,SendThread,(LPVOID)sock, 0, &dwThreadID);
+	HANDLE hClient = CreateThread(0,0,SendThread,(LPVOID)sock, CREATE_SUSPENDED, &dwThreadID);
 
 	//u_long iMode = TRUE;
 	//ioctlsocket(sock, FIONBIO, &iMode);
@@ -118,7 +119,7 @@ int main()
 		{
 		case PACKET_CHAR_MSG:
 			{
-				printf("Recv---->%s\n", packet.msg);
+				printf("%s\n", packet.msg);
 			}break;
 		case PACKET_CHATNAME_REQ:
 		{
