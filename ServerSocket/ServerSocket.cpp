@@ -3,6 +3,7 @@
 #include<WinSock2.h>
 #include<iostream>
 #include"ServProtocol.h"
+
 int SendMsg(SOCKET sock, char* msg, short type)
 {
 	UPACKET packet;
@@ -72,7 +73,7 @@ DWORD WINAPI ServerThread(LPVOID IpThreadParameter)
 			{
 				memcpy(&packet.ph, iterRecv->szRecvMsg, PACKET_HEADER_SIZE);
 
-				//char* msg = (char*)&packet;
+				char* msg = (char*)&packet;
 				int iNumRecvByte = 0;
 				do {
 

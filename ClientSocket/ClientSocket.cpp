@@ -30,7 +30,7 @@ DWORD WINAPI SendThread(LPVOID IpThreadParameter)
 	{
 
 		char szSendMsg[256] = { 0, };
-		printf("%s", "send----->");
+		printf("%s", "-->");
 		fgets(szSendMsg, 256,stdin);
 		szSendMsg[strlen(szSendMsg) - 1] = 0;
 		if (strcmp(szSendMsg, "exit") == 0)
@@ -55,7 +55,7 @@ int main()
 	SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
 
 	SOCKADDR_IN sa;
-	sa.sin_addr.s_addr = inet_addr("192.168.0.10");
+	sa.sin_addr.s_addr = inet_addr("192.168.0.86");
 	sa.sin_port = htons(10000);
 	sa.sin_family = AF_INET;
 
@@ -100,7 +100,12 @@ int main()
 				{
 					break;
 				}
-				int iRecvBytes = recv(sock, &packet.msg[iNumRecvByte], packet.ph.len-PACKET_HEADER_SIZE,0);
+				int iRecvBytes = recv(sock, &packet.msg[iNumRecvByte], packet.ph.len-PACKET_HEADER_SIZE-iNumRecvByte,0);
+				if (iRecvBytes == 0)
+				{
+					printf("서버 정상 종료");
+					break;
+				}
 					
 			if (iRecvBytes == SOCKET_ERROR)
 				{

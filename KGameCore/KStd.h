@@ -1,4 +1,5 @@
 #pragma once
+#include <winsock2.h>
 #include <windows.h>
 #include <tchar.h>
 #include <map>
@@ -13,13 +14,15 @@
 #include <wrl.h>
 #include"KVector.h"
 #include"TMath.h"
-extern float g_fGameTimer;
-extern float g_fSecondPerFrame;
 
 #pragma comment(lib,"d3d11.lib")
 #pragma comment(lib,"d3dcompiler.lib")
 #pragma comment(lib,"dxgi.lib")
+#pragma comment(lib, "ws2_32.lib")
 #define KCORE
+extern float g_fGameTimer;
+extern float g_fSecondPerFrame;
+
 using namespace Microsoft::WRL;
 using namespace std;
 
