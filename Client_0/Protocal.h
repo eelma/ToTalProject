@@ -1,5 +1,6 @@
 #pragma once
 #pragma pack(push,1)
+#define PACKET_HEADER_SIZE 4
 typedef struct
 {
 
@@ -11,7 +12,7 @@ typedef struct
 {
 	PACKET_HEADER ph;
 	char msg[256];
-};
+}UPACKET;
 typedef struct
 {
 	char szName[9];
