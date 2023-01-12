@@ -8,7 +8,6 @@ DWORD WINAPI RecvThread(LPVOID IpThreadParameter)
 	int iTotalRecvBytes = 0;
 	while (1)
 	{
-
 	char szRecvMsg[256] = { 0, };
 	int iRecvBytes = recv(net->m_Sock, szRecvMsg, PACKET_HEADER_SIZE - iTotalRecvBytes, 0);
 	if (iRecvBytes == 0)
@@ -86,18 +85,18 @@ bool NetWork::NetStart(string ip, int iPort)
 	sa.sin_addr.s_addr = inet_addr(ip.c_str());
 	sa.sin_port = htons(iPort);
 	int iRet = connect(m_Sock, (sockaddr*)&sa, sizeof(sa));
-	if (iRet == SOCKET_ERROR)
+	/*if (iRet == SOCKET_ERROR)
 	{
 		int iError = WSAGetLastError();
 		printf("%d", iError);
 		return false;
-	}
+	}*/
 
 	//u_long iMode = true;
 	//ioctlsocket(m_Sock, FIONBIO, &iMode);
 	
-	DWORD dwThreadID;
-	m_hClientTread = CreateThread(0, 0, RecvThread, (LPVOID)this, 0, &dwThreadID);
+	//DWORD dwThreadID;
+	//m_hClientTread = CreateThread(0, 0, RecvThread, (LPVOID)this, 0, &dwThreadID);
 	
 	return true;
 }
