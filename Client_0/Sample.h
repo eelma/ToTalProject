@@ -19,5 +19,6 @@ public:
 	bool Render() override;
 	bool Release() override;
 	void ClearD3D11DeviceContext(ID3D11DeviceContext* pd3dDeviceContext);
+	void NetProcess();
 };
 

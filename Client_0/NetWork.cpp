@@ -59,7 +59,67 @@ DWORD WINAPI RecvThread(LPVOID IpThreadParameter)
 };
 int NetWork::SendMsg(SOCKET sock, const char* msg, short type)
 {
+	UPACKET packet;
+	ZeroMemory(&packet, sizeof(UPACKET));
+	packet.ph.len = strlen(msg) + PACKET_HEADER_SIZE;
+	packet.ph.type = type;
+	memcpy(packet.msg, msg, strlen(msg));
 
+	char* msgSend = (char*)&packet;
+	int iSendBytes = send(sock, msgSend, packet.ph.len, 0);
 
-	return 0;
+	if (iSendBytes = SOCKET_ERROR)
+	{
+		if (WSAGetLastError() != WSAEWOULDBLOCK)
+		{
+			closesocket(sock);
+			return -1;
+		}
+	}
+	return 1;
+}
+bool NetWork::NetStart(string ip, int iPort)
+{
+	m_Sock = socket(AF_INET, SOCK_STREAM, 0);
+	SOCKADDR_IN sa;
+	sa.sin_family = AF_INET;
+	sa.sin_addr.s_addr = inet_addr(ip.c_str());
+	sa.sin_port = htons(iPort);
+	int iRet = connect(m_Sock, (sockaddr*)&sa, sizeof(sa));
+	if (iRet == SOCKET_ERROR)
+	{
+		int iError = WSAGetLastError();
+		printf("%d", iError);
+		return false;
+	}
+
+	//u_long iMode = true;
+	//ioctlsocket(m_Sock, FIONBIO, &iMode);
+	
+	DWORD dwThreadID;
+	m_hClientTread = CreateThread(0, 0, RecvThread, (LPVOID)this, 0, &dwThreadID);
+	
+	return true;
+}
+
+bool NetWork::Frame()
+{
+	return true;
+}
+bool NetWork::Render()
+{
+	return true;
+}
+bool NetWork::Release()
+{
+	return true;
+}
+NetWork::NetWork()
+{
+	WSADATA ws;
+	WSAStartup(MAKEWORD(2, 2), &ws);
+}
+NetWork::~NetWork()
+{
+	
 }
