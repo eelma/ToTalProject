@@ -1,5 +1,27 @@
 #include "Sample.h"
 #include"KWindow.h"
+
+char* STK;
+char sendData[] = { 0, };
+void function1()
+{
+	KFsm fsm;
+	fsm.AddTransition(STATE_STAND, EVENT_TIMEMOVE, STATE_MOVE);
+	fsm.AddTransition(STATE_STAND, EVENT_FINDTARGET, STATE_ATTACK);
+	fsm.AddTransition(STATE_MOVE, EVENT_STOPMOVE, STATE_STAND);
+	fsm.AddTransition(STATE_ATTACK, EVENT_LOSTTARGET, STATE_STAND);
+
+	KUser2D player;
+	KNpc2D npc(&fsm);
+	while (1)
+	{
+		STK = (char*)(npc.Process(&player));
+
+		this_thread::sleep_for(1s);
+	}
+};
+std::thread t1;
+
 bool Sample::Init()
 {
 	//m_pTitle = new KSceneTitle;
@@ -13,15 +35,15 @@ bool Sample::Init()
 	//m_pCurrentScene = m_pTitle;
 	//커렌트를 타이틀로하면 지형만 뿌려진다
 
-	m_pBGSound = I_Sound.GetPtr(L"PacMan1987.mp3");
+	m_pBGSound = I_Sound.GetPtr(L"123.mp3");
 	if (m_pBGSound == nullptr)
 	{
-		m_pBGSound = I_Sound.Load(L"../../data/sound/PacMan/PacMan1987.mp3");
+		m_pBGSound = I_Sound.Load(L"../../data/sound/PacMan/123.mp3");
 	}
-	m_move = I_Sound.GetPtr(L"pacman_chomp.wav");
+	m_move = I_Sound.GetPtr(L"123.mp3");
 	if (m_move == nullptr)
 	{
-		m_move = I_Sound.Load(L"../../data/sound/PacMan/pacman_chomp.wav");
+		m_move = I_Sound.Load(L"../../data/sound/PacMan/123.mp3");
 	}
 	m_pBGSound->Play(true);
 	return true;
@@ -31,6 +53,9 @@ bool Sample::Frame()
 	KeyDown();
 	
 	m_pCurrentScene->Frame();
+
+
+
 
 	//I_Sound.Frame();
 	
@@ -65,7 +90,7 @@ void Sample::KeyDown()
 	{
 		m_pBGSound->VolumeUp();
 	}
-	if (I_Input.GetKey(VK_HOME) == KEY_PUSH)
+	if (I_Input.GetKey('1') == KEY_PUSH)
 	{
 		m_pBGSound->VolumeDown();
 	}
@@ -82,8 +107,9 @@ void Sample::KeyDown()
 
 int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR    lpCmdLine, int       nCmdShow)
 {
+
  Sample demo;
- demo.SetWindow(hInstance,L"PackMan",800,1000);
+ demo.SetWindow(hInstance,L"TEST",800,800);
  demo.Run(); return 1;
 
 }

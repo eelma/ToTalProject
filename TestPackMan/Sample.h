@@ -4,6 +4,9 @@
 #include "KGameCore.h"
 //#include "KSceneTitle.h"
 #include"KStaticObject.h"
+#include"KFsm.h"
+#include"KNpc2D.h"
+#include<thread>
 class Sample : public KGameCore
 {
 public:
